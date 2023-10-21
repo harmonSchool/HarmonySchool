@@ -1,0 +1,53 @@
+/* AllStudent.css */
+
+.StudentTable {
+    margin: 20px;
+  }
+  
+ .first {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fefefe;
+    border: 1px solid #0a0a0a;
+  } 
+   
+  .table-header th {
+    background-color: #ffffff;
+    color: rgb(16, 15, 15);
+    padding: 8px;
+    text-align: left;
+    margin-left: 20px;
+  }
+  
+  .table-data td {
+    /* border: 1px solid #fffcfc; */
+    padding: 8px;
+    text-align: left;
+   
+    margin-left: 20px;
+  }
+  
+  .table-data-even {
+    background-color: #fbf6f6;
+  }
+  
+  .table-data:hover {
+    background-color: #f4ecec;
+    cursor: pointer;
+  }
+  
+  .StudentContainer {
+    margin: 0 auto;
+    padding: 50px;
+    background-color: #ffffff;
+    margin-left: 250px;
+  }
+  
+  .StudentCard {
+    padding: 10px;
+    border: 1px solid #e2dddd;
+    border-radius: 5px;
+    background-color: #ededed;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  

@@ -1,0 +1,17 @@
+.Profile-container {
+    margin-left: 250px;
+    justify-content: space-between;
+}
+.Profile-image {
+    border-radius: 40%;
+    width: 100px;
+}
+.Profile-Header {
+    display: flex;
+    justify-content: space-between; /* Adds space between elements */
+    align-items: center;
+}
+
+.Profile-Header > * {
+    margin-right: 0px; /* Adjust the margin value as needed */
+}
