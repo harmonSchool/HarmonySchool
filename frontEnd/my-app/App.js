@@ -36,9 +36,18 @@ import CheckOut from './screens/Payement/CheckOut';
 import ReviewOrder from  './screens/Payement/ReviewOrder';
 import PaymentMethod from './screens/Payement/ReviewOrder';
 import CalendarScreen from './screens/MyCalender/CalendarScreen';
+import StudentClass from './screens/Teacher/StudentClass';
+import DataStudent1 from './screens/Teacher/DataStudent1';
+import DataStudent2 from './screens/Teacher/DataStudent2';
+import DataStudent3 from './screens/Teacher/DataStudent3';
+import DataStudent4 from './screens/Teacher/DataStudent4';
+import DataStudent5 from './screens/Teacher/DataStudent5';
+import DataStudent6 from './screens/Teacher/DataStudent6';
 
 import ConversationView from "./screens/Chat/Conv";
 import Notess from './screens/Notes/Notess'
+import CalenderParent from './CalenderParent/CalenderParent';
+
 
 const Stack = createNativeStackNavigator()
 
@@ -48,9 +57,15 @@ export default function App() {
     <MyProvider>
     <NativeBaseProvider >
     <NavigationContainer>
-    
-    <Stack.Navigator initialRouteName="Notes">
+    <Stack.Navigator initialRouteName="StudentClass">
      <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
+     <Stack.Screen name="StudentClass" component={StudentClass} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent1" component={DataStudent1} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent2" component={DataStudent2} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent3" component={DataStudent3} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent4" component={DataStudent4} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent5" component={DataStudent5} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent6" component={DataStudent6} options={{headerShown:false}}  />
      <Stack.Screen name="Login" component={Login} options={{headerShown:false}}  /> 
      <Stack.Screen name="SignUp" component={SignUp} options={{headerShown:false}}/> 
      <Stack.Screen name="Inscription" component={Inscription} options={{headerShown:false}} />
@@ -83,6 +98,8 @@ export default function App() {
     <Stack.Screen name="ReviewOrder" component={ReviewOrder} options={{headerShown:false}}  />  
      <Stack.Screen name="CheckOut" component={CheckOut} options={{headerShown:false}}  />        
      <Stack.Screen name="PaymentMethod" component={PaymentMethod} options={{headerShown:false}}  />
+    
+     <Stack.Screen name="CalenderParent" component={CalenderParent} options={{headerShown:false}}  />
 
      
      <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />

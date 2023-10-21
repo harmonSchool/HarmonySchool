@@ -5,5 +5,6 @@
   "number":"78834564",
   "image":"https://th.bing.com/th/id/OIP.qTplu8MkCicLB8SBy2j6WwHaHX?pid=ImgDet&rs=1",
   "admin_idadmin":1,
-  "class":"first class"
+  "class":"first class",
+  "subject_idsubject":1
 }

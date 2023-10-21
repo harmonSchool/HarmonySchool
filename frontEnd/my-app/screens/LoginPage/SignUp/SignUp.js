@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import axios from "axios"
 import {
   StyleSheet,
   Text,
@@ -22,7 +22,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CreateAnAccount = ({navigation}) => {
   
-  const { idusers,setUsersId} = useContext(MyContext);
 
   const [password,setPassword]=useState('');
   const [email,setEmail]=useState("")
@@ -60,55 +59,55 @@ const CreateAnAccount = ({navigation}) => {
       Birthday,
       Number,
     };
-    console.log(userData);
-    Axios.post(`http://192.168.1.5:3001:3001/user/register`, userData)
-
+  
+    console.log('Sending data:', userData);
+  
+   fetch("http://192.168.1.25:2023/user/register", userData)
       .then((response) => {
-        console.log(response.data);
-
-        setName("");
-        setDateOfBirth("");
-        setPhoneNumber("");
-        setEmail("");
-        setPassword("");
-
-        setUserId(response.data.idusers);
-        console.log("User ID:", response.data.idusers);
-        Alert.alert("Success", "Registration successful! You can now log in.");
-
-        navigation.navigate("Login");
+        console.log('Response:', response.data);
+  
+        setName('');
+        setDateOfBirth('');
+        setPhoneNumber('');
+        setEmail('');
+        setPassword('');
+  
+        Alert.alert('Success', 'Registration successful! You can now log in.');
+        navigation.navigate('Login');
       })
       .catch((error) => {
         console.error('Registration Error', error);
-        Alert.alert('Check your inputs');
+        Alert.alert('Check your inputs or network connection.');
       });
   };
 
-  const verify = () => {
-    if (password.length < 6) {
-      setIsError(!isError);
-      Alert.alert("make password than 6");
+  const verify = (password) => {
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+
+    if (password.length !== 6 || !hasUppercase || !hasLowercase || !hasNumber) {
+      setIsError(true);
+      Alert.alert("Your password must be 6 characters long and must include an uppercase letter, a lowercase letter, and a number.");
     }
   };
+
 
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.homeDiv}>
-          <Text style={styles.homeText}>Home</Text>
+          <Text style={styles.homeText}></Text>
         </View>
 
         <View style={styles.imageContainer}>
-          <Image
-            source={require("../../../assets/icon8.png")}
-            style={{ flex: 1, width: undefined, height: undefined }}
-          />
+         
         </View>
 
         <View style={styles.text}>
-          <Text style={{ color: "#66328E" }}>Create Account</Text>
+          <Text style={{ color: "#66328E" , left:"13%",top:"-50%"}}>Create Account</Text>
         </View>
-
+<View style={styles.main}>
         <View style={styles.nameContainer}>
           <Text style={styles.label}>Name</Text>
           <TextInput
@@ -157,7 +156,7 @@ const CreateAnAccount = ({navigation}) => {
           />
         </View>
 
-        <TouchableOpacity style={styles.loginButton} onPress={handleSignUp}>
+        <TouchableOpacity style={styles.loginButton} onPress={()=>handleSignUp()}>
           <View style={styles.loginButtonTextWrapper}>
             <Text style={styles.loginButtonText}>SIGN UP</Text>
           </View>
@@ -174,7 +173,9 @@ const CreateAnAccount = ({navigation}) => {
             &nbsp;&nbsp;Log in
           </Text>
         </View>
+        </View>
       </View>
+      
     </ScrollView>
   );
 };
@@ -184,10 +185,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    width: '100%',
-    marginTop: -29,
-    margin:29
+    width: '150%',
+    height:850,
+    marginTop: -15,
+    
+    
+    backgroundColor:"white"
   },
+  main : {
+marginLeft:30
+  },
+
   text: {
     alignItems: "center",
     marginTop: 10,

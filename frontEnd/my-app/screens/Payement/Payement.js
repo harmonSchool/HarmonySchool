@@ -1,25 +1,91 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { useContext } from "react";
-import { MyContext } from "../../useContext/useContext";
-const Payement = () => {
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation from React Navigation
+
+const Payment = () => {
+  const navigation = useNavigation(); 
+
+  const [trimesters, setTrimesters] = useState([false, false, false]);
+  const [months, setMonths] = useState(Array(10).fill(false)); 
+
+  const handleUnpaidButtonClick = () => {
+    
+    navigation.navigate('PaymentMethod'); 
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>this Payement</Text>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.header}>Cantine Payment</Text>
+      <Text style={styles.subHeader}>Trimester Payments</Text>
+      {trimesters.map((isPaid, index) => (
+        <View key={index} style={styles.periodContainer}>
+          <Text style={styles.periodText}>Trimester {index + 1}</Text>
+          <TouchableOpacity style={styles.unpaidButton} onPress={handleUnpaidButtonClick}>
+            <Text style={styles.buttonText}>Unpaid</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+      <Text style={styles.subHeader}>Monthly Payments</Text>
+      {months.map((isPaid, index) => (
+        <View key={index} style={styles.periodContainer}>
+          <Text style={styles.periodText}>Month {index + 1}</Text>
+          <TouchableOpacity style={styles.unpaidButton} onPress={handleUnpaidButtonClick}>
+            <Text style={styles.buttonText}>Unpaid</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 20,
+    marginTop: 30,
   },
-  text: {
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#66328E',
+  },
+  subHeader: {
     fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 20,
+    color: '#66328E',
+  },
+  periodContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // alignItems: 'center',
+    // marginVertical: 10,
+    // paddingHorizontal: 10,
+    // borderRadius: 10,
+    // backgroundColor: 'white',
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.15,
+    // shadowRadius: 3.84,
+    // elevation: 5,
+  },
+  periodText: {
+    fontSize: 18,
+    color: '#333',
+  },
+  unpaidButton: {
+    backgroundColor: '#F44336',
+    borderRadius: 10,
+    padding: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
     fontWeight: 'bold',
   },
 });
 
-export default Payement;
+export default Payment;

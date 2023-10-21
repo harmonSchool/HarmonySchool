@@ -10,12 +10,37 @@ import {
 import { useState } from "react";
 import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
+import axios from "axios";
 const Profile = ({ navigation }) => {
-  const [name, setName] = useState("");
-  const [emailAdress, setEmailAdress] = useState("");
-  const [dateOfBirthday, setDateOfBirthday] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+
+  const [userId,setUserId] = useState("")
+  const [username , setUserName]=useState("")
+  const [email , setEmail] = useState("")
+  const [dob , setDob]= useState("")
+  const [currentPassword , setCurrentPassword]=useState("")
+  const [newPassword , setNewPassword]=useState("")
+
+  const handleProfileUpdate = () => {
+    const url = `http://192.168.1.25:2023/user/edit/${userId}`;
+  
+    const userData = {
+      username ,  
+      email,
+      dob,
+      currentPassword,
+      newPassword,
+    };
+  
+    fetch(url, userData)
+      .then(response => {
+        console.log('Profile updated successfully', response.data);
+        navigation.navigate("Home")
+      })
+      .catch(error => {
+        console.error('Profile update failed', error);
+      });
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -125,7 +150,7 @@ const Profile = ({ navigation }) => {
             <View style={styles.btn}>
               <Text
                 style={styles.Log}
-                onPress={() => navigation.navigate("Inscription")}
+                onPress={handleProfileUpdate}
               >
                 Save Changes
               </Text>

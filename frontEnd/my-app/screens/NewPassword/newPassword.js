@@ -1,52 +1,87 @@
-import React from 'react';
+import {useEffect} from 'react';
 import { TouchableOpacity ,View, Text, ImageBackground, StyleSheet, TextInput ,Alert , Button } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { useState } from 'react';
 
 
 export default function ResetPasswordScreen({navigation}) {
+
+ 
+  const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const userId = 'userId'; 
+  const [userDataEmail, setUserDataEmail] = useState('');
+  const [isError,setIsError]=useState(false);
 
-  const handleSubmit = () => {
-    if (!newPassword || !confirmNewPassword) {
-      return Alert.alert('All fields are required');
+  const getAllUserData = async () => {
+    try {
+      const response = await fetch('http://192.168.1.25:2023/user/getAll');
+      if (response.ok) {
+        const data = await response.json();
+        const emails = data.map(user => user.email);
+        setUserDataEmail(emails[0]); 
+        console.log('Emails:', emails);
+      } else {
+        throw new Error('Network response was not ok');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
+  };
 
-    if (newPassword !== confirmNewPassword) {
-      return Alert.alert('Passwords do not match');
-    }
+  useEffect(() => {
+    getAllUserData();
+  }, []);
 
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ newPassword, confirmNewPassword }),
-    };
 
-    fetch(`http://192.168.1.5:3001/reset-password/${userId}`, requestOptions)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Failed to update password');
-        }
-      })
-      .then((data) => {
-        if (data.message === 'Password updated successfully') {
-          Alert.alert('Password updated successfully');
-          navigation.navigate("Home")
-        } else {
-          throw new Error('Invalid user ID');
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        Alert.alert('An error occurred while updating the password');
-      });
+
+
+  const handleResetPassword = () => {
+  if (!email || !newPassword) {
+    Alert.alert('Error', 'Both email and new password are required');
+    return;
   }
+
+  if (!userDataEmail) {
+    Alert.alert('Error', 'User data not available');
+    return;
+  }
+
+  if (!userDataEmail.includes(email)) {
+    Alert.alert('Error', 'Email not found in user data. Password reset failed.');
+    return;
+  }
+
+  // Send a POST request to your API
+  fetch('http://192.168.1.25:2023/reset-password', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, newPassword }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      Alert.alert('Success', data.message);
+      navigation.navigate("Home")
+    })
+    .catch((error) => {
+      Alert.alert('Error', 'Password reset failed');
+    });
+};
+ 
+const verify = (password) => {
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+
+  if (password.length < 6 || !hasUppercase || !hasLowercase || !hasNumber) {
+    setIsError(true);
+    Alert.alert("Password must be at least 6 characters include uppercase letter, one lowercase letter, and one number.");
+  }
+};
+
+
+
     return (
     		<View style={styles.confirmpassword}>
         <View style={styles.container} >
@@ -79,29 +114,38 @@ export default function ResetPasswordScreen({navigation}) {
                 <View style={styles.rectangle2} />
                 <Text style={styles.send}>Send</Text>
               
-              <View style={styles.rectangle2} />
-          					<Text onPress={handleSubmit} style={styles.send}>
+              <View style={styles.rectangle2} 
+              />
+          					<Text style={styles.send}
+                    onPress={handleResetPassword}
+
+                    >
             						{`Send`}
           					</Text>
         				</View>
         				<Text style={styles.enterThenewPassword}>
           					{`Reset Password`}
         				</Text>
-        				<TextInput 
-                secureTextEntry
-                value={newPassword}
-                onChangeText={(text) => setNewPassword(text)}
-                style={styles.rectangle3}/>
+                <TextInput
+                style={styles.rectangle3}
+                value={email}
+
+                onChangeText={setEmail}
+
+                />
 
                 
-        				<TextInput 
+                <TextInput      
                 secureTextEntry
-                value={confirmNewPassword}
-                onChangeText={(text) => setConfirmNewPassword(text)}
+                value={newPassword}
+                onBlur={verify}
+                isError={isError}
 
-                style={styles.rectangle4}/>
+                style={styles.rectangle4}
+                onChangeText={setNewPassword}
+              />
         				<Text style={styles.newpassword}>
-          					{`new password`}
+          					{`Email`}
         				</Text>
         				<Text style={styles.confirrmThenewpassword}>
           					{`Confirrm The new password`}

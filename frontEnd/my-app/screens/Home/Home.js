@@ -3,7 +3,24 @@ import Video from 'react-native-video'
 import {lightTheme, darkTheme} from '../../Theme/Theme'
 import { useContext } from "react";
 import { MyContext } from "../../useContext/useContext";
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 const Home = ({navigation}) => {
+
+    const removeItem = async () => {
+        try {
+          // Clear any user-related data from AsyncStorage
+          await AsyncStorage.removeItem('userData'); // You can replace 'userData' with the key you used to store the user data.
+      
+          // You may also want to navigate to the login or another appropriate screen
+          navigation.navigate('Login'); // Replace 'Login' with the screen you want to navigate to after logging out.
+        } catch (error) {
+          console.error('Error logging out:', error);
+        }
+      };
+
     const { isDarkMode,setMode } = useContext(MyContext);
     const theme = isDarkMode ? darkTheme : lightTheme;
     const darkMode=()=>{
@@ -11,8 +28,14 @@ const Home = ({navigation}) => {
       }
   return (
     <View style={{backgroundColor: theme.backgroundColor}}>
+    
     <ScrollView>
+    
+    
         <View style={[styles.container,{backgroundColor: theme.backgroundColor}]}>
+        <Text style={styles.Log} onPress={removeItem}>
+        Log Out
+      </Text>
             <View style={[styles.nav, {borderColor:theme.borderColor}]}>
             <Image
     style={{width:40,
@@ -20,6 +43,8 @@ const Home = ({navigation}) => {
     marginLeft:12,marginTop:-4
   }}
   source={{uri:'https://images.vexels.com/media/users/3/224233/isolated/preview/d5ee0e9c87bb54cf867d7fb89c4570b8-online-education-logo.png'}} />
+
+  
             <TouchableNativeFeedback onPress={()=>navigation.navigate('Login')}>
             <View style={{alignItems: 'center',justifyContent: 'center',height:38,width:90,marginLeft:160,borderRadius:15,marginTop:-38   ,backgroundColor:"purple"}}>
             <Text style={{color:"white"}}>Connection</Text>
@@ -32,6 +57,7 @@ const Home = ({navigation}) => {
     marginLeft:268,marginTop:-40
   }}
   source={{uri:'https://cdn-icons-png.flaticon.com/128/802/802016.png'}} />
+  
         </TouchableNativeFeedback>
             </View>
             
@@ -44,6 +70,7 @@ const Home = ({navigation}) => {
             <Text style={[styles.text1,{color:theme.textColor}]}>See All</Text>
         </View>
         <View style={styles.matieres}>
+       
         <ScrollView horizontal={true} >
             <View style={[styles.matiere , {borderColor:theme.borderColor}]}>
                 <Image 
@@ -183,6 +210,7 @@ source={{uri:"https://www.carthageland.com/img/logo-cl-tunis.png"}}
         </View>
         <View style={{width:100,height:60}}></View>
         </View>
+       
     </ScrollView>
     </View>
   )
@@ -192,6 +220,7 @@ const styles=StyleSheet.create({
     container: {    flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+
       },navPhone:{
         width:"100%",
         height:23,
@@ -225,7 +254,7 @@ const styles=StyleSheet.create({
         width:"100%",
         height:45,
         marginTop:17,
-        borderBottomWidth:0.6
+        borderBottomWidth:0.2
     },fImg:{
         width:"100%",
         height:180,
@@ -243,7 +272,7 @@ const styles=StyleSheet.create({
         height:130,
         
         borderRadius:12,
-        borderWidth:0.6,
+        borderWidth:0.9,
     },matieres:{
         width:"100%",
         height:150,
@@ -254,12 +283,12 @@ const styles=StyleSheet.create({
         height:130,
         
         borderRadius:12,
-        borderWidth:0.6,
+        borderWidth:0.9,
         marginLeft:15
         
     },Teachers:{
         height:190,
-        borderWidth:0.6,
+        borderWidth:0.9,
          width:150,
          borderRadius:15,
         //  backgroundColor:"red"
@@ -269,7 +298,7 @@ const styles=StyleSheet.create({
         borderRadius:15,
         // backgroundColor:"red",
         marginLeft:20,
-        borderWidth:0.6
+        borderWidth:0.9,
     },seeAll1:{
         // backgroundColor:"blue",
         width:"100%",
@@ -295,7 +324,17 @@ const styles=StyleSheet.create({
         borderRadius:15,
         marginTop:-160,
         backgroundColor:"purple"
-    }
+    },
+    Log: {
+        color: "black",
+        padding: 10,
+        borderRadius: 8,
+        
+left:"39%",
+top:23,        
+
+        fontWeight: "bold", // Adjust the font weight as needed
+      },
 })
 
 export default Home

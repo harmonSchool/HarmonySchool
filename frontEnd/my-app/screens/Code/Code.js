@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ImageBackground, StyleSheet, TextInput } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import ADRESS_API from '../serverUrl';
-export default function Code() {
+export default function Code({navigation}) {
   const [verificationCode, setVerificationCode] = useState('');
 
   const handleSubmit = () => {
@@ -14,10 +14,11 @@ export default function Code() {
       body: JSON.stringify({ verificationCode: verificationCode }),
     };
 
-    fetch(`http://192.168.1.5:3001/check-verification-code`, requestOptions)
+    fetch(`http://192.168.1.25:2023/check-verification-code`, requestOptions)
       .then((response) => {
         if (response.ok) {
           alert('Verification code is valid');
+          navigation.navigate("NewPassword")
         } else {
           alert('Verification code is invalid');
         }
@@ -91,7 +92,9 @@ const styles = StyleSheet.create({
     boxShadow: "20px 4px 4px 0px rgba(0, 0, 0, 0.25)",
     alignItems: "flex-start",
     rowGap: 0,
-    borderRadius: 7.681159973144531
+    borderRadius: 7.681159973144531,
+    height:"150%"
+
 },
   	home: {
     position: "absolute",

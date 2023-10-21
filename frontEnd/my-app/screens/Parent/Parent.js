@@ -8,7 +8,7 @@ const navigation = useNavigation();
   
 const handleImageClick = () => {
   
-    navigation.navigate("CalendarScreen",{
+    navigation.navigate("Profile",{
 
       
     })

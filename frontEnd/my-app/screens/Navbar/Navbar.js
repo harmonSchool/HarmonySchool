@@ -17,7 +17,7 @@ const Navbar = () => {
       <Image
     style={{width:35,
     height:35,
-    marginLeft:12,marginTop:16
+    marginLeft:15,marginTop:16
   }}
   source={{uri:'https://cdn-icons-png.flaticon.com/128/2343/2343694.png'}} />
   </TouchableWithoutFeedback>
@@ -28,7 +28,7 @@ const Navbar = () => {
   <Image
     style={{width:40,
     height:40,
-    marginLeft:88,marginTop:-39,
+    marginLeft:97,marginTop:-41,
   }}
   source={{uri:'https://cdn-icons-png.flaticon.com/128/6299/6299232.png'}} />
   </TouchableWithoutFeedback>
@@ -38,7 +38,7 @@ const Navbar = () => {
     <Image
     style={{width:40,
     height:40,
-    marginLeft:180,marginTop:-40
+    marginLeft:185,marginTop:-42
   }}
   source={{uri:'https://cdn-icons-png.flaticon.com/128/9171/9171457.png'}} />
   </TouchableWithoutFeedback>
@@ -48,7 +48,7 @@ const Navbar = () => {
   <Image
     style={{width:40,
     height:40,
-    marginLeft:260,marginTop:-42
+    marginLeft:265,marginTop:-42
   }}
   source={{uri:'https://cdn-icons-png.flaticon.com/512/7153/7153150.png'}} />
  </TouchableWithoutFeedback>
@@ -59,7 +59,7 @@ const Navbar = () => {
   <Image
     style={{width:40,
     height:40,
-    marginLeft:330,marginTop:-42
+    marginLeft:355,marginTop:-42
   }}
   source={{uri:'https://cdn-icons-png.flaticon.com/128/8139/8139348.png'}} />
   </TouchableWithoutFeedback>
@@ -74,13 +74,12 @@ const Navbar = () => {
 
 const styles = StyleSheet.create({
   container: {   
-    
-  },nav:{
-    width :"101%",
-    height:60,
 
-    // backgroundColor:"red"
-  }
+  },nav:{
+    width :"120%",
+    height:60,
+    width:"100%",
+}
 });
 
 export default Navbar

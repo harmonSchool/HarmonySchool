@@ -50,7 +50,7 @@ LocaleConfig.locales['en'] = {
 
 LocaleConfig.defaultLocale = 'en';
 
-export default function CalendarScreen({ visible, onClose, onAddEvent ,route}) {
+export default function CalenderParent({ visible, onClose, onAddEvent ,route}) {
 
 
 
@@ -75,6 +75,30 @@ export default function CalendarScreen({ visible, onClose, onAddEvent ,route}) {
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [selectedStudentFirstName, setSelectedStudentFirstName] = useState('');
   const [selectedStudentLastName, setSelectedStudentLastName] = useState('');
+
+
+  
+  useEffect(() => {
+    // Retrieve the First Name and Last Name from AsyncStorage
+    AsyncStorage.getItem('First_name')
+      .then((firstName) => {
+        setSelectedStudentFirstName(firstName);
+      })
+      .catch((error) => {
+        console.error('Error retrieving First Name: ', error);
+      });
+
+    AsyncStorage.getItem('LastName')
+      .then((lastName) => {
+        setSelectedStudentLastName(lastName);
+      })
+      .catch((error) => {
+        console.error('Error retrieving Last Name: ', error);
+      });
+
+    // ...
+  });
+
 
   const items = ['Option 1', 'Option 2', 'Option 3'];
 
@@ -185,54 +209,9 @@ const loadEventsAndHolidays = async () => {
     }
   };
 
-  const onDayPress = (day) => {
-    setSelectedDate(day.dateString);
-    setIsEventFormVisible(true);
-    setIsHolidayFormVisible(false);
-  };
+  
 
-  const onDayLongPress = (day) => {
-    setselectedHod(day.dateString);
-    setIsHolidayFormVisible(true);
-    setIsEventFormVisible(false);
-  };
-
-
-  const handleAddEvent = async () => {
-    if (selectedStudentId)
-    {
-      // Load events for the selected student
-      
-      const currentEvents = await loadStudentEvents(selectedStudentId);
-      const newEvent = {
-        selected: true,
-        selectedColor: 'red',
-        eventName: 'Event',
-      };
-  
-      // Add the new event to the current events
-      currentEvents.push({
-        date: selectedDate,
-        event: newEvent,
-      });
-  
-      // Save the updated events for the selected student
-      await saveStudentEvents(selectedStudentId, currentEvents);
-  
-      // Update the calendar markings
-      const newCalendarMarkings = {
-        ...calendarMarkings,
-        [selectedDate]: newEvent,
-      };
-  
-      saveEventsAndHolidays({ comments, calendarMarkings: newCalendarMarkings });
-  
-      setCalendarMarkings(newCalendarMarkings);
-    }
-  
-    setIsEventFormVisible(true);
-  };
-
+ 
  
   
 
@@ -292,23 +271,7 @@ setCalendarMarkings(newCalendarMarkings);
    
 
 
-<Text style={styles.label}>Select a student </Text>
-<TouchableOpacity onPress={toggleModal} style={styles.customDropdown}>
-  <Text style={styles.selectedValue}>ID student :  {  selectedValue }</Text>
-</TouchableOpacity>
-<Modal visible={isModalVisible} transparent animationType="slide">
-  <View style={styles.modalContainer}>
-    {students.map((student, index) => (
-      <TouchableOpacity
-        key={index}
-        style={styles.modalItem}
-        onPress={() => selectItem(student.value)}
-      >
-        <Text>{student.label}</Text>
-      </TouchableOpacity>
-    ))}
-  </View>
-</Modal>
+
 
 
           <FAB style={styles.circle} />
@@ -327,48 +290,21 @@ setCalendarMarkings(newCalendarMarkings);
          
   
           <Calendar
-            onDayPress={onDayPress}
-            onDayLongPress={onDayLongPress}
-            markedDates={calendarMarkings}
+        
           />
   
-          {isEventFormVisible && (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.absent}>Absent</Text>
-              <EventForm
-              visible={isEventFormVisible}
-              onClose={()=>setIsEventFormVisible(false)}          
-            onAddEvent={handleAddEvent}
-            backgroundColor="red"
-          />
+         
+              <Text style={styles.absent}></Text>
+              
+        
             </View>
-          )}
+        
   
-          {isHolidayFormVisible && (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.hld}>Holiday</Text>
-              <EventForm
-                visible={isHolidayFormVisible}
-                onClose={() => setIsHolidayFormVisible(false)}
-                onAddEvent={handleAddHoliday}
-                backgroundColor="green"
-              />
-            </View>
-          )}
+         
         </View>
   
         <View>
-          {comments[selectedDate] && (
-            <Text style={styles.commentText}>{comments[selectedDate]}</Text>
-          )}
-  
-          {isHolidayFormVisible && (
-            <TextInput
-              style={styles.commentInput}
-              onChangeText={handleCommentChange}
-              value={comments[selectedDate]}
-            />
-          )}
+        
         </View>
         <View>
         <View>
@@ -379,23 +315,9 @@ setCalendarMarkings(newCalendarMarkings);
         </View>
       </View>
       </View>
-    </View> 
   )  
 
 }
   
-  const EventForm = ({ visible, onClose, onAddEvent, backgroundColor }) => {
-    const fabStylePlus = { ...styles.fab, backgroundColor };
-    const fabStyleCounter = { ...styles.fab2, backgroundColor };
-  
-    return (
-      <View animationType="slide" transparent={false} visible={visible}>
-        <View style={styles.modalContainer}>
-          <FAB style={fabStylePlus} icon="plus" onPress={onAddEvent} />
-          <FAB style={styles.fab3} />
-          <FAB style={fabStyleCounter} />
-        </View>
-      </View>
-    );
-  };
+
   

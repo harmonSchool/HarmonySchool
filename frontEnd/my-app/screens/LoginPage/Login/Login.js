@@ -8,34 +8,52 @@ import { MyContext } from "../../../useContext/useContext";
 
 
 function Login({ navigation }) {
-  const { isDarkMode, setMode, setUser } = useContext(MyContext);
+  const { isDarkMode, setMode, setUser  } = useContext(MyContext);
   const theme = isDarkMode ? darkTheme : lightTheme;
   const [email,setEmail]=useState('')
   const [password , setPassword]=useState('')
   const [data,setData]=useState([])
-const handleLog=(e)=>{
-e.preventDefault()
-    axios.post(`http://192.168.1.5:3001/user/login`,{
-      email,
-      password,
-    }).then((res)=>{
-      setData(res.data)
-      console.log(data);
-      alert("welcome")
-      navigation.navigate('Parent')
-    }).catch((err)=>{
-      if(email===""){
-        console.log("enter your email");
-        alert('enter your email')
-      }else if(password===""){
-        console.log("enter your password");
-        alert("enter your password")
-      }else{
-      console.log(err)
-      alert("check your pass or your email")
-    }
-  })
-}
+
+
+  
+
+
+
+
+  const handleLog = (e) => {
+    e.preventDefault();
+    axios.post(`http://192.168.1.25:2023/user/login`, {
+        email,
+        password,
+      })
+      .then((res) => {
+        setData(res.data);
+        console.log(data);
+        alert("welcome");
+  
+        if (email.includes("_teacherfromHarmony")) {
+          navigation.navigate('Teacher');
+        } else {
+          navigation.navigate('Parent');
+        }
+      })
+      .catch((err) => {
+        if (email === "") {
+          console.log("enter your email");
+          alert('enter your email');
+        } else if (password === "") {
+          console.log("enter your password");
+          alert("enter your password");
+        } else {
+          console.log(err);
+          alert("check your password or your email");
+        }
+      });
+  }
+
+
+  
+
   return (
     <View style={[styles.container,{ backgroundColor: theme.backgroundColor }]}>
 

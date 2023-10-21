@@ -7,20 +7,19 @@ import { MyContext } from "../../useContext/useContext";
 
 export default function Student() {
   const [studentData, setStudentData] = useState([]);
+  const [userId , setUserId] = useState("")
   const { user } = useContext(MyContext);
 
   useEffect(() => {
-    axios
-      .get(`http://${ADRESS_API}:3001/student/getByUser/${user?.id}`)
+    fetch(`http://192.168.1.25:2023/student/getByUser/${users_idUsers}`)
       .then((response) => {
         setStudentData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching student data:", error);
       });
-  }, []);
+  }, [user]); // Include user as a dependency for useEffect
 
-  // console.log(studentData);
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {studentData.map((student, index) => (
@@ -29,8 +28,6 @@ export default function Student() {
             <Image
               source={{
                 uri: student.imageURL,
-                height: "400px",
-                width: "400px",
               }}
               style={styles.ellipseImage}
             />
@@ -38,7 +35,7 @@ export default function Student() {
           <View style={styles.studentInfo}>
             <Text style={styles.studentInfoLabel}>Name</Text>
             <Text style={styles.studentInfoValue}>{student.First_name}</Text>
-            <Text style={styles.studentInfoLabel}>Lastname:</Text>
+            <Text style={styles.studentInfoLabel}>Last Name:</Text>
             <Text style={styles.studentInfoValue}>{student.lastName}</Text>
             <Text style={styles.studentInfoLabel}>Date of Birth:</Text>
             <Text style={styles.studentInfoValue}>{student.Birthday}</Text>
@@ -57,50 +54,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  purpleRectangle: {
-    width: "90%",
-    height: "33.33%",
-    backgroundColor: "purple",
-    borderRadius: 20,
-    borderTopRightRadius: 16,
-    marginTop: 45,
-  },
-  whiteRectangle: {
-    width: "90%",
-    height: "80.33%",
+  studentCard: {
+    margin: 10,
+    padding: 10,
     backgroundColor: "white",
-    borderRadius: 20,
-    borderBottomLeftRadius: 16,
-    marginTop: -150,
-    borderColor: "#BA68C8",
-    borderWidth: 2,
-    alignItems: "center",
+    borderRadius: 10,
+    flexDirection: "row",
   },
   ellipseContainer: {
     width: 150,
     height: 150,
-    borderRadius: 50,
+    borderRadius: 75,
     borderWidth: 2,
     borderColor: "#BA68C8",
     alignItems: "center",
     justifyContent: "center",
-    display: "flex",
-    marginLeft: 25,
-    marginTop: 50,
+    marginRight: 10,
   },
   ellipseImage: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 50,
+    width: 146,
+    height: 146,
+    borderRadius: 73,
   },
   studentInfo: {
-    marginTop: 40,
-    alignItems: "center",
+    flex: 1,
   },
   studentInfoLabel: {
     fontWeight: "bold",
     color: "#BA68C8",
-    fontSize: 25,
+    fontSize: 18,
     marginBottom: 5,
   },
   studentInfoValue: {
