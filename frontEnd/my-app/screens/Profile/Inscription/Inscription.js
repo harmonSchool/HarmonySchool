@@ -48,7 +48,7 @@ const Inscription = ({ navigation }) => {
   const handle = () => {
     AsyncStorage.getItem("userId");
     axios
-      .post(`http://192.168.1.5:3001/student/add`, {
+      .post(`http://${ADRESS_API}:3000/student/add`, {
         First_name,
         LastName,
         Birthday,
@@ -67,32 +67,37 @@ const Inscription = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.Edit}>
-          <Image
-            style={{ width: 40, height: 40, marginLeft: 56, marginTop: 30 }}
-            source={{
-              uri: "https://images.vexels.com/media/users/3/224233/isolated/preview/d5ee0e9c87bb54cf867d7fb89c4570b8-online-education-logo.png",
-            }}
-          />
-          <Text style={{ fontSize: 18 }}>Student Inscription</Text>
-        </View>
-        <View>
-          <Text style={{ color: "#A901DB", marginTop: 20 }}>First Name</Text>
-          <TextInput
-            onChangeText={setFirstName}
-            style={{
-              borderColor: "#A901DB",
-              backgroundColor: "#F2F2F2",
-              borderWidth: 1,
-              marginTop: "10%",
-              height: 45,
-              width: 240,
-              borderRadius: 8,
-              marginTop: 10,
-            }}
-          />
+    <ScrollView style={{ backgroundColor: 'white', flex:1 , marginTop:"3%"}}>
+        <View style={{...styles.container}} >
+        <View style={styles.Edit } >
+      <Image
+    style={{width:40,
+    height:40,
+    marginLeft:56,marginTop:30
+  
+  }}
+  source={{uri:'https://images.vexels.com/media/users/3/224233/isolated/preview/d5ee0e9c87bb54cf867d7fb89c4570b8-online-education-logo.png'}} />
+      <Text style={{fontSize:18, letterSpacing: 0.6,
+        lineHeight: 29,
+        textAlign: "left",
+        color: "black",    flexShrink: 0,
+      }}>Student Inscription</Text>
+      
+      </View>
+            <View >
+                
+            <Text style={{color:"#66328E",marginTop:20,
+          
+          }}>First Name</Text>
+            <TextInput onChangeText={setFirstName} style={{borderColor:"#66328E",backgroundColor:"#F2F2F2",borderWidth:1 ,marginTop:"10%" , height:45 , width:240 , borderRadius:8,marginTop:10 ,   backgroundColor: "rgba(248, 240, 240, 1)",
+            borderWidth: 1,
+            borderColor: "rgba(102, 50, 142, 1)",
+            borderRadius: 7.681159973144531}} />
+
+        
+        
+
+          
           <Text style={{ color: "#A901DB", marginTop: 20 }}>Last Name</Text>
           <TextInput
             onChangeText={setLastName}
@@ -168,21 +173,22 @@ const Inscription = ({ navigation }) => {
               </View>
             </View>
           </Modal>
-          <Text style={{ color: "#A901DB", marginTop: 20 }}>
-            Current_graduation_Certificate
-          </Text>
-          <View style={styles.img}></View>
-          <View style={styles.btn}>
-            <Text style={styles.Log} onPress={() => handle()}>
-              Send
-            </Text>
-          </View>
+            <Text style={{color:"#66328E",marginTop:20}}>Current_graduation_Certificate</Text>
+            <View style={styles.img}></View><View  style={styles.btn}>
+  <Text  style={styles.Log} onPress={()=>handle() }>Send</Text>
+</View>
+
+            
+</View>
+
         </View>
-      </View>
+     
     </ScrollView>
-  );
-};
-const styles = StyleSheet.create({
+  )
+}
+const styles=StyleSheet.create({
+
+  
   modalContainer: {
     flex: 1,
     justifyContent: "center",
@@ -194,41 +200,35 @@ const styles = StyleSheet.create({
     width: 250,
     borderRadius: 10,
     padding: 10,
-  },
-  img: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#A901DB",
-    marginLeft: 0,
-    marginTop: 20,
-  },
-  modalItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-  Log: {
-    color: "#fff",
-    marginLeft: 90,
-    marginTop: 20,
-  },
-  btn: {
-    marginTop: 30,
-    width: 205,
-    height: 60,
-    borderRadius: 8,
-    marginLeft: 14,
-    backgroundColor: "#A901DB",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: 30,
-  },
-});
+  },img:{
+        width:80,
+        height:80,
+        borderRadius:10,
+        borderWidth:1,
+        borderColor:"#66328E",
+        marginLeft:0,
+        marginTop:30
+    },modalItem: {
+      padding: 15,
+      borderBottomWidth: 1,
+      borderBottomColor: '#ccc',
+    },Log:{
+        color:"#fff",
+        marginLeft:90,
+        marginTop:20
+      },btn:{
+        marginTop:30,
+        width:205,
+        height:60,
+        borderRadius:8,
+        marginLeft:14,
+        backgroundColor:"#66328E"
+      },container: {    flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingBottom:30
+      }
+})
 
 export default Inscription;

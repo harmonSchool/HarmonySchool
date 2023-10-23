@@ -36,6 +36,8 @@ import CheckOut from './screens/Payement/CheckOut';
 import ReviewOrder from  './screens/Payement/ReviewOrder';
 import PaymentMethod from './screens/Payement/ReviewOrder';
 import CalendarScreen from './screens/MyCalender/CalendarScreen';
+import Payementbus from  './screens/Payement/Payementbus';
+
 
 import ConversationView from "./screens/Chat/Conv";
 import Notess from './screens/Notes/Notess'
@@ -49,11 +51,12 @@ export default function App() {
     <NativeBaseProvider >
     <NavigationContainer>
     
-    <Stack.Navigator initialRouteName="Notes">
+    <Stack.Navigator initialRouteName="Home">
      <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
      <Stack.Screen name="Login" component={Login} options={{headerShown:false}}  /> 
      <Stack.Screen name="SignUp" component={SignUp} options={{headerShown:false}}/> 
      <Stack.Screen name="Inscription" component={Inscription} options={{headerShown:false}} />
+     <Stack.Screen name="Payementbus" component={Payementbus} options={{headerShown:false}} />
     <Stack.Screen name="Home" component={Home} options={{headerShown:false}} /> 
     <Stack.Screen name="Parent" component={Parent} options={{headerShown:false}} /> 
     <Stack.Screen name="Teacher" component={Teacher} options={{headerShown:false}} /> 
