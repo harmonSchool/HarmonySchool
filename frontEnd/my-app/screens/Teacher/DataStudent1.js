@@ -9,7 +9,7 @@ const DataStudent1 = () => {
 
     useEffect(() => {
       
-      axios.get(`http://192.168.1.25:2023/student/getStudentsByClass/First class`)
+      axios.get(`http://192.168.1.16:3000/student/getStudentsByClass/First class`)
         .then(response => {
           
           setStudents(response.data);

@@ -1,99 +1,91 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import { useState, useEffect } from "react";
-import ADRESS_API from "../serverUrl";
-import axios from "axios";
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { useState,useEffect } from 'react';
+import ADRESS_API from '../serverUrl';
+import axios from 'axios';
 
-const DataStudent1 = () => {
-  const [students, setStudents] = useState([]);
+const DataStudent6 = () => {
+    const [students, setStudents] = useState([]); 
 
-  useEffect(() => {
-    axios
-      .get(`http://${ADRESS_API}:3001/student/getStudentsByClass6/sixthclass`)
-      .then((response) => {
-        setStudents(response.data);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération des étudiants :", error);
-      });
-  }, []);
+    useEffect(() => {
+      
+      axios.get(`http://192.168.1.16:3000/student/getStudentsByClass6/Sixth class`)
+        .then(response => {
+          
+          setStudents(response.data);
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération des étudiants :', error);
+        });
+    }, []); 
 
   return (
-    <View style={styles.detailContainer}>
-      <Text style={styles.className}>Students of First Class</Text>
-      <ScrollView style={{ width: 270, marginTop: 20 }}>
+   
+      <View style={styles.detailContainer}>
+        <Text style={styles.className}>Students of First Class</Text>
+        <ScrollView style={{ width: 270,marginTop:20 }}>
         <View style={styles.studentGrid}>
           {students.map((student, index) => (
             <TouchableOpacity key={student.id} style={styles.studentItem}>
               <View style={styles.studentImageContainer}>
-                <Image
-                  source={{ uri: student.image }}
-                  style={styles.studentImage}
-                />
+                <Image source={{ uri: student.image }} style={styles.studentImage} />
               </View>
-              <Text style={styles.studentName}>
-                {student.First_name} {student.lastName}
-              </Text>
+              <Text style={styles.studentName}>{student.First_name} {student.lastName}</Text>
             </TouchableOpacity>
           ))}
         </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    
   );
 };
 
 const styles = StyleSheet.create({
   detailContainer: {
-    backgroundColor: "#DBC8E4",
-    borderColor: "pink",
+    backgroundColor: '#DBC8E4',
+    borderColor: 'pink',
     borderRadius: 10,
-    width: "90%",
+    width: '90%',
     padding: 50,
     marginTop: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 20,
-    height: "90%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft:20,
+    height:"90%",
+    
   },
   className: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 20,
   },
   studentGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    // Espacement horizontal entre les élèves
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between', 
+   // Espacement horizontal entre les élèves
   },
   studentItem: {
-    width: "40%", // 45% de la largeur pour afficher deux élèves par ligne
+    width: '40%', // 45% de la largeur pour afficher deux élèves par ligne
     marginBottom: 20,
-    alignItems: "center",
+    alignItems: 'center',
   },
   studentImageContainer: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    overflow: "hidden",
+    overflow: 'hidden',
     marginBottom: 10,
   },
   studentImage: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     borderRadius: 50,
   },
   studentName: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 18,
   },
 });
 
-export default DataStudent1;
+export default DataStudent6;

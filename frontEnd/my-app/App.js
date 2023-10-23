@@ -37,6 +37,13 @@ import ReviewOrder from  './screens/Payement/ReviewOrder';
 import PaymentMethod from './screens/Payement/ReviewOrder';
 import CalendarScreen from './screens/MyCalender/CalendarScreen';
 import Payementbus from  './screens/Payement/Payementbus';
+import StudentClass from './screens/Teacher/StudentClass';
+import DataStudent1 from './screens/Teacher/DataStudent1';
+import DataStudent2 from './screens/Teacher/DataStudent2';
+import DataStudent3 from './screens/Teacher/DataStudent3';
+import DataStudent4 from './screens/Teacher/DataStudent4';
+import DataStudent5 from './screens/Teacher/DataStudent5';
+import DataStudent6 from './screens/Teacher/DataStudent6';
 
 
 import ConversationView from "./screens/Chat/Conv";
@@ -51,11 +58,26 @@ export default function App() {
     <NativeBaseProvider >
     <NavigationContainer>
     
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Teacher">
      <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
+
+     <Stack.Screen name="DataStudent1" component={DataStudent1 } options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent2" component={DataStudent2 } options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent3" component={DataStudent3} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent4" component={DataStudent4} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent5" component={DataStudent5} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent6" component={DataStudent6} options={{headerShown:false}}  />
+
+
+
+
+
+
+
      <Stack.Screen name="Login" component={Login} options={{headerShown:false}}  /> 
      <Stack.Screen name="SignUp" component={SignUp} options={{headerShown:false}}/> 
      <Stack.Screen name="Inscription" component={Inscription} options={{headerShown:false}} />
+     <Stack.Screen name="StudentClass" component={StudentClass} options={{headerShown:false}} />
      <Stack.Screen name="Payementbus" component={Payementbus} options={{headerShown:false}} />
     <Stack.Screen name="Home" component={Home} options={{headerShown:false}} /> 
     <Stack.Screen name="Parent" component={Parent} options={{headerShown:false}} /> 

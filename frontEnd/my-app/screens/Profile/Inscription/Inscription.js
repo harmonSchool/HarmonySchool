@@ -30,8 +30,8 @@ const Inscription = ({ navigation }) => {
     "Second Class",
     "Third Class",
     "Fourt Class",
-    "Second Class",
-    "sixth Class",
+    "Fifth Class",
+    "Sixth Class",
   ];
   const [userId, setUserId] = useState("");
 

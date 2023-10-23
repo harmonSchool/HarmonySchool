@@ -4,12 +4,12 @@ import { useState,useEffect } from 'react';
 import ADRESS_API from '../serverUrl';
 import axios from 'axios';
 
-const DataStudent1 = () => {
+const DataStudent4 = () => {
     const [students, setStudents] = useState([]); 
 
     useEffect(() => {
       
-      axios.get(`http://192.168.1.25:2023/student/getStudentsByClass4/Fourt class`)
+      axios.get(`http://192.168.1.16:3000/student/getStudentsByClass4/Fourt class`)
         .then(response => {
           
           setStudents(response.data);
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DataStudent1;
+export default DataStudent4;
