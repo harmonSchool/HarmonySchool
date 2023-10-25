@@ -9,12 +9,12 @@ const ConversationView = () => {
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState('');
   const [idchat,setIdChat]=useState(null)
-  const { usersId,setUsersId,teachersId,setTeachersId } = useContext(MyContext);
+  const { usersId,teachersId,setTeachersId } = useContext(MyContext);
   const [message, setMessage] =useState('');
   const recipientId = 1;
   useEffect(() => {
   axios.get('http://192.168.1.192:3000/teacher/get').then((res)=>{
-    setUsersId(res.data)
+    (res.data)
     console.log("all users is here")
   }).catch((err)=>{
     console.log("Parents "+err);
@@ -57,7 +57,7 @@ const sendPrivateMessage = () => {
 
 
     const startChat=()=>{
-      socket.emit("join",{userId:usersId, TeachrId:recipientId}, (idchatFromserver)=>{
+      socket.emit("join",{usersId, TeachrId}, (idchatFromserver)=>{
         setIdChat(idchatFromserver)
       })
     }

@@ -35,7 +35,7 @@ const Login= () => {
   };
   const handelRegister = (event) => {
     event.preventDefault()
-    axios.post('http://localhost:2023/Admin/addAdmin',{admin,password}).then((response)=>{
+    axios.post('http://localhost:3000/Admin/addAdmin',{admin,password}).then((response)=>{
       console.log('register success',response.data)
       // setUserContext(response.data)
       navigate('/home')
@@ -47,7 +47,7 @@ const Login= () => {
 const handelLogin = (event) => {
   event.preventDefault();
   axios
-    .post('http://localhost:2023/Admin/loginAdmin', { admin, password })
+    .post('http://localhost:3000/Admin/loginAdmin', { admin, password })
     .then((response) => {
       console.log('welcome', response.data);
       // navigate('/hiii')

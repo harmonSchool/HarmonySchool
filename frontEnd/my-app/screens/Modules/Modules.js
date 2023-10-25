@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     height: 31,
     fontFamily: "Poppins",
     fontSize: 25,
-    fontWeight: "bold",
+    fontWeight: "700",
     fontStyle: "normal",
     lineHeight: 30,
     color: "#BA68C8",

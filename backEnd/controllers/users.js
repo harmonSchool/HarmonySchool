@@ -13,6 +13,9 @@ const pool = mysql.createPool({
   database: "school",
 });
 
+
+
+
 function getUsers(req,res){
   User.getAll((err,result)=>{
     if(err) res.status(500).send(err)
@@ -20,6 +23,62 @@ function getUsers(req,res){
   })
 }
 
+function getUserByID(req, res) {
+  const { idusers } = req.params;
+
+  User.getUserById(idusers, (err, user) => {
+    if (err) {
+      console.error("Error retrieving user by ID: " + err);
+      res.sendStatus(500);
+    } else if (!user) {
+      res.status(404).send("User not found");
+    } else {
+      res.status(200).json(user);
+    }
+  });
+}
+
+
+function getByUserName(req,res){
+  const {username} = req.body;
+  User.getUserIdByUsername(username,(err,idusers)=>{
+    if(err){
+      console.error("Error is "+err);
+    }
+    else{
+      res.status(200).json(idusers)
+    }
+  })
+}
+
+
+function getBymail(req,res){
+  const {email} = req.body;
+  User.getUserIdByEmail(email,(err,idusers)=>{
+    if(err){
+      console.error("Error is "+err);
+    }
+    else{
+      res.status(200).json(idusers)
+    }
+  })
+}
+
+
+
+
+function deleted(req, res) {
+  const { idusers } = req.params;
+
+  User.deleteUser(idusers, (err, result) => {
+    if (err) {
+      console.error("Error deleting user: " + err);
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  });
+}
 
 
 function login(req, res) {
@@ -28,26 +87,31 @@ function login(req, res) {
   User.findByEmail(email, (err, results) => {
     if (err) {
       console.error("Error retrieving user from database: " + err);
-      return res.sendStatus(500);
+      return res.status(500).send({ message: "Internal server error" });
     }
     if (results.length === 0) {
+      console.log(`User with email ${email} not found.`);
       return res.status(401).send({ message: "Invalid email or password" });
     }
 
     const user = results[0];
+    console.log(`Found user: ${user.username}`);
+
     bcrypt.compare(password, user.password, (err, isMatch) => {
       if (err) {
         console.error("Error comparing passwords: " + err);
-        return res.sendStatus(500);
+        return res.status(500).send({ message: "Internal server error" });
       }
 
       if (!isMatch) {
+        console.log(`Password for user ${user.username} does not match.`);
         return res.status(401).send({ message: "Invalid email or password" });
       }
 
       const token = jwt.sign({ userId: user.User_Id }, secretKey, {
         expiresIn: "1h",
       });
+      console.log(`User ${user.username} successfully logged in.`);
       res.send({ token, id: user.idusers });
     });
   });
@@ -99,12 +163,13 @@ function register(req, res) {
   });
 }
 
-function getAll(callback) {
-  const sql = "SELECT * FROM users";
-  conn.query(sql, (err, results) => {
-    callback(err, results);
+function getAll (callback) {
+  const sql = 'SELECT * FROM users'
+  conn.query(sql,  (err, results) =>{
+    callback(err, results)
   });
 }
+
 
 const sendEmail = (req, res) => {
   const { email } = req.body;
@@ -144,24 +209,18 @@ const sendEmail = (req, res) => {
 
 
 
-
 async function update(req, res) {
-  const { username, password, email } = req.body;
+  const { username, password, email } = req.body; 
   const { idusers } = req.params;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.updateNewProfile(username, email, hashedPassword, idusers, (err, results) => {
-      if (err) {
-        console.error('Error updating user profile: ' + err);
-        res.status(500).send({ error: 'Failed to update user profile' });
-      } else {
-        res.status(200).send({ message: 'Update successful' });
-      }
-    });
+    await User.updateNewProfile(username, email, hashedPassword, idusers);
+
+    res.status(200).send({ message: 'Update successful' });
   } catch (err) {
     console.error('Error updating user profile: ' + err);
-    res.status(500).send({ error: 'Failed to update user profile' });
+    res.sendStatus(500);
   }
 }
 
@@ -174,6 +233,12 @@ async function update(req, res) {
 
 module.exports = { login , 
   register,
-  getUsers,sendEmail,update
+  getUsers,
+  sendEmail,
+  deleted,
+  sendEmail,update,
+  getUserByID,
+  getByUserName,
+  getBymail
 
  };

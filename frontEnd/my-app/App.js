@@ -29,6 +29,7 @@ import Arts from './screens/Modules/ModuleArts';
 import Sport from './screens/Modules/ModuleSport';
 import Navbar from './screens/Navbar/Navbar'
 import Chat1 from './screens/Chat/Chat1';
+import Chat2 from './screens/Chat/Chat2';
 import FindEmail from './screens/FindEmail/forgot-password'
 import Code from './screens/Code/Code';
 import newPassword from './screens/NewPassword/newPassword';
@@ -36,19 +37,12 @@ import CheckOut from './screens/Payement/CheckOut';
 import ReviewOrder from  './screens/Payement/ReviewOrder';
 import PaymentMethod from './screens/Payement/ReviewOrder';
 import CalendarScreen from './screens/MyCalender/CalendarScreen';
-import StudentClass from './screens/Teacher/StudentClass';
-import DataStudent1 from './screens/Teacher/DataStudent1';
-import DataStudent2 from './screens/Teacher/DataStudent2';
-import DataStudent3 from './screens/Teacher/DataStudent3';
-import DataStudent4 from './screens/Teacher/DataStudent4';
-import DataStudent5 from './screens/Teacher/DataStudent5';
-import DataStudent6 from './screens/Teacher/DataStudent6';
-
 import ConversationView from "./screens/Chat/Conv";
 import Notess from './screens/Notes/Notess'
-import CalenderParent from './CalenderParent/CalenderParent';
-
-
+import Hom from './screens/Home/hom';
+import ProfileView from './screens/Profile/ProfileView/ProfileView';
+import parentInterFace from './screens/FirstInterfaces/parentInterFace';
+import Intro from './screens/Intro/Intro';
 const Stack = createNativeStackNavigator()
 
 
@@ -57,15 +51,11 @@ export default function App() {
     <MyProvider>
     <NativeBaseProvider >
     <NavigationContainer>
-    <Stack.Navigator initialRouteName="StudentClass">
+    <Stack.Navigator initialRouteName="Home">
+    <Stack.Screen name="Intro" component={Intro} options={{headerShown:false}}  />
      <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
-     <Stack.Screen name="StudentClass" component={StudentClass} options={{headerShown:false}}  />
-     <Stack.Screen name="DataStudent1" component={DataStudent1} options={{headerShown:false}}  />
-     <Stack.Screen name="DataStudent2" component={DataStudent2} options={{headerShown:false}}  />
-     <Stack.Screen name="DataStudent3" component={DataStudent3} options={{headerShown:false}}  />
-     <Stack.Screen name="DataStudent4" component={DataStudent4} options={{headerShown:false}}  />
-     <Stack.Screen name="DataStudent5" component={DataStudent5} options={{headerShown:false}}  />
-     <Stack.Screen name="DataStudent6" component={DataStudent6} options={{headerShown:false}}  />
+     <Stack.Screen name="IT1" component={parentInterFace} options={{headerShown:false}}  />
+     <Stack.Screen name="ProfileView" component={ProfileView} options={{headerShown:false}}  />
      <Stack.Screen name="Login" component={Login} options={{headerShown:false}}  /> 
      <Stack.Screen name="SignUp" component={SignUp} options={{headerShown:false}}/> 
      <Stack.Screen name="Inscription" component={Inscription} options={{headerShown:false}} />
@@ -98,18 +88,12 @@ export default function App() {
     <Stack.Screen name="ReviewOrder" component={ReviewOrder} options={{headerShown:false}}  />  
      <Stack.Screen name="CheckOut" component={CheckOut} options={{headerShown:false}}  />        
      <Stack.Screen name="PaymentMethod" component={PaymentMethod} options={{headerShown:false}}  />
-    
-     <Stack.Screen name="CalenderParent" component={CalenderParent} options={{headerShown:false}}  />
-
-     
+     <Stack.Screen name="Hom" component={Hom} options={{headerShown:false}}  />
      <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />
      <Stack.Screen name="Conv" component={ConversationView} options={{headerShown:false}}  />
-
-
-
-
+     <Stack.Screen name="Chat2" component={Chat2}  options={{headerShown:false}} ></Stack.Screen>
     </Stack.Navigator>
-    <Navbar /> 
+    {/* <Navbar />  */}
     </NavigationContainer>
     </NativeBaseProvider>
     </MyProvider>

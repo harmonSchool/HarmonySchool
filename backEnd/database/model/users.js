@@ -79,15 +79,70 @@ function updateNewProfile(username, email, password, idusers, callback) {
   });
 }
 
+function deleteUser(idusers, callback) {
+  const query = "DELETE FROM users WHERE idusers = ?";
+  conn.query(query, [idusers], (err, results) => {
+    if (err) {
+      console.error("Error deleting user: " + err);
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+}
+function getUserById(idusers, callback) {
+  const query = "SELECT * FROM users WHERE idusers = ?";
+  conn.query(query, [idusers], (err, results) => {
+    if (err) {
+      console.error("Error retrieving user by ID: " + err);
+      callback(err, null);
+    } else if (results.length === 0) {
+      callback("User not found", null);
+    } else {
+      callback(null, results[0]);
+    }
+  });
+}
 
 
+function getUserIdByUsername(username, callback) {
+  const query = "SELECT idusers FROM users WHERE username = ?";
+  conn.query(query, [username], (err, results) => {
+    if (err) {
+      console.error("Error retrieving user ID by username: " + err);
+      callback(err, null);
+    } else if (results.length === 0) {
+      callback("User not found", null);
+    } else {
+      callback(null, results[0].idusers);
+    }
+  });
+}
 
 
+function getUserIdByEmail(email, callback) {
+  const query = "SELECT idusers FROM users WHERE email = ?";
+  conn.query(query, [email], (err, results) => {
+    if (err) {
+      console.error("Error retrieving user ID by email: " + err);
+      callback(err, null);
+    } else if (results.length === 0) {
+      callback("email not found", null);
+    } else {
+      callback(null, results[0].idusers);
+    }
+  });
+}
 
 
-  module.exports = { findByEmail,
-    createUser,
-    updateNewProfile,
-    getAll,
- };
-  
+module.exports = { 
+  findByEmail,
+  createUser,
+  getAll,
+  updateNewProfile,
+  deleteUser,
+  getUserById,
+  getUserIdByUsername,
+  getUserIdByEmail
+};
+

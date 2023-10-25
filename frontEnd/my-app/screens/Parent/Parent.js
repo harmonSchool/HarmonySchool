@@ -1,14 +1,29 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView,TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import { MyContext } from "../../useContext/useContext";
-const Parent = () => {
-const navigation = useNavigation();
+import axios from 'axios';
+import Adress from '../IP'
+const Parent = ({navigation}) => {
+
+const { isDarkMode, setMode,iduser,setUsersID,email} = useContext(MyContext);
+
+useEffect(() => {
+ 
+    axios.post(`http://${Adress}:3000/user/getUserByemail`, { email })
+      .then((res) => {
+        setUsersID(res.data);
+        console.log("succes " + iduser);
+      })
+      .catch((err) => {
+        console.log('the error ' + err);
+      });
   
+}, [iduser]);
 const handleImageClick = () => {
   
-    navigation.navigate("Profile",{
+    navigation.navigate("CalendarScreen",{
 
       
     })

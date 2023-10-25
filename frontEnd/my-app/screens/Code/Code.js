@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, TextInput } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import ADRESS_API from '../serverUrl';
-export default function Code({navigation}) {
+import { Title } from 'react-native-paper';
+export default function Code() {
   const [verificationCode, setVerificationCode] = useState('');
 
   const handleSubmit = () => {
@@ -14,11 +15,10 @@ export default function Code({navigation}) {
       body: JSON.stringify({ verificationCode: verificationCode }),
     };
 
-    fetch(`http://192.168.1.25:2023/check-verification-code`, requestOptions)
+    fetch(`http://192.168.104.14:3000/check-verification-code`, requestOptions)
       .then((response) => {
         if (response.ok) {
           alert('Verification code is valid');
-          navigation.navigate("NewPassword")
         } else {
           alert('Verification code is invalid');
         }
@@ -31,50 +31,26 @@ export default function Code({navigation}) {
 
 
     return (
-    		<View style={styles.enteryourcode}>
-        <View  style={styles.container} >
-      			<Text style={styles.home}>
-        				{`Home`}
-      			</Text>
-      			
-      			<Text style={styles.ghazalaarianaTunis}>
-        				{`16 ghazala , ariana /tunis`}
-      			</Text>
-      			<Text style={styles._21627011482}>
-        				{`+216 27011 482`}
-      			</Text>
-      			<Text style={styles.schoolgmailcom}>
-        				{`School@gmail.com`}
-      			</Text>
-<Svg style={styles.vector} width="16" height="23" viewBox="0 0 16 23" fill="none" >
-<Path d="M8 0.885254C3.6 0.885254 0 4.71154 0 9.38812C0 15.1276 7 21.611 7.3 21.9299C7.5 22.0361 7.8 22.1424 8 22.1424C8.2 22.1424 8.5 22.0361 8.7 21.9299C9 21.611 16 15.1276 16 9.38812C16 4.71154 12.4 0.885254 8 0.885254ZM8 19.6979C5.9 17.5721 2 13.0018 2 9.38812C2 5.88069 4.7 3.01097 8 3.01097C11.3 3.01097 14 5.88069 14 9.38812C14 12.8956 10.1 17.5721 8 19.6979ZM8 5.13669C5.8 5.13669 4 7.04983 4 9.38812C4 11.7264 5.8 13.6396 8 13.6396C10.2 13.6396 12 11.7264 12 9.38812C12 7.04983 10.2 5.13669 8 5.13669ZM8 11.5138C6.9 11.5138 6 10.5573 6 9.38812C6 8.21898 6.9 7.26241 8 7.26241C9.1 7.26241 10 8.21898 10 9.38812C10 10.5573 9.1 11.5138 8 11.5138Z" fill="#DA00FF"/>
-</Svg>
-
-<Svg style={styles._vector} width="21" height="23" viewBox="0 0 21 23" fill="none" >
-<Path d="M2.15271 2.77708H6.64271L8.08972 6.6225L5.76471 8.26993C5.6278 8.36702 5.51555 8.49853 5.43792 8.65279C5.36029 8.80705 5.31969 8.97929 5.31971 9.15423C5.32271 9.25414 5.31971 9.15529 5.31971 9.15529V9.17761C5.32031 9.22514 5.32231 9.27264 5.32571 9.32004C5.33171 9.40719 5.34171 9.52517 5.36071 9.67078C5.39971 9.95775 5.47471 10.3531 5.62071 10.8187C5.91471 11.754 6.49071 12.9646 7.61271 14.1571C8.73471 15.3496 9.87371 15.9618 10.7527 16.2743C11.1917 16.4295 11.5627 16.5081 11.8347 16.5507C11.9882 16.5734 12.1428 16.5876 12.2977 16.5932L12.3107 16.5942H12.3187C12.3187 16.5942 12.4307 16.5879 12.3197 16.5942C12.5054 16.5941 12.6873 16.5391 12.8452 16.4353C13.0031 16.3315 13.1307 16.183 13.2137 16.0065L13.8837 14.5822L18.3197 15.3688V19.9603C16.2087 20.2845 10.5067 20.6044 6.02671 15.8428C1.54671 11.0812 1.84671 5.01971 2.15271 2.77708ZM7.39271 9.67078L9.19971 8.3911C9.58146 8.12046 9.86403 7.71854 10 7.25274C10.1361 6.78694 10.1172 6.2856 9.94671 5.8328L8.49971 1.98738C8.35123 1.59296 8.09495 1.25487 7.76395 1.01674C7.43295 0.778601 7.04241 0.651339 6.64271 0.651367H2.10071C1.19171 0.651367 0.336714 1.32203 0.187714 2.37001C-0.152286 4.75294 -0.613286 11.7912 4.61271 17.3457C9.83871 22.9002 16.4607 22.4091 18.7027 22.0488C19.6887 21.8894 20.3197 20.9817 20.3197 20.0156V15.3688C20.3198 14.8656 20.1519 14.3787 19.8459 13.9947C19.5399 13.6107 19.1157 13.3545 18.6487 13.2717L14.2127 12.4863C13.7908 12.4114 13.3574 12.4823 12.9762 12.6885C12.595 12.8948 12.2861 13.2255 12.0947 13.6321L11.7487 14.3686C11.6264 14.3366 11.5053 14.2994 11.3857 14.257C10.7657 14.0381 9.90471 13.5874 9.02671 12.6542C8.14871 11.721 7.72471 10.8059 7.51871 10.1459C7.46952 9.98986 7.4278 9.83129 7.39371 9.67078H7.39271Z" fill="#BA68C8"/>
-</Svg>
-
-<Svg style={styles.__vector} width="20" height="18" viewBox="0 0 20 18" fill="none" >
-<Path d="M3.25 0.856567H16.75C17.5801 0.85651 18.3788 1.19408 18.9822 1.80004C19.5856 2.40599 19.948 3.23439 19.995 4.11529L20 4.31086V14.408C20.0001 15.2903 19.6824 16.1392 19.1123 16.7806C18.5422 17.4219 17.7628 17.807 16.934 17.857L16.75 17.8623H3.25C2.41986 17.8624 1.62117 17.5248 1.01777 16.9188C0.414367 16.3129 0.0519987 15.4845 0.00500012 14.6036L6.97518e-09 14.408V4.31086C-5.43467e-05 3.42854 0.317554 2.57964 0.887672 1.93831C1.45779 1.29698 2.23719 0.911835 3.066 0.861882L3.25 0.856567ZM18.5 6.56731L10.35 11.127C10.258 11.1786 10.1568 11.2094 10.053 11.2173C9.94921 11.2251 9.84499 11.2099 9.747 11.1727L9.651 11.128L1.5 6.56837V14.408C1.50002 14.8748 1.66517 15.3245 1.96268 15.6679C2.26019 16.0113 2.6683 16.2232 3.106 16.2616L3.25 16.268H16.75C17.1893 16.268 17.6126 16.0923 17.9357 15.7759C18.2588 15.4594 18.4581 15.0254 18.494 14.56L18.5 14.408V6.56731ZM16.75 2.45086H3.25C2.81081 2.45087 2.38768 2.62641 2.06461 2.94262C1.74154 3.25883 1.54214 3.69259 1.506 4.15781L1.5 4.31086V4.76682L10 9.52099L18.5 4.76576V4.31086C18.5 3.84389 18.3347 3.39403 18.037 3.05062C17.7392 2.70721 17.3309 2.49539 16.893 2.45723L16.75 2.45086Z" fill="#BA68C8"/>
-</Svg>
-
-      			<View style={styles.emailAddressHolder}>
-        				<View style={styles.rectangle1}/>
-        				<Text style={styles._enteryourcode}>
-          					{`Enter your code`}
-        				</Text>
-        				<TextInput style={styles.rectangle3}
-            onChangeText={(text) => setVerificationCode(text)}
-
-                />
-        				<View 
-                style={styles.rectangle2}/>
-        				<Text                 onPress={handleSubmit}
-                style={styles.send}>
-          					{`Send`}
-        				</Text>
-      			</View>
-    		</View>
+        <View style={styles.container}>
+          <Text style={{marginTop:"-7%",top:'-20%', color: "rgba(0, 0, 0, 1)"  ,  fontSize:20,fontWeight:"600",left:"-19%"}}>Verify our code</Text>
+         <Text style={{marginTop:"1.5%", color: "rgba(0, 0, 0, 1)",top:"-20%"  ,  fontSize:20,fontWeight: "200",left:"-14%"}}>to update your password</Text>
+         <TextInput style={{borderColor: "#66328E",
+      height: "10%",
+      width: "90%",
+      backgroundColor: "#CFCDCD",
+      borderRadius: 5.681159973144531}}
+        onChangeText={(text) => setVerificationCode(text)}
+        placeholder='   enter your code'
+        />
+        <TouchableOpacity onPress={handleSubmit} style={   {top:'30%',
+    width:"90%",
+    height:"10%",
+    borderRadius:8,
+    justifyContent:"center",
+  alignItems:"center",
+    backgroundColor: "#1FA609"}}>
+          <Title  style={{ color:"#fff"}}>Send code</Title>
+        </TouchableOpacity>
         </View>
     )
 }
@@ -82,20 +58,11 @@ export default function Code({navigation}) {
 const styles = StyleSheet.create({
 
   container: {
-    margin: "9%",
-    marginTop: "2%",
+    flex:1,
+   alignItems:"center",
+   justifyContent:"center",backgroundColor:"white"
   }, 
-  	enteryourcode: {
-    flexShrink: 0,
-    height: 744,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    boxShadow: "20px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-    alignItems: "flex-start",
-    rowGap: 0,
-    borderRadius: 7.681159973144531,
-    height:"150%"
-
-},
+  
   	home: {
     position: "absolute",
     flexShrink: 0,
