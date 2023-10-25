@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -21,6 +22,8 @@ const classeRoute=require("./routes/classe")
 const SubjectRoute=require("./routes/subject")
 const StudentRoute=require("./routes/student")
 const StudRoute= require('./routes/notes')
+const Payment= require('./controllers/Payement')
+const Auth = require('./routes/Auth');
 const { getAll } = require('./controllers/users');
 const { update } = require('./controllers/EditProfile')
 const { updateUserPassword } = require('../backEnd/controllers/users');
@@ -36,6 +39,9 @@ app.use('/classe',classeRoute)
 app.use('/subject',SubjectRoute)
 app.use('/student',StudentRoute)
 app.use('/note',StudRoute)
+
+app.use('/',Auth);
+app.use('/',Payment);
 
 const activeUsers = new Set();
 
@@ -340,8 +346,8 @@ app.post('/calender', (req, res) => {
 });
 
 
-const port = process.env.PORT || 2023; 
-app.listen(port, () => {
+const port = process.env.PORT || 4242; 
+app.listen(port,'0.0.0.0', () => {
     console.log(`Server connected on port ${port}`);
 });
 

@@ -44,6 +44,7 @@ import DataStudent3 from './screens/Teacher/DataStudent3';
 import DataStudent4 from './screens/Teacher/DataStudent4';
 import DataStudent5 from './screens/Teacher/DataStudent5';
 import DataStudent6 from './screens/Teacher/DataStudent6';
+import CheckoutScreen from './screens/Stripe/CheckoutScreen';
 
 
 import ConversationView from "./screens/Chat/Conv";
@@ -58,7 +59,7 @@ export default function App() {
     <NativeBaseProvider >
     <NavigationContainer>
     
-    <Stack.Navigator initialRouteName="Teacher">
+    <Stack.Navigator initialRouteName="Parent">
      <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
 
      <Stack.Screen name="DataStudent1" component={DataStudent1 } options={{headerShown:false}}  />
@@ -112,6 +113,9 @@ export default function App() {
      
      <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />
      <Stack.Screen name="Conv" component={ConversationView} options={{headerShown:false}}  />
+
+     <Stack.Screen name="Stripe" component={CheckoutScreen} options={{ headerShown: false }} initialParams={{ amount: 100 }} />
+     
 
 
 

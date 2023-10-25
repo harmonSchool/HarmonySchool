@@ -35,7 +35,7 @@ const handleImageClick = () => {
   };
 
   const handleImageClick6 = () => {
-    navigation.navigate("CheckOut")
+    navigation.navigate("ReviewOrder");
 
   };
 

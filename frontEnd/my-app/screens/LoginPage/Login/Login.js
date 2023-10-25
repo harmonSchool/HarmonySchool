@@ -6,23 +6,39 @@ import axios from "axios";
 import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
 
+import ADRESS_API from "../../serverUrl";
 
 function Login({ navigation }) {
   const { isDarkMode, setMode, setUser } = useContext(MyContext);
   const theme = isDarkMode ? darkTheme : lightTheme;
   const [email,setEmail]=useState('')
   const [password , setPassword]=useState('')
+  const [role , setRole]=useState('')
   const [data,setData]=useState([])
+
+
+
 const handleLog=(e)=>{
+
 e.preventDefault()
-    axios.post(`http://192.168.1.16:3000/user/login`,{
+  const url = ADRESS_API + 'auth';
+  console.log(url);
+
+    axios.post(url  ,{
       email,
       password,
     }).then((res)=>{
       setData(res.data)
       console.log(data);
-      alert("welcome")
-      navigation.navigate('Parent')
+    
+      if(res.data[0].role == 1){
+        navigation.navigate('Parent');
+        alert("welcome Parent");
+      }else{
+        navigation.navigate('Teacher');
+        alert("welcome Teacher");
+      }
+      
     }).catch((err)=>{
       if(email===""){
         console.log("enter your email");

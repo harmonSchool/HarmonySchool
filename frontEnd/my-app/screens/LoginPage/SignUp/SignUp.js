@@ -14,7 +14,7 @@ import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons/index";
 import CustomTextInputEmail from "./CustomTextInputEmail";
 import CustomTextInputPassword from "./CustomTextInputPassword";
 import { Alert } from "react-native";
-import serverUrl from "../../serverUrl";
+
 import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
 import ADRESS_API from "../../serverUrl";
@@ -58,10 +58,18 @@ const CreateAnAccount = ({ navigation }) => {
       Number,
     };
     console.log(userData);
-    Axios.post(`http://${ADRESS_API}:3000/user/register`, userData)
+    Axios.post(ADRESS_API + 'user/register', userData)
 
       .then((response) => {
         console.log(response.data);
+
+        data = {email : userData.email , password : userData.password , role : 1};
+
+        Axios.post(ADRESS_API + 'create/user',data).then((res) => {
+          
+        }).catch((err) => {
+          alert(err);
+        });
 
         setName("");
         setDateOfBirth("");

@@ -147,7 +147,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `harmony`.`login`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `harmony`.`login` (
-  `idlogin` INT NOT NULL,
+  `idlogin` INT NOT NULL AUTO_INCREMENT,
   `password` VARCHAR(255) NOT NULL,
   `role` TINYINT NOT NULL DEFAULT '0',
   `email` VARCHAR(45) NOT NULL,
