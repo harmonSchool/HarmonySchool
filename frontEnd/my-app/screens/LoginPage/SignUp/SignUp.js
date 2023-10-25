@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"
+import Axios from "axios";
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,10 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Dimensions
 } from "react-native";
+import AntDesign from "react-native-vector-icons/AntDesign"
+import Adress from '../../IP'
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons/index";
 import CustomTextInputEmail from "./CustomTextInputEmail";
@@ -21,11 +24,11 @@ import ADRESS_API from "../../serverUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CreateAnAccount = ({navigation}) => {
-  
-
+  const {height,width}=Dimensions.get('window')
+  const { iduser,setUsersID,setName,username} = useContext(MyContext);
+const[hide,setHide]=useState(true)
   const [password,setPassword]=useState('');
-  const [email,setEmail]=useState("")
-  const [username, setName] = useState('');
+ const [email,setEmail]=useState("")
   const [Birthday, setDateOfBirth] = useState('');
   const [Number, setPhoneNumber] = useState('');
   const [isError,setIsError]=useState(false);
@@ -59,97 +62,83 @@ const CreateAnAccount = ({navigation}) => {
       Birthday,
       Number,
     };
-  
-    console.log('Sending data:', userData);
-  
-   axios.post("http://192.168.1.5:2023/user/register", userData)
-      .then((response) => {
-        console.log('Response:', response.data);
-  
-        setName('');
-        setDateOfBirth('');
-        setPhoneNumber('');
-        setEmail('');
-        setPassword('');
-  
-        Alert.alert('Success', 'Registration successful! You can now log in.');
-        navigation.navigate('Login');
-      })
-      .catch((error) => {
-        console.error('Registration Error', error);
-        Alert.alert('Check your inputs or network connection.');
-      });
-  };
+    console.log(userData);
+    Axios.post(`http://${Adress}/user/register`, userData).then((res)=>{
+      console.log("data is "+res.data);
+      navigation.navigate('Login')
+    }).catch((err)=>{
+      console.log(err);
+    })
+      };
 
-  const verify = (password) => {
+  const verify = () => {
     if (password.length < 6) {
-      setIsError(true);
-      Alert.alert("Your password must be at least 6 characters long.");
+      setIsError(!isError);
+      Alert.alert("make password than 6");
     }
   };
-  
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.homeDiv}>
-          <Text style={styles.homeText}></Text>
-        </View>
-
         <View style={styles.imageContainer}>
-         
         </View>
 
         <View style={styles.text}>
-          <Text style={{ color: "#66328E" , left:"13%",top:"-50%"}}>Create Account</Text>
+          <Text style={{ fontWeight:"400",fontSize:18,left:-130 }}>Create an account</Text>
+
+          <Text style={{ fontWeight:"300",fontSize:13,left:-130,top:10 }}>and join us</Text>
         </View>
-<View style={styles.main}>
+
         <View style={styles.nameContainer}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={styles.label}>name</Text>
           <TextInput
             style={styles.inputName}
-            placeholderTextColor="#000000"
+            placeholder="   enter your name"
             onChangeText={handleName}
           />
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={styles.label}>Date_of_birthday</Text>
+          <Text style={styles.label}>date_of_birthday</Text>
           <TextInput
             style={styles.inputName}
-            placeholderTextColor="#000000"
+            placeholder="   YYYY/MM/DD"
             onChangeText={handleDate}
           />
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={styles.label}>Phone Number</Text>
+          <Text style={styles.label}>phone Number</Text>
           <TextInput
             style={styles.inputName}
-            placeholderTextColor="#000000"
+            placeholder="   enter your phone number"
             onChangeText={handlePhone}
           />
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={[styles.label, { paddingBottom: 20.44 }]}>Email</Text>
+          <Text style={[styles.label]}>e-mmail</Text>
 
-          <CustomTextInputEmail
-            iconName={faEnvelope}
+          <TextInput
+            style={styles.inputName}
+            placeholder="   enter your e-mail"
             onChangeText={handleEmail}
           />
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={[styles.label, { paddingBottom: 20.44 }]}>Password</Text>
+          <Text style={[styles.label]}>password</Text>
 
-          <CustomTextInputPassword
-            iconName={faLock}
+          < TextInput
+            style={styles.inputName}
+            placeholder="   enter your password"
             onChangeText={handlePassword}
-            onBlur={verify}
-            isError={isError}
-            secureTextEntry={true}
+            secureTextEntry={hide}
+            
           />
+                   <AntDesign name="eye" style={{color:"black",fontSize:28,top:-28,left:"90%"}} onPress={()=>setHide(!hide)}/>
+
         </View>
 
         <TouchableOpacity style={styles.loginButton} onPress={()=>handleSignUp()}>
@@ -158,20 +147,9 @@ const CreateAnAccount = ({navigation}) => {
           </View>
         </TouchableOpacity>
 
-        <View style={styles.haveAccountContainer}>
-          <Text style={styles.label}>Have an account already?</Text>
-          <Text
-            style={styles.haveAnAccountText}
-            onPress={() => {
-              navigation.navigate("Login");
-            }}
-          >
-            &nbsp;&nbsp;Log in
-          </Text>
-        </View>
-        </View>
+        <View style={{width:"100%",height:70}}></View>
+
       </View>
-      
     </ScrollView>
   );
 };
@@ -181,23 +159,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    width: '150%',
-    height:850,
-    marginTop: -15,
-    
-    
-    backgroundColor:"white"
+    width: '100%',
+    marginLeft:-15
   },
-  main : {
-marginLeft:30
-  },
-
   text: {
     alignItems: "center",
     marginTop: 10,
     marginLeft: 141,
     marginRight: 141,
-    width: 100,
+    width: 190,
 
     color: "#65328e",
   },
@@ -230,34 +200,28 @@ marginLeft:30
   },
   nameContainer: {
     position: "relative",
-    width: 269,
+    width: "90%",
     height: 84,
     marginLeft: 40,
     marginTop: 20,
+    
   },
   label: {
-    color: "#66328E",
-    fontSize: 12.3,
-    fontWeight: "500",
+    color:"rgba(0, 0, 0, 1)"  ,  fontSize:12,fontWeight: "300"
   },
   inputName: {
-    position: "absolute",
-    width: 269,
-    height: 46,
-    top: 38,
-    left: 0,
-    backgroundColor: "#F8F0F0",
-    borderRadius: 7.69,
-    borderWidth: 0.77,
-    borderColor: "#66328E",
-    paddingLeft: 10,
-    fontSize: 14,
+
+    top: "10%",
+    height: "60%",
+    width: "100%",
+    backgroundColor: "#CFCDCD",
+    borderRadius: 5.681159973144531 
   },
   loginButton: {
     position: "relative",
-    width: 268,
+    width: '90%',
     height: 46,
-    backgroundColor: "#65328e",
+    backgroundColor: "#1FA609",
     borderRadius: 7.69,
     justifyContent: "center",
     alignItems: "center",
@@ -265,10 +229,9 @@ marginLeft:30
     marginLeft: 40, // Adjust the margin as needed
   },
   loginButtonTextWrapper: {
-    position: "absolute",
-    width: 54,
-    height: 28,
-    top: 9,
+    
+    justifyContent:"center",
+    alignItems:"center"
   },
   loginButtonText: {
     color: "#F8F0F0",

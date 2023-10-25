@@ -2,7 +2,7 @@ const connection = require("../index")
 
 const add = (teacherData, callback) => {
   const sql = `INSERT INTO teachers SET ?`;
-  connection.query(sql, teacherData, function (error, results) {
+  connection.query(sql, [teacherData], function (error, results) {
       callback(error, results);
   });
 };

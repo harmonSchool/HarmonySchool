@@ -11,23 +11,15 @@ import Parent from "./screens/Parent/Parent"
 import Teacher from './screens/Teacher/Teacher';
 import Teachers from './screens/Teacher/Teachers';
 import TeacherDetail from './screens/Teacher/TeacherDetail';
-import Modules from './screens/Modules/Modules';
-import Languages from './screens/Modules/Languages';
-import ModuleDetail from './screens/Modules/ModuleDetail';
+// import Modules from './screens/Modules/Modules';
+// import ModuleDetail from './screens/Modules/ModuleDetail';
 import Options from './screens/Options/Options';
 import Student from './screens/Student/Student';
 import Contact from './screens/Contact/Contact';
-import Notes from './screens/Note/Notes';
-import Arabic from './screens/Modules/ModuleArabic';
-import Frensh from './screens/Modules/ModuleFrensh';
-import English from './screens/Modules/ModuleEnglish';
-import Math from './screens/Modules/ModuleMath';
-import Science from './screens/Modules/ModuleScience';
-import It from './screens/Modules/ModuleIT';
-import Arts from './screens/Modules/ModuleArts';
-import Sport from './screens/Modules/ModuleSport';
+
 import Navbar from './screens/Navbar/Navbar'
 import Chat1 from './screens/Chat/Chat1';
+import Chat2 from './screens/Chat/Chat2';
 import FindEmail from './screens/FindEmail/forgot-password'
 import Code from './screens/Code/Code';
 import newPassword from './screens/NewPassword/newPassword';
@@ -44,9 +36,13 @@ import DataStudent5 from './screens/Teacher/DataStudent5';
 import DataStudent6 from './screens/Teacher/DataStudent6';
 import Payment from './screens/Payement/Payment';
 import ConversationView from "./screens/Chat/Conv";
-import Notess from './screens/Notes/Notess'
-import CalenderParent from './CalenderParent/CalenderParent';
+import Notess from "./screens/Notes/Notess"
+import Notes from "./screens/Note/Notes"
 
+import Hom from './screens/Home/hom';
+import ProfileView from './screens/Profile/ProfileView/ProfileView';
+import parentInterFace from './screens/FirstInterfaces/parentInterFace';
+import Intro from './screens/Intro/Intro';
 const Stack = createNativeStackNavigator()
 
 
@@ -55,7 +51,7 @@ export default function App() {
     <MyProvider>
     <NativeBaseProvider >
     <NavigationContainer>
-    <Stack.Navigator initialRouteName="CalendarScreen">
+    <Stack.Navigator initialRouteName="Payment">
     <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
 
      <Stack.Screen name="Payment" component={Payment} options={{headerShown:false}}  />
@@ -66,6 +62,9 @@ export default function App() {
      <Stack.Screen name="DataStudent4" component={DataStudent4} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent5n" component={DataStudent5} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent6" component={DataStudent6} options={{headerShown:false}}  />
+    <Stack.Screen name="Intro" component={Intro} options={{headerShown:false}}  />
+     <Stack.Screen name="IT1" component={parentInterFace} options={{headerShown:false}}  />
+     <Stack.Screen name="ProfileView" component={ProfileView} options={{headerShown:false}}  />
      <Stack.Screen name="Login" component={Login} options={{headerShown:false}}  /> 
      <Stack.Screen name="SignUp" component={SignUp} options={{headerShown:false}}/> 
      <Stack.Screen name="Inscription" component={Inscription} options={{headerShown:false}} />
@@ -74,8 +73,7 @@ export default function App() {
     <Stack.Screen name="Teacher" component={Teacher} options={{headerShown:false}} /> 
     <Stack.Screen name="Teachers" component={Teachers} options={{headerShown:false}} />
     <Stack.Screen name="TeacherDetail" component={TeacherDetail} options={{headerShown:false}} /> 
-    <Stack.Screen name="Languages" component={Languages} options={{headerShown:false}} />
-    <Stack.Screen name="Options" component={Options} options={{headerShown:false}} /> 
+    {/*<Stack.Screen name="Options" component={Options} options={{headerShown:false}} />*/} 
     <Stack.Screen name="Student" component={Student} options={{headerShown:false}} /> 
     <Stack.Screen name="Notes" component={Notes} options={{headerShown:false}} />
     <Stack.Screen name="Notess" component={Notess} options={{headerShown:false}} />
@@ -84,20 +82,15 @@ export default function App() {
     <Stack.Screen name="Code" component={Code}  options={{headerShown:false}} ></Stack.Screen>
     <Stack.Screen name="NewPassword" component={newPassword}  options={{headerShown:false}} ></Stack.Screen>
     <Stack.Screen name="Chat1" component={Chat1}  options={{headerShown:false}} ></Stack.Screen>
-    <Stack.Screen name="ReviewOrder" component={ReviewOrder} options={{headerShown:false}}  />  
+  {/* <Stack.Screen name="ReviewOrder" component={ReviewOrder} options={{headerShown:false}}  /> */} 
      <Stack.Screen name="CheckOut" component={CheckOut} options={{headerShown:false}}  />        
-     <Stack.Screen name="PaymentMethod" component={PaymentMethod} options={{headerShown:false}}  />
-    
-
-     
+    {/*<Stack.Screen name="PaymentMethod" component={PaymentMethod} options={{headerShown:false}}  />*/}
+     <Stack.Screen name="Hom" component={Hom} options={{headerShown:false}}  />
      <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />
      <Stack.Screen name="Conv" component={ConversationView} options={{headerShown:false}}  />
-
-
-
-
+     <Stack.Screen name="Chat2" component={Chat2}  options={{headerShown:false}} ></Stack.Screen>
     </Stack.Navigator>
-    <Navbar /> 
+    {/* <Navbar />  */}
     </NavigationContainer>
     </NativeBaseProvider>
     </MyProvider>

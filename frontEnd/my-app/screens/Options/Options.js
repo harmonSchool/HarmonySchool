@@ -57,8 +57,6 @@ const Options = () => {
   );
 };
 
-export default Options;
-
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
@@ -81,7 +79,7 @@ const styles = StyleSheet.create({
   textContain: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
+    alignItems: 'center',
   },
   text1: {
     top: 38,

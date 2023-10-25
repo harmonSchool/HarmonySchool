@@ -1,76 +1,57 @@
-import {StyleSheet, Text , View , TextInput ,Button, Image ,ScrollView, TouchableNativeFeedback  } from "react-native"
+import {StyleSheet, Text , View , TextInput ,Button, Image ,ScrollView,Dimensions, TouchableNativeFeedback  } from "react-native"
 import Video from 'react-native-video'
 import {lightTheme, darkTheme} from '../../Theme/Theme'
-import { useContext } from "react";
+import { useContext,useEffect,useState  } from "react";
 import { MyContext } from "../../useContext/useContext";
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+import { SafeAreaView } from "react-native-safe-area-context";
+import Adress from '../IP'
+import axios from "axios";
 const Home = ({navigation}) => {
-
-    const removeItem = async () => {
-        try {
-          // Clear any user-related data from AsyncStorage
-          await AsyncStorage.removeItem('userData'); // You can replace 'userData' with the key you used to store the user data.
-      
-          // You may also want to navigate to the login or another appropriate screen
-          navigation.navigate('Login'); // Replace 'Login' with the screen you want to navigate to after logging out.
-        } catch (error) {
-          console.error('Error logging out:', error);
-        }
-      };
-
-    const { isDarkMode,setMode } = useContext(MyContext);
+    const {height,width}=Dimensions.get('window')
+    const { isDarkMode,setMode} = useContext(MyContext);
     const theme = isDarkMode ? darkTheme : lightTheme;
     const darkMode=()=>{
         setMode(!isDarkMode)
       }
+      const [data,setData]=useState([])
+      useEffect(()=>{
+        axios.get(`http://${Adress}/teacher/get`).then((res)=>{
+                  setData(res.data)
+              console.log(data);
+              }).catch((err)=>{
+                  console.log(err);
+              })
+          },[])
+
+  
   return (
+    <SafeAreaView style={{backgroundColor:"black"}}>
     <View style={{backgroundColor: theme.backgroundColor}}>
-    
     <ScrollView>
-    
-    
         <View style={[styles.container,{backgroundColor: theme.backgroundColor}]}>
-        <Text style={styles.Log} onPress={removeItem}>
-        Log Out
-      </Text>
             <View style={[styles.nav, {borderColor:theme.borderColor}]}>
             <Image
     style={{width:40,
     height:40,
-    marginLeft:12,marginTop:-4
+    left:"3%",top:"-11%",borderRadius:"100%"
   }}
-  source={{uri:'https://images.vexels.com/media/users/3/224233/isolated/preview/d5ee0e9c87bb54cf867d7fb89c4570b8-online-education-logo.png'}} />
-
-  
+  source={{uri:'https://img.freepik.com/premium-vector/green-paper-cutout-plant-with-two-leaves-it_870273-24.jpg?w=2000'}} />
             <TouchableNativeFeedback onPress={()=>navigation.navigate('Login')}>
-            <View style={{alignItems: 'center',justifyContent: 'center',height:38,width:90,marginLeft:160,borderRadius:15,marginTop:-38   ,backgroundColor:"purple"}}>
+            <View style={{alignItems: 'center',justifyContent: 'center',height:"50%",width:"35%",borderRadius:8,top:"-60%",left:"61%"  ,backgroundColor:"#1FA609"}}>
             <Text style={{color:"white"}}>Connection</Text>
             </View>
             </TouchableNativeFeedback>
-            <TouchableNativeFeedback onPress={()=>darkMode()}>
-        <Image
-    style={{width:40,
-    height:40,
-    marginLeft:268,marginTop:-40
-  }}
-  source={{uri:'https://cdn-icons-png.flaticon.com/128/802/802016.png'}} />
-  
-        </TouchableNativeFeedback>
             </View>
-            
             <View style={styles.fImg}>
                 <Image
-                style={{width:"100%",height:160,marginTop:15}}
+                style={{width:"100%",height:"90%",marginTop:15}}
                 source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Hibbing_High_School_2014.jpg/1200px-Hibbing_High_School_2014.jpg'}}/>
             </View>
         <View style={styles.seeAll}>
+            <Text style={{fontWeight:400,top:"10%",left:"5%",color:"#1FA609"}} >Here is The matieres</Text>
             <Text style={[styles.text1,{color:theme.textColor}]}>See All</Text>
         </View>
         <View style={styles.matieres}>
-       
         <ScrollView horizontal={true} >
             <View style={[styles.matiere , {borderColor:theme.borderColor}]}>
                 <Image 
@@ -110,39 +91,32 @@ const Home = ({navigation}) => {
             </View>
             </ScrollView>
         </View>
-        <Text style={[styles.text1,{color:theme.textColor}]}>See All</Text>
+        <Text style={[styles.text1,{color:theme.textColor}]} >See All</Text>
         <View style={styles.seeAll1}>
             <ScrollView horizontal={true}>
-            <View style={[styles.Teachers, {borderColor:theme.borderColor}]}>
+                {data.map((e)=>{
+                  return(
+<View style={[styles.Teachers, {borderColor:theme.borderColor}]}>
                 <Image style={{borderWidth:0.6,width:90,height:90,borderRadius:100,backgroundColor:"#fff",marginTop:8,marginLeft:28,borderColor:theme.borderColor}}
                 source={{uri:'https://avatars.githubusercontent.com/u/97634240?v=4'}}
                 />
-                <View style={{marginLeft:15,marginTop:21}}>
-                    <Text style={{color:theme.textColor}}>Oubayid ben said</Text>
-                    <Text style={{marginLeft:23,color:theme.textColor}}>IT Teacher</Text>
+                <View style={{alignItems: 'center',
+        justifyContent: 'center',marginTop:21}}>
+                    <Text style={{color:theme.textColor}}>Mr.{e.name}</Text>
+                    <Text style={{color:theme.textColor}}>IT Teacher</Text>
                 </View>
             </View>
-            <View style={[styles.Teachers1, {borderColor:theme.borderColor}]}>
-                <Image style={{borderWidth:0.6,width:90,height:90,borderRadius:100,backgroundColor:"#fff",marginTop:8,marginLeft:28 , borderColor:theme.borderColor}}
-                source={{uri:'https://avatars.githubusercontent.com/u/129502701?v=4'}}
-                />
-                <View style={{marginLeft:15,marginTop:21}}>
-                    <Text style={{marginLeft:6,color:theme.textColor}}>Wissem Hajjem</Text>
-                    <Text style={{marginLeft:23,color:theme.textColor}}>IT Teacher</Text>
-                </View>
-            </View>
-            <View style={[styles.Teachers1, {borderColor:theme.borderColor}]}>
-                <Image style={{borderWidth:0.6,width:90,height:90,borderRadius:100,backgroundColor:"#fff",marginTop:8,marginLeft:28,borderColor:theme.borderColor}}
-                source={{uri:'ede'}}
-                />
-                <View style={{marginLeft:15,marginTop:21}}>
-                    <Text style={{color:theme.textColor}}>Khouloud Ouelhazi</Text>
-                    <Text style={{marginLeft:8,color:theme.textColor}}>Science Teacher</Text>
-                </View>
-            </View>
+                  )  
+                })}
+            
             </ScrollView>
         </View>
-        <View style={styles.imgPage}>
+        <View style={{ 
+            width:width - 30,
+            height:width -160,
+            borderRadius:width/12,
+            marginTop:20,
+        backgroundColor:"black"}}>
          
 
         </View>
@@ -152,7 +126,7 @@ const Home = ({navigation}) => {
             <Text style={{marginLeft:15,fontSize:10,color:theme.textColor}}>by the teachers and the staff</Text>
             <Text style={{fontSize:10,color:theme.textColor}}>to make it one of the highest ranks</Text>
         </View>
-        <Text style={{fontSize:25,marginTop:50,marginLeft:-160,color:theme.textColor}}>Sponsors</Text>
+        <Text style={{fontSize:25,marginLeft:width - 500,marginTop:50,color:theme.textColor}}>Sponsors</Text>
         <View style={styles.sponsors}>
             
 <Image 
@@ -210,9 +184,9 @@ source={{uri:"https://www.carthageland.com/img/logo-cl-tunis.png"}}
         </View>
         <View style={{width:100,height:60}}></View>
         </View>
-       
     </ScrollView>
     </View>
+    </SafeAreaView>
   )
 }
 
@@ -220,7 +194,6 @@ const styles=StyleSheet.create({
     container: {    flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-
       },navPhone:{
         width:"100%",
         height:23,
@@ -234,7 +207,7 @@ const styles=StyleSheet.create({
         width:250,
         borderRadius:25,
         height:50,
-        backgroundColor:"purple"
+        backgroundColor:"#1FA609"
       },matiertof:{
         width:"91%",
         marginLeft:7,
@@ -252,27 +225,31 @@ const styles=StyleSheet.create({
     ,nav:{
         // backgroundColor:"red",
         width:"100%",
-        height:45,
-        marginTop:17,
-        borderBottomWidth:0.2
+        height:"5%",
+        top:"2.5%",
+
     },fImg:{
         width:"100%",
         height:180,
-        marginTop:5
+        top:"-1%"
+        ,flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },seeAll:{
           
         width:"100%",
         height:40,
         marginTop:17
     },text1:{
-        marginLeft:260,
-        marginTop:12
+        left:"80%",
+        top:"-35%"
     },matiere:{
         width:180,
         height:130,
+        backgroundColor:"white",
         
         borderRadius:12,
-        borderWidth:0.9,
+        borderWidth:0.6,
     },matieres:{
         width:"100%",
         height:150,
@@ -283,14 +260,15 @@ const styles=StyleSheet.create({
         height:130,
         
         borderRadius:12,
-        borderWidth:0.9,
+        borderWidth:0.6,
         marginLeft:15
         
     },Teachers:{
         height:190,
-        borderWidth:0.9,
+        borderWidth:0.6,
          width:150,
          borderRadius:15,
+         marginLeft:20
         //  backgroundColor:"red"
     },Teachers1:{
         height:190,
@@ -298,43 +276,28 @@ const styles=StyleSheet.create({
         borderRadius:15,
         // backgroundColor:"red",
         marginLeft:20,
-        borderWidth:0.9,
+        borderWidth:0.6
     },seeAll1:{
         // backgroundColor:"blue",
         width:"100%",
         height:210,
         marginTop:17
-    },imgPage:{
-        width:260,
-        height:160,
-        borderRadius:19,
-        marginTop:20,
-        backgroundColor:"black"
-    } ,ales:{
+    },ales:{
         width:130,
         height:160,
         marginLeft:-155,
         borderRadius:15,
         marginTop:20,
-        backgroundColor:"purple"
+        backgroundColor:"#1FA609"
     },ales1:{
         width:130,
         height:160,
         marginLeft:155,
         borderRadius:15,
         marginTop:-160,
-        backgroundColor:"purple"
-    },
-    Log: {
-        color: "black",
-        padding: 10,
-        borderRadius: 8,
-        
-left:"39%",
-top:23,        
-
-        fontWeight: "bold", // Adjust the font weight as needed
-      },
+        backgroundColor:"#1FA609"
+    }
 })
+  
 
 export default Home

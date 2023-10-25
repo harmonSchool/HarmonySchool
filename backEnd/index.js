@@ -5,9 +5,14 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const cors  =require("cors")
+const path = require('path')
+const bodyparser = require ("body-parser")
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use(express.static('app'));
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules', )));
+app.use(bodyparser.json())
 app.use(cors())
 
 
@@ -20,12 +25,12 @@ const teacherRoute=require("./routes/teacher")
 const classeRoute=require("./routes/classe")
 const SubjectRoute=require("./routes/subject")
 const StudentRoute=require("./routes/student")
-const StudRoute= require('./routes/notes')
-const { getAll } = require('./controllers/users');
+const StudRoute= require('./routes/Notes')
+const adminRoute=require('./routes/Admin')
+
 const { update } = require('./controllers/EditProfile')
 const { updateUserPassword } = require('../backEnd/controllers/users');
-const mg = require('nodemailer-mailgun-transport'); 
-const adminRoute=require("./routes/Admin")
+const mg = require('nodemailer-mailgun-transport'); // or any other transport method
 
 
 const crypto = require('crypto');
@@ -34,47 +39,61 @@ const nodemailer = require('nodemailer');
 app.use('/user',userRoutes)
 app.use('/teacher',teacherRoute)
 app.use('/classe',classeRoute)
-app.use('/subject',SubjectRoute) 
+app.use('/subject',SubjectRoute)
 app.use('/student',StudentRoute)
 app.use('/note',StudRoute)
-app.use("/admin",adminRoute)
+app.use('/Admin',adminRoute)
 
-const activeUsers = new Set();
+var clientSocketIds = [];
+var connectedUsers= [];
+
+const getSocketByuserId = (userId)=>{
+  var socket=''
+  for(var i=0;i<clientSocketIds;i++){
+    if(clientSocketIds[i].userId == userId){
+      socket=clientSocketIds[i].socket;
+      break;
+    }
+  }
+  return socket
+}
+
 
 io.on('connection', (socket) => {
-  console.log("socket id", socket.id)
-  socket.broadcast.emit("message",`The user ${socket.id} joined the chat`)
-  socket.on('new user', (data) => {
-    socket.userId = data;
-    activeUsers.add(data);
-    io.emit('new user', [...activeUsers]);
-  });
-
-  socket.on("join", (userId,TeacherId) => {
-    const chat = `SELECT users_idusers FROM chat WHERE users_iduser = ${userId} AND teachers_idteacher=${TeacherId} LIMIT 1`
-    if(!chat){
-      const room = `INSERT INTO chat SET ?`
-      socket.join(room.id);
-      console.log(`User with ID: ${socket.id} joined room: ${room.id}`);
-    } else {
-      socket.join(chat.id)
-    }
-  });
-  socket.on('voiceMessage', (audio) => {
-    console.log('Received voice message:', audio);
-    socket.broadcast.emit('voiceMessage', audio);
-  });
-  
-  socket.on("send", (data) => {
-    console.log(data)
-    io.to(data.chat_idchat).emit("message", data);
-  });
-  
+  console.log("Conected")
 
   socket.on('disconnect', () => {
-    activeUsers.delete(socket.userId);
-    io.emit('message', "a user has left");
+    console.log('disconnected')
+    connectedUsers = connectedUsers.filter((item)=>{
+      item.socketId != socket.id
+    })
+    io.emit('updateUserList',connectedUsers)
   });
+
+
+  socket.on('loggedin',(user)=>{
+    clientSocketIds.push({socket:socket,userId:user.user_id})
+    connectedUsers = connectedUsers.filter((item) => {
+      item.user_id != user.user_id
+    });
+    connectedUsers.push({...user, socketId: socket.id})
+    io.emit('updateUserList', connectedUsers)
+  })
+
+  socket.on('create', function(data) {
+    console.log("create room")
+    socket.join(data.room);
+    let withSocket = getSocketByUserId(data.withUserId);
+    socket.broadcast.to(withSocket.id).emit("invite",{room:data})
+});
+socket.on('joinRoom',(data)=> {
+    socket.join(data.room.room);
+});
+
+socket.on('message',(data)=> {
+    socket.broadcast.to(data.room).emit('message', data);
+})
+  
 
   // socket.on('chat message', (data) => {
   //   io.emit('chat message', data);
@@ -92,16 +111,16 @@ const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN = "1//04Tq0ie_KxFuCCgYIARAAGAQSNwF-L9Irp-uftta6x36cYuWPk2Io4ZaQ7-Oi1UW_6Fdx8d3EIw27QC_sosOGS0wEUswIMSgLX2A";
 
-app.get('user/getAll',(req,res)=>{
-  getAll((err,result)=>{
-      if(err){
-          res.status(500).json(err)
-      }
-      else {
-          res.status(200).json(result)
-      }
-  })
-})
+// app.get('/user/getAll',(req,res)=>{
+//   getAll((err,result)=>{
+//       if(err){
+//           res.status(500).json(err)
+//       }
+//       else {
+//           res.status(200).json(result)
+//       }
+//   })
+// })
 
 app.put('/api/users/editProfile',(req,res)=>{
   update((err,result)=>{
@@ -391,7 +410,7 @@ app.listen(port, () => {
 
 
 
- 
+
 
 
 

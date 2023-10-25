@@ -1,8 +1,4 @@
-const { add,put,remove,getAll,getStudentsInClass,getOneStudent,
-  getStudentsByUser,getStudentsByClass,getStudentsByClass2, getStudentsByClass3,
-  getStudentsByClass4 ,
-  getStudentsByClass5 ,
-  getStudentsByClass6  } = require("../database/model/student")
+const { add,put,remove,getAll,getStudentsInClass,getOneStudent, getStudentIdByUsername} = require("../database/model/student")
 
 
   const addStudent = (req, res) => {
@@ -20,6 +16,18 @@ const { add,put,remove,getAll,getStudentsInClass,getOneStudent,
   };
   
 
+
+const getByname=(req,res)=>{
+const {First_name}=req.body
+getStudentIdByUsername(First_name,(err,result)=>{
+  if(err){
+    console.error("Error is "+err);
+  }
+  else{
+    res.status(200).json(result)
+  }
+})
+}
 
 
 const UpdateStudent = (req, res) => {
@@ -92,84 +100,6 @@ const UpdateStudent = (req, res) => {
       }
     });
   };
-  const getStudentsByClassController = (req, res) => {
-    const className = "First class"; 
-  
-    getStudentsByClass(className, (error, students) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json(error);
-      } else {
-        res.status(200).json(students);
-      }
-    });
-  };
-  
-  const getStudentsByClassController2 = (req, res) => {
-    const className = "Second class"; 
-  
-    getStudentsByClass2(className, (error, students) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json(error);
-      } else {
-        res.status(200).json(students);
-      }
-    });
-  };
-
-  const getStudentsByClassController3 = (req, res) => {
-    const className = "Third class"; 
-  
-    getStudentsByClass3(className, (error, students) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json(error);
-      } else {
-        res.status(200).json(students);
-      }
-    });
-  };
-
-  const getStudentsByClassController4 = (req, res) => {
-    const className = "Fourt class"; 
-  
-    getStudentsByClass4(className, (error, students) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json(error);
-      } else {
-        res.status(200).json(students);
-      }
-    });
-  };
-
-  const getStudentsByClassController5 = (req, res) => {
-    const className = "Fifth class"; 
-  
-    getStudentsByClass5(className, (error, students) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json(error);
-      } else {
-        res.status(200).json(students);
-      }
-    });
-  };
-
-  const getStudentsByClassController6 = (req, res) => {
-    const className = "Sixth class"; 
-  
-    getStudentsByClass6(className, (error, students) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json(error);
-      } else {
-        res.status(200).json(students);
-      }
-    });
-  };
-
 
 
   
@@ -182,13 +112,7 @@ const UpdateStudent = (req, res) => {
     RemoveStudent,
     UpdateStudent,
     getOnStudent,
-    getStudentsByClassController2,
-    getStudentsByClassController3,
-    getStudentsByClassController4,
-    getStudentsByClassController5,
-    getStudentsByClassController6,
-    
-    getStudentsByClassController
+    getByname
 
   }
 

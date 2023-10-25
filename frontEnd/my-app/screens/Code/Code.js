@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, TextInput } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import ADRESS_API from '../serverUrl';
-export default function Code({navigation}) {
+import { Title } from 'react-native-paper';
+export default function Code() {
   const [verificationCode, setVerificationCode] = useState('');
 
   const handleSubmit = () => {
@@ -18,7 +19,6 @@ export default function Code({navigation}) {
       .then((response) => {
         if (response.ok) {
           alert('Verification code is valid');
-          navigation.navigate("NewPassword")
         } else {
           alert('Verification code is invalid');
         }
@@ -31,31 +31,26 @@ export default function Code({navigation}) {
 
 
     return (
-    		<View style={styles.enteryourcode}>
-        <View  style={styles.container} >
-      			<Text style={styles.home}>
-      			</Text>
-      			
-      		
-
-
-      			<View style={styles.emailAddressHolder}>
-        				<View style={styles.rectangle1}/>
-        				<Text style={styles._enteryourcode}>
-          					{`Enter code`}
-        				</Text>
-        				<TextInput style={styles.rectangle3}
-            onChangeText={(text) => setVerificationCode(text)}
-
-                />
-        				<View 
-                style={styles.rectangle2}/>
-        				<Text                 onPress={handleSubmit}
-                style={styles.send}>
-          					{`Send`}
-        				</Text>
-      			</View>
-    		</View>
+        <View style={styles.container}>
+          <Text style={{marginTop:"-7%",top:'-20%', color: "rgba(0, 0, 0, 1)"  ,  fontSize:20,fontWeight:"600",left:"-19%"}}>Verify our code</Text>
+         <Text style={{marginTop:"1.5%", color: "rgba(0, 0, 0, 1)",top:"-20%"  ,  fontSize:20,fontWeight: "200",left:"-14%"}}>to update your password</Text>
+         <TextInput style={{borderColor: "#66328E",
+      height: "10%",
+      width: "90%",
+      backgroundColor: "#CFCDCD",
+      borderRadius: 5.681159973144531}}
+        onChangeText={(text) => setVerificationCode(text)}
+        placeholder='   enter your code'
+        />
+        <TouchableOpacity onPress={handleSubmit} style={   {top:'30%',
+    width:"90%",
+    height:"10%",
+    borderRadius:8,
+    justifyContent:"center",
+  alignItems:"center",
+    backgroundColor: "#1FA609"}}>
+          <Title  style={{ color:"#fff"}}>Send code</Title>
+        </TouchableOpacity>
         </View>
     )
 }
@@ -63,21 +58,11 @@ export default function Code({navigation}) {
 const styles = StyleSheet.create({
 
   container: {
-    margin: "9%",
-    marginTop: "2%",
-    
+    flex:1,
+   alignItems:"center",
+   justifyContent:"center",backgroundColor:"white"
   }, 
-  	enteryourcode: {
-          flexShrink: 0,
-    height: 744,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    boxShadow: "20px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-    alignItems: "flex-start",
-    rowGap: 0,
-    borderRadius: 7.681159973144531,
-    height:"150%"
-
-},
+  
   	home: {
     position: "absolute",
     flexShrink: 0,

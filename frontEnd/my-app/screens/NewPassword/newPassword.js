@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import React from 'react';
 import { TouchableOpacity ,View, Text, ImageBackground, StyleSheet, TextInput ,Alert , Button } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { useState } from 'react';
@@ -52,38 +52,29 @@ export default function ResetPasswordScreen({ navigation }) {
                 <View style={styles.rectangle2} />
                 <Text style={styles.send}>Send</Text>
               
-              <View style={styles.rectangle2} 
-              />
-          					<Text style={styles.send}
-                    onPress={handleResetPassword}
-
-                    >
+              <View style={styles.rectangle2} />
+          					<Text onPress={handleSubmit} style={styles.send}>
             						{`Send`}
           					</Text>
         				</View>
         				<Text style={styles.enterThenewPassword}>
           					{`Reset your Password`}
         				</Text>
-                <TextInput
-                style={styles.rectangle3}
-                value={email}
-
-                onChangeText={setEmail}
-
-                />
-
-                
-                <TextInput      
+        				<TextInput 
                 secureTextEntry
                 value={newPassword}
-                onBlur={verify}
-                isError={isError}
+                onChangeText={(text) => setNewPassword(text)}
+                style={styles.rectangle3}/>
 
-                style={styles.rectangle4}
-                onChangeText={setNewPassword}
-              />
+                
+        				<TextInput 
+                secureTextEntry
+                value={confirmNewPassword}
+                onChangeText={(text) => setConfirmNewPassword(text)}
+
+                style={styles.rectangle4}/>
         				<Text style={styles.newpassword}>
-          					{`Email`}
+          					{`new password`}
         				</Text>
         				<Text style={styles.confirrmThenewpassword}>
           					{`Confirrm The new password`}

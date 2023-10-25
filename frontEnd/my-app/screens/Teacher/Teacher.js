@@ -1,34 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { useContext } from "react";
+import { MyContext } from "../../useContext/useContext";
 const Teacher = () => {
-  const navigation = useNavigation();
-
-  const handleNavigateToStudents = () => {
-    navigation.navigate('StudentClass');
-  };
-
-  //StudentClass
-
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.homeDiv}>
-          <Text style={styles.homeText}></Text>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.homeDiv}>
+        <Text style={styles.homeText}></Text>
+      </View>
 
-        <View style={styles.imageContainer}>
-          <Image
-            style={{
-              height: 90,
-              width: 90,
-              marginLeft: -15,
-              top: 10,
-            }}
-            source={{ uri: 'https://www.learningprofessionals.af.mil/portals/87/Images/S2C%20Images/Article%20Image_1.png?ver=VSSxf_st2FKR3mLATXb3dQ%3D%3D' }}
-          />
-        </View>
+      <View style={styles.imageContainer}>
+      <Image
+      style={{
+      height:90,
+      width:90,
+      marginLeft:0,top:30
+    }}
+    source={{uri:'https://www.learningprofessionals.af.mil/portals/87/Images/S2C%20Images/Article%20Image_1.png?ver=VSSxf_st2FKR3mLATXb3dQ%3D%3D'}} />
+      </View>
 
         <View style={styles.text}>
           <Text style={{ color: '#66328E', left: -8, fontWeight: '900', fontSize: 16, top: -140, textAlign: 'center', marginTop: -20 }}>
@@ -43,8 +33,8 @@ const Teacher = () => {
 
               <Image
                 style={{
-                  height: 90,
-                  width: 120,
+                  height: 100,
+                  width: 100,
                   marginLeft: -10,
                   marginTop: 40,
                 }}
@@ -123,7 +113,7 @@ const Teacher = () => {
               uri: 'https://cdn-icons-png.flaticon.com/512/1869/1869397.png',
             }}
           />
-          <Text style={{ color: '#66328E', left: -76, fontWeight: '800', textAlign: 'center' }}>Calender</Text>
+          <Text style={{ color: '#66328E', left: -75, fontWeight: '800', textAlign: 'center' }}>Calender</Text>
           </TouchableOpacity>
 
 
@@ -142,17 +132,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '120%',
-    height:"120%",
     paddingTop: 50,
-    marginLeft: -39,
+    marginLeft: -40,
     height:900,
   },
   homeDiv: {
     backgroundColor: 'white',
     width: 312,
-    height: 100,
+    height: 65,
     marginLeft: 21,
-    marginTop: 10, // Ajustez cette valeur pour aligner plus haut
+    marginTop:60,
   },
   homeText: {
     fontSize: 15,
@@ -161,21 +150,21 @@ const styles = StyleSheet.create({
     color: '#65328e',
   },
   imageContainer: {
-    marginTop: 10, // Ajustez cette valeur pour aligner plus haut
+    marginTop: 20,
     width: 100,
     height: 50,
-    marginLeft: 21,
+    marginLeft: 21, 
   },
  
   text: {
-    marginLeft: 25,
-    marginTop: 10,
+    marginLeft: 25, 
+    marginTop: 10, 
   },
   imaged: {
-    width: 100,
+    width: 100, 
     height: 100,
-    borderRadius: 10,
-    margin: 10,
+    borderRadius: 10, 
+    margin: 10, 
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -186,9 +175,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   imageContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10, // Ajustez cette valeur pour aligner plus haut
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    marginTop: 20,
     marginLeft: 21,
   },
   imageTextWrapper: {
@@ -205,6 +194,8 @@ const styles = StyleSheet.create({
       height: 2,
     },
   }
+  
+
 });
 
 export default Teacher;

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
-import { useRoute } from "@react-navigation/native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ADRESS_API from "../serverUrl";
+import React,{useState,useEffect,useContext} from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { useRoute } from '@react-navigation/native';
+import { MyContext } from '../../useContext/useContext';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ADRESS_API from '../serverUrl';
 
 const TeacherDetail = () => {
   const [Class, setClass] = useState(null);
@@ -37,10 +38,11 @@ const TeacherDetail = () => {
   useEffect(() => {
     async function retrieveClass() {
       try {
-        const value = await AsyncStorage.getItem("Class");
-        setClass(value);
+        const value = await AsyncStorage.getItem();
+       setClass(value)
+        
       } catch (error) {
-        console.error("Error retrieving data from AsyncStorage:", error);
+        
       }
     }
 
@@ -66,7 +68,7 @@ const TeacherDetail = () => {
             <Text style={styles.description}>{data.email}</Text>   
             <View style={styles.rectangle}>
               <FontAwesomeIcon icon={faComment} style={styles.chatIcon} />
-              <Text style={styles.sendMessage}>Send Message</Text>
+              <Text  style={styles.sendMessage}>Send Message</Text>
             </View>
           </View>
         </View>
@@ -79,43 +81,43 @@ const TeacherDetail = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "transparent",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   detailContainer: {
-    backgroundColor: "#DBC8E4",
+    backgroundColor: '#DBC8E4',
     borderRadius: 10,
-    width: "80%",
-    height: "90%",
+    width: '80%',
+    height: '90%',
     padding: 20,
     marginTop: 40,
   },
   centeredView: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "purple",
-    width: "100%",
-    height: "90%",
+    borderColor: 'purple',
+    width: '100%',
+    height: '90%',
     marginTop: 30,
   },
   centeredText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 20,
   },
   contentContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   ellipse: {
     width: 200,
     height: 200,
     borderRadius: 50,
-    backgroundColor: "#66328E",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#66328E',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 10,
   },
   image: {
@@ -123,9 +125,10 @@ const styles = StyleSheet.create({
     height: 300,
     borderRadius: 40,
     marginBottom: 10,
+   
   },
   name: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 16,
     marginBottom: 5,
   },
@@ -134,20 +137,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   rectangle: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: "#66328E",
+    backgroundColor: '#66328E',
     borderRadius: 10,
   },
   chatIcon: {
-    color: "white",
+    color: 'white',
     marginRight: 5,
   },
   sendMessage: {
-    color: "white",
-    fontWeight: "bold",
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 

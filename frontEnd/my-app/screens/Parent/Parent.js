@@ -1,10 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TextInput, Button, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+
+import { useContext,useEffect } from "react";
+import { MyContext } from "../../useContext/useContext";
 import axios from 'axios';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import Adress from '../IP'
 
 const Parent = () => {
+  
+  const { isDarkMode, setMode,iduser,setUsersID,email} = useContext(MyContext);
+
+
+  useEffect(() => {
+ 
+    axios.post(`http://${Adress}:3000/user/getUserByemail`, { email })
+      .then((res) => {
+        setUsersID(res.data);
+        console.log("succes " + iduser);
+      })
+      .catch((err) => {
+        console.log('the error ' + err);
+      });
+  
+}, [iduser]);
+
+
   const navigation = useNavigation();
   const [showInput, setShowInput] = useState(false);
   const route = useRoute(); // Use useRoute to access the route's params
