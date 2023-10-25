@@ -10,6 +10,7 @@ import {
   Modal,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
@@ -24,7 +25,7 @@ const Inscription = ({ navigation }) => {
   const [LastName, setLastName] = useState("");
   const [Birthday, setBirthday] = useState("");
   const [image, setImage] = useState("");
-  const [Class, setClass] = useState("");
+  const [clas, setClass] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const classes = [
     "First Class",
@@ -52,12 +53,12 @@ const Inscription = ({ navigation }) => {
    
     AsyncStorage.getItem("userId");
     console.log(user)
-   axios.post(`http://192.168.1.25:2023/student/add`, {
+   axios.post(`http://192.168.1.5:2023/student/add`, {
         First_name : First_name,
         LastName : LastName,
         Birthday : Birthday , 
         image: "image",
-        class: Class,
+        clas: clas,
         users_idusers: user?.id,
         classes_idclasses: 1,
       })
@@ -70,8 +71,7 @@ const Inscription = ({ navigation }) => {
       })
       
       .catch((err) => {
-        console.log(err)
-        alert(err);
+        Alert.alert("Check your Netword");
       });
   };
 
@@ -134,7 +134,6 @@ const Inscription = ({ navigation }) => {
             top:5,
             width: 111,
             height: 28,
-            fontFamily: "Poppins",
             fontSize: 12.28985595703125,
             fontWeight: "700",
             fontStyle: "normal",
@@ -157,7 +156,7 @@ const Inscription = ({ navigation }) => {
             onPress={() => {setModalVisible(true)
               }}
           >
-            <Text>{Class || "Select Class"}</Text>
+            <Text>{clas || "Select Class"}</Text>
           </TouchableOpacity>
           <Modal
             animationType="slide"

@@ -62,7 +62,7 @@ const CreateAnAccount = ({navigation}) => {
   
     console.log('Sending data:', userData);
   
-   fetch("http://192.168.1.25:2023/user/register", userData)
+   axios.post("http://192.168.1.5:2023/user/register", userData)
       .then((response) => {
         console.log('Response:', response.data);
   
@@ -82,16 +82,12 @@ const CreateAnAccount = ({navigation}) => {
   };
 
   const verify = (password) => {
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasLowercase = /[a-z]/.test(password);
-    const hasNumber = /\d/.test(password);
-
-    if (password.length !== 6 || !hasUppercase || !hasLowercase || !hasNumber) {
+    if (password.length < 6) {
       setIsError(true);
-      Alert.alert("Your password must be 6 characters long and must include an uppercase letter, a lowercase letter, and a number.");
+      Alert.alert("Your password must be at least 6 characters long.");
     }
   };
-
+  
 
   return (
     <ScrollView>

@@ -166,14 +166,47 @@ async function update(req, res) {
 }
 
 
-//contact us 
 
+const updatePassword = (req, res) => {
+  const { idusers } = req.params;
+  const { newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).json({ error: 'New password and confirm password do not match.' });
+  }
+
+  User.updateUserPassword(idusers, newPassword, (err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Password update failed.' });
+    }
+    res.status(200).json({ message: 'Password updated successfully.' });
+  });
+};
+
+
+
+
+
+const getUserById = (req, res) => {
+  const idUsers = req.params.idUsers;
+
+  User.getOneUser(idUsers, (error, students) => {
+    if (error) {
+      console.log(error);
+      res.status(500).json(error);
+    } else {
+      res.status(200).json(students);
+    }
+  });
+};
 
 
 
 
 module.exports = { login , 
   register,
-  getUsers,sendEmail,update
+  getUsers,sendEmail,update,
+  updatePassword,
+  getUserById
 
  };

@@ -46,17 +46,12 @@ const Profile = ({ navigation }) => {
       <View style={styles.container}>
         <View>
           <View style={styles.Edit}>
-            <Image
-              style={{ width: 40, height: 40, left:"12%", marginTop: -30 }}
-              source={{
-                uri: "https://images.vexels.com/media/users/3/224233/isolated/preview/d5ee0e9c87bb54cf867d7fb89c4570b8-online-education-logo.png",
-              }}
-            />
-            <Text style={{ fontSize: 18,fontWeight: "400" ,left:"0%"}}>Edit Profile</Text>
+            
+            <Text style={{ fontSize: 18,fontWeight: "700" ,left:"-12%" , fontSize:25 }}>Edit Profile</Text>
           </View>
           <View style={styles.circle}></View>
           <View style={styles.inputs}>
-            <Text style={{ color: "rgba(0, 0, 0, 1)"  ,  fontWeight: "400"}}>Name</Text>
+            <Text style={{ color: "rgba(0, 0, 0, 1)"  , fontWeight: "600" }}>Name</Text>
             <TextInput
               style={{
                 borderColor: "#66328E",
@@ -71,7 +66,7 @@ const Profile = ({ navigation }) => {
                 borderRadius: 7.681159973144531,
               }}
             />
-            <Text style={{ marginTop: "10%",     color: "rgba(0, 0, 0, 1)",  fontWeight: "400"
+            <Text style={{ marginTop: "10%",     color: "rgba(0, 0, 0, 1)",  fontWeight: "600" 
           }}>
               Email Adress
             </Text>
@@ -89,7 +84,7 @@ const Profile = ({ navigation }) => {
                 borderRadius: 7.681159973144531,
               }}
             />
-            <Text style={{ marginTop: "10%",     color: "rgba(0, 0, 0, 1)", fontWeight: "400"
+            <Text style={{ marginTop: "10%",     color: "rgba(0, 0, 0, 1)", fontWeight: "600" 
           }}>
               Date Of Birthday
             </Text>
@@ -107,7 +102,7 @@ const Profile = ({ navigation }) => {
                 borderRadius: 7.681159973144531,
               }}
             />
-            <Text style={{ marginTop: "10%",     color: "rgba(0, 0, 0, 1)", fontWeight: "400"
+            <Text style={{ marginTop: "10%",     color: "rgba(0, 0, 0, 1)", fontWeight: "600" 
           }}>
               Current Password
             </Text>
@@ -128,7 +123,7 @@ const Profile = ({ navigation }) => {
                 
               }}
             />
-            <Text style={{ marginTop: "10%",    color: "rgba(0, 0, 0, 1)",    fontWeight: "400",
+            <Text style={{ marginTop: "10%",    color: "rgba(0, 0, 0, 1)",    fontWeight: "600",
 
           }}>
               New Password
@@ -156,13 +151,7 @@ const Profile = ({ navigation }) => {
               </Text>
             </View>
           </View>
-          <View style={styles.aboutUs}>
-            <Text style={{ marginLeft: 40 }}>16 ghazala , ariana /tunis</Text>
-            <Text style={{ marginLeft: 65, marginTop: 20 }}>+216 27011482</Text>
-            <Text style={{ marginLeft: 55, marginTop: 20 }}>
-              School@gmail.com
-            </Text>
-          </View>
+         
         </View>
       </View>
     </ScrollView>
@@ -174,6 +163,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    left:5
   },
   circle: {
     width: 160,

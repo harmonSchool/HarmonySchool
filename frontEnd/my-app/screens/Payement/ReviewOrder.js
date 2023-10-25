@@ -69,18 +69,18 @@ const PaymentMethod = ({ navigation }) => {
       <View style={styles.header}>
         
       </View>
-      <Image
-        source={require('../../assets/violet.png')}
-        style={styles.image}
-      />
+      
       <Text style={styles.checkout}>CHECKOUT</Text>
 
       <View style={styles.boxContainer}>
         <View style={styles.box}>
-          <Image
-            source={require('../../assets/tuition.png')}
-            style={styles.boxImage}
-          />
+        <Image
+        style={{width:50,
+        height:50,
+        marginLeft:2,marginTop:2
+      }}
+      source={{uri:'https://cdn-icons-png.flaticon.com/512/5953/5953443.png'}} />
+    
           <View style={styles.boxContent}>
             <Text style={styles.boxTitle}>School Tuition</Text>
             <View style={styles.checkboxContainer}>
@@ -101,10 +101,13 @@ const PaymentMethod = ({ navigation }) => {
         </View>
 
         <View style={styles.box}>
-          <Image
-            source={require('../../assets/eat.png')}
-            style={styles.boxImage}
-          />
+        <Image
+        style={{width:40,
+        height:40,
+        marginLeft:8,marginTop:-4
+      }}
+      source={{uri:'https://cdn-icons-png.flaticon.com/512/926/926255.png'}} />
+    
           <View style={styles.boxContent}>
             <Text style={styles.boxTitle}>Breakfast</Text>
             <View style={styles.checkboxContainer}>
@@ -125,10 +128,12 @@ const PaymentMethod = ({ navigation }) => {
         </View>
 
         <View style={styles.box}>
-          <Image
-            source={require('../../assets/bus.png')}
-            style={styles.boxImage}
-          />
+        <Image
+        style={{width:40,
+        height:40,
+        marginLeft:5,marginTop:-4
+      }}
+      source={{uri:'https://cdn-icons-png.flaticon.com/512/174/174237.png'}} />
           <View style={styles.boxContent}>
             <Text style={styles.boxTitle}>Bus</Text>
             <View style={styles.checkboxContainer}>
@@ -149,21 +154,7 @@ const PaymentMethod = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={styles.contactInfoContainer}>
-        <View style={styles.contactInfo}>
-          <FontAwesome name="map-marker" size={16} style={styles.icon} />
-          <Text style={styles.contactInfoText}>16 Ghazala, Ariana/Tunis</Text>
-        </View>
-        <View style={styles.contactInfo}>
-          <FontAwesome name="phone" size={16} style={styles.icon} />
-          <Text style={styles.contactInfoText}>+216 27011 482</Text>
-        </View>
-        <View style={styles.contactInfo}>
-          <FontAwesome name="envelope" size={16} style={styles.icon} />
-          <Text style={styles.contactInfoText}>school@gmail.com</Text>
-        </View>
-      </View>
-
+      
       <TouchableOpacity style={styles.button} onPress={handleNextButtonPress}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
@@ -177,7 +168,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   header: {
-    backgroundColor: '#4285F4',
     padding: 16,
   },
   headerText: {
@@ -219,6 +209,7 @@ const styles = StyleSheet.create({
   },
   checkboxContainer: {
     marginTop: 10,
+    fontWeight:"700"
   },
   checkbox: {
     backgroundColor: 'white',

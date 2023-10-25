@@ -11,7 +11,7 @@ export default function Student() {
   const { user } = useContext(MyContext);
 
   useEffect(() => {
-    fetch(`http://192.168.1.25:2023/student/getByUser/${users_idUsers}`)
+    fetch(`http://192.168.1.5:2023/student/getByUser/${users_idUsers}`)
       .then((response) => {
         setStudentData(response.data);
       })

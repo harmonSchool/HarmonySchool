@@ -43,8 +43,8 @@ const Teacher = () => {
 
               <Image
                 style={{
-                  height: 100,
-                  width: 100,
+                  height: 90,
+                  width: 120,
                   marginLeft: -10,
                   marginTop: 40,
                 }}
@@ -123,7 +123,7 @@ const Teacher = () => {
               uri: 'https://cdn-icons-png.flaticon.com/512/1869/1869397.png',
             }}
           />
-          <Text style={{ color: '#66328E', left: -75, fontWeight: '800', textAlign: 'center' }}>Calender</Text>
+          <Text style={{ color: '#66328E', left: -76, fontWeight: '800', textAlign: 'center' }}>Calender</Text>
           </TouchableOpacity>
 
 
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     width: '120%',
     height:"120%",
     paddingTop: 50,
-    marginLeft: -40,
+    marginLeft: -39,
     height:900,
   },
   homeDiv: {

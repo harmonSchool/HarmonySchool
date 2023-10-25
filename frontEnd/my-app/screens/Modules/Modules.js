@@ -152,13 +152,12 @@ const styles = StyleSheet.create({
   teacherText: {
     width: 349,
     height: 31,
-    fontFamily: "Poppins",
-    fontSize: 25,
+    fontSize: 29,
     fontWeight: "bold",
     fontStyle: "normal",
     lineHeight: 30,
-    color: "#BA68C8",
-    left : 130,
+    color: "#3C9B2C",
+    left : 120,
     top:-15
   },
   rectangles: {

@@ -1,19 +1,13 @@
-
-import React, { useState , useEffect } from 'react';
-import { Modal, Text, TextInput, Button, View , Image , TouchableWithoutFeedback, ScrollView , TouchableOpacity  , } from 'react-native';
+import React, { useState, useEffect  , useRef} from 'react';
+import { Modal, Text, TextInput, View, Image, TouchableWithoutFeedback, ScrollView, TouchableOpacity  , Animated} from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { FAB  , transparent} from 'react-native-paper';
-import { styles } from './styles'; 
+import { styles } from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios"
 import SelectDropdown from 'react-native-select-dropdown'
-
 import Mailer from "react-native-mail"
-
-
-
 import { Svg, Path } from 'react-native-svg';
-
+import { Card, Title } from 'react-native-paper';
 
 LocaleConfig.locales['en'] = {
   monthNames: [
@@ -50,93 +44,63 @@ LocaleConfig.locales['en'] = {
 
 LocaleConfig.defaultLocale = 'en';
 
-export default function CalendarScreen({ visible, onClose, onAddEvent ,route}) {
+export default function CalendarScreen({ visible, onClose, onAddEvent, route }) {
+
+  
 
 
+  
+  const [student, setStudentData] = useState([]);
+  const [students, setStudents] = useState([]);
 
-
-
-
-
-  const [student,setStudentData]=useState([])
-  const [user , setUserData]=useState([])
+  const [user, setUserData] = useState([]);
   const [selectedDate, setSelectedDate] = useState('');
-
   const [selectedHod, setselectedHod] = useState('');
   const [comments, setComments] = useState({});
-  const [isEventFormVisible, setIsEventFormVisible] = useState(true);
-  const [isHolidayFormVisible, setIsHolidayFormVisible] = useState(false);
   const [calendarMarkings, setCalendarMarkings] = useState({});
   const [isRectangleVisible, setIsRectangleVisible] = useState(false);
-
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedValue, setSelectedValue] = useState();
-
   const [selectedStudentId, setSelectedStudentId] = useState(null);
-  const [selectedStudentFirstName, setSelectedStudentFirstName] = useState('');
-  const [selectedStudentLastName, setSelectedStudentLastName] = useState('');
 
-  const items = ['Option 1', 'Option 2', 'Option 3'];
-
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
-
-  const selectItem = (item) => {
-    setSelectedValue(item);
-    toggleModal();
-  };
-
-  
-  const onSelectStudent = (selectedItem, index) => {
-    setSelectedStudentId(selectedItem.value);
-    const selectedStudent = student.find(studentData => studentData.idStudent === selectedItem.value);
-    if (selectedStudent) {
-      setSelectedStudentFirstName(selectedStudent.First_name);
-      setSelectedStudentLastName(selectedStudent.LastName);
-    }
-    toggleModal();
-  };
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [isEventFormVisible, setIsEventFormVisible] = useState(true);
+  const [isHoldilday, setIsHolidayFormVisible] = useState(true);
 
 
-  
-  //getStudent
-  useEffect(()=>{
-   axios.get(`http://192.168.1.25:2023/student/get`)
-      .then((response)=>{
-console.log(response.data);
-    setStudentData(response.data )
-  }).catch((error)=>{
-    console.error("Error fetching student data ",error)
-  })
-  console.log(student,"student");
-
-},[])
-
-
-
-useEffect(() => {
-  axios.get(`http://192.168.1.5:3001/api/users/getAll`)
-    .then((response) => {
-      console.log("API Response:", response.data);
-      setUserData(response.data);
-
-      const emails = response.data.map((user) => user.email);
-      console.log("Emails:", emails);
-    })
-    .catch((error) => {
-      console.error("Error fetching student data", error);
-    });
-
-  console.log(user, "student");
-}, []);
-
-
-
+  const scrollY = useRef(new Animated.Value(0)).current;
 
 
 
  
+ 
+
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: false }
+  );
+
+  //getStudent
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://192.168.1.189:2023/student/getStudentsByClass/First class');
+        setStudents(response.data);
+        setLoading(false);
+      } catch (error) {
+       
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+ 
+
   useEffect(() => {
     loadEventsAndHolidays().then((data) => {
       setComments(data.comments || {});
@@ -144,44 +108,37 @@ useEffect(() => {
     });
   }, []);
 
-
-
   const saveStudentEvents = async (studentId, events) => {
     try {
       const key = `eventsForStudent_${studentId}`;
       await AsyncStorage.setItem(key, JSON.stringify(events));
     } catch (error) {
-      console.error('Error saving student events: ', error);
     }
   };
 
   const loadStudentEvents = async (studentId) => {
     try {
       const key = `eventsForStudent_${studentId}`;
-      const studentEvents = await AsyncStorage.removeItem(key);
+      const studentEvents = await AsyncStorage.setItem(key);
       return studentEvents ? JSON.parse(studentEvents) : [];
     } catch (error) {
-      console.error('Error loading student events: ', error);
       return [];
     }
   };
 
-const loadEventsAndHolidays = async () => {
+  const loadEventsAndHolidays = async () => {
     try {
-      const eventsAndHolidays = await AsyncStorage.removeItem('eventsAndHolidays');
+      const eventsAndHolidays = await AsyncStorage.setItem('eventsAndHolidays');
       return eventsAndHolidays ? JSON.parse(eventsAndHolidays) : {};
     } catch (error) {
-      console.error('Error loading data: ', error);
       return {};
     }
   };
 
-  
   const saveEventsAndHolidays = async (data) => {
     try {
       await AsyncStorage.setItem('eventsAndHolidays', JSON.stringify(data));
     } catch (error) {
-      console.error('Error saving data: ', error);
     }
   };
 
@@ -189,54 +146,69 @@ const loadEventsAndHolidays = async () => {
     setSelectedDate(day.dateString);
     setIsEventFormVisible(true);
     setIsHolidayFormVisible(false);
-  };
-
-  const onDayLongPress = (day) => {
-    setselectedHod(day.dateString);
-    setIsHolidayFormVisible(true);
-    setIsEventFormVisible(false);
-  };
-
-
-  const handleAddEvent = async () => {
-    if (selectedStudentId)
-    {
-      // Load events for the selected student
-      
-      const currentEvents = await loadStudentEvents(selectedStudentId);
-      const newEvent = {
-        selected: true,
-        selectedColor: 'red',
-        eventName: 'Event',
-      };
   
-      // Add the new event to the current events
-      currentEvents.push({
-        date: selectedDate,
-        event: newEvent,
-      });
-  
-      // Save the updated events for the selected student
-      await saveStudentEvents(selectedStudentId, currentEvents);
-  
-      // Update the calendar markings
+    if (selectedStudent) {
+      // Update the color of the marked date to red for the selected student
       const newCalendarMarkings = {
         ...calendarMarkings,
-        [selectedDate]: newEvent,
+        [day.dateString]: { selected: true, selectedColor: 'red', eventName: 'Event' },
       };
   
       saveEventsAndHolidays({ comments, calendarMarkings: newCalendarMarkings });
   
       setCalendarMarkings(newCalendarMarkings);
     }
+  };
   
+  const onDayLongPress = (day) => {
+    setselectedHod(day.dateString);
+    setIsHolidayFormVisible(true);
+    setIsEventFormVisible(false);
+  
+    if (selectedStudent) {
+      // Update the color of the marked date to green for the selected student
+      const newCalendarMarkings = {
+        ...calendarMarkings,
+        [day.dateString]: { selected: true, selectedColor: 'green', eventName: 'Holiday' },
+      };
+  
+      saveEventsAndHolidays({ comments, calendarMarkings: newCalendarMarkings });
+  
+      setCalendarMarkings(newCalendarMarkings);
+    }
+  };
+  const handleAddEvent = async () => {
+    if (selectedStudentId) {
+      // Load events for the selected student
+      const currentEvents = await loadStudentEvents(selectedStudentId);
+      const newEvent = {
+        selected: true,
+        selectedColor: 'red',
+        eventName: 'Event',
+      };
+
+      // Add the new event to the current events
+      currentEvents.push({
+        date: selectedDate,
+        event: newEvent,
+      });
+
+      // Save the updated events for the selected student
+      await saveStudentEvents(selectedStudentId, currentEvents);
+
+      // Update the calendar markings
+      const newCalendarMarkings = {
+        ...calendarMarkings,
+        [selectedDate]: newEvent,
+      };
+
+      saveEventsAndHolidays({ comments, calendarMarkings: newCalendarMarkings });
+
+      setCalendarMarkings(newCalendarMarkings);
+    }
+
     setIsEventFormVisible(true);
   };
-
- 
-  
-
-
 
   const handleAddHoliday = () => {
     const newCalendarMarkings = {
@@ -246,12 +218,9 @@ const loadEventsAndHolidays = async () => {
 
     saveEventsAndHolidays({ comments, calendarMarkings: newCalendarMarkings });
 
-
-setCalendarMarkings(newCalendarMarkings);
+    setCalendarMarkings(newCalendarMarkings);
     setIsHolidayFormVisible(true);
   };
-
-
 
   const handleCommentChange = (text) => {
     const newComments = { ...comments, [selectedDate]: text };
@@ -261,70 +230,38 @@ setCalendarMarkings(newCalendarMarkings);
     setComments(newComments);
   };
 
-
-
   const toggleRectangleVisibility = () => {
     setIsRectangleVisible(!isRectangleVisible);
   };
 
 
-  const students = student.map((studentData , index ) => ({
-    label: studentData.First_name + ' ' + studentData.LastName ,
-    value: studentData.idStudent  
+  const filteredStudents = students.filter(student => {
+    return student.First_name.toLowerCase().includes(searchText.toLowerCase()) ||
+      student.LastName.toLowerCase().includes(searchText.toLowerCase());
+  });
 
-  }));
-
- 
 
   
+
+ const clearPreviousStudentEvents = async (studentId) => {
+  if (studentId) {
+    const key = `eventsForStudent_${studentId}`;
+    await AsyncStorage.removeItem(key);
+  }
+};
+
+  const onStudentPress = (student) => {
+    clearPreviousStudentEvents(selectedStudentId); // Clear previous student's events
+    setSelectedStudent(student); // Set the new selected student
+  };
+
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-
-    
-  
+    <View style={{ flex: 1, backgroundColor: 'white'  , }}>
       <View animationType="slide" transparent={false} visible={visible}>
-
-      
         <View style={styles.container}>
-
-       
-        
-   
-
-
-<Text style={styles.label}>Select a student </Text>
-<TouchableOpacity onPress={toggleModal} style={styles.customDropdown}>
-  <Text style={styles.selectedValue}>ID student :  {  selectedValue }</Text>
-</TouchableOpacity>
-<Modal visible={isModalVisible} transparent animationType="slide">
-  <View style={styles.modalContainer}>
-    {students.map((student, index) => (
-      <TouchableOpacity
-        key={index}
-        style={styles.modalItem}
-        onPress={() => selectItem(student.value)}
-      >
-        <Text>{student.label}</Text>
-      </TouchableOpacity>
-    ))}
-  </View>
-</Modal>
-
-
-          <FAB style={styles.circle} />
-          <FAB style={styles.ce2} />
-          <Text style={styles.hd}>Holiday</Text>
-          <Text
-            style={styles.at}
-            title="Filter Students"
-            onPress={toggleRectangleVisibility}
-          >
-            Absent
-          </Text>
-  
-          <Text style={{ top: -28, marginLeft: '12%', fontWeight: '700' }} />
-  
-         
+          <Text style={styles.label}> Calender</Text>
+          
+          
   
           <Calendar
             onDayPress={onDayPress}
@@ -332,70 +269,42 @@ setCalendarMarkings(newCalendarMarkings);
             markedDates={calendarMarkings}
           />
   
-          {isEventFormVisible && (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.absent}>Absent</Text>
-              <EventForm
-              visible={isEventFormVisible}
-              onClose={()=>setIsEventFormVisible(false)}          
-            onAddEvent={handleAddEvent}
-            backgroundColor="red"
-          />
-            </View>
-          )}
-  
-          {isHolidayFormVisible && (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.hld}>Holiday</Text>
-              <EventForm
-                visible={isHolidayFormVisible}
-                onClose={() => setIsHolidayFormVisible(false)}
-                onAddEvent={handleAddHoliday}
-                backgroundColor="green"
-              />
-            </View>
-          )}
-        </View>
-  
-        <View>
-          {comments[selectedDate] && (
-            <Text style={styles.commentText}>{comments[selectedDate]}</Text>
-          )}
-  
-          {isHolidayFormVisible && (
-            <TextInput
-              style={styles.commentInput}
-              onChangeText={handleCommentChange}
-              value={comments[selectedDate]}
-            />
-          )}
+         
+         
+        
+      
         </View>
         <View>
-        <View>
-        {isRectangleVisible && <ScrollView style={styles.rectangle47}></ScrollView>}
-        <View>
-          
-        </View>
+          <View>
+          </View>
         </View>
       </View>
-      </View>
-    </View> 
-  )  
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <ScrollView
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+        >
+          {filteredStudents.map((student, index) => {
+            // Animated card styles go here
+            return (
+              <Card key={student.id} style={styles.card}
+              onPress={() => onStudentPress(student)}
 
-}
-  
-  const EventForm = ({ visible, onClose, onAddEvent, backgroundColor }) => {
-    const fabStylePlus = { ...styles.fab, backgroundColor };
-    const fabStyleCounter = { ...styles.fab2, backgroundColor };
-  
-    return (
-      <View animationType="slide" transparent={false} visible={visible}>
-        <View style={styles.modalContainer}>
-          <FAB style={fabStylePlus} icon="plus" onPress={onAddEvent} />
-          <FAB style={styles.fab3} />
-          <FAB style={fabStyleCounter} />
-        </View>
-      </View>
-    );
-  };
-  
+              >
+              
+                <Card.Cover source={{ uri: student.image }} />
+                <Card.Content>
+                  <Title style={styles.title}>First Name: {student.First_name}</Title>
+                  <Title style={styles.title}>Last Name: {student.LastName}</Title>
+                </Card.Content>
+              </Card>
+            );
+          })}
+        </ScrollView>
+      )}
+    </View>
+  );
+          }
+ 

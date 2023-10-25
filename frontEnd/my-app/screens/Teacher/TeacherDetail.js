@@ -9,61 +9,61 @@ import ADRESS_API from "../serverUrl";
 
 const TeacherDetail = () => {
   const [Class, setClass] = useState(null);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const route = useRoute();
   const subject = route.params?.params.subject;
 
   useEffect(() => {
-    if (Class && subject) {
-      const apiUrl = `http://192.168.1.25:2023/teacher/getOneTeacher/${subject}/${Class}`;
-      console.log("apiurl****", apiUrl);
-      // Fetch data from API
-      axios
-        .get(apiUrl)
-        .then((response) => {
+    async function fetchData() {
+      if (Class && subject) {
+        try {
+          const apiUrl = `http://192.168.1.5:2023/teacher/getOneTeacher/${subject}/${Class}`;
+          console.log("apiurl****", apiUrl);
+          const response = await axios.get(apiUrl);
           setData(response.data);
+          setLoading(false);
           console.log("---------", response.data);
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Error fetching teacher data:", error);
-        });
+          setLoading(false);
+        }
+      }
     }
+
+    fetchData();
   }, [Class, subject]);
 
   useEffect(() => {
-    // Retrieve the 'Class' from AsyncStorage
-    _retrieveData = async () => {
+    async function retrieveClass() {
       try {
         const value = await AsyncStorage.getItem("Class");
         setClass(value);
       } catch (error) {
         console.error("Error retrieving data from AsyncStorage:", error);
       }
-    };
+    }
 
-    _retrieveData();
+    retrieveClass();
   }, []);
 
   return (
     <View style={styles.container}>
+    {loading ? (
+      <Text>Loading...</Text>
+    ) : (
       <View style={styles.detailContainer}>
         <Text style={styles.centeredText}>Mr/Mss</Text>
         <View style={styles.centeredView}>
-          {/* Content of the second view */}
           <View style={styles.contentContainer}>
-            {/* Image */}
             <Image
               style={styles.image}
               source={{
                 uri: "https://www.teflcourse.net/uploads/teacher-portrait1.jpg",
-              }} // Replace 'YOUR_IMAGE_URI_HERE' with the actual image URI
+              }}
             />
-
-            {/* Name and description */}
-            <Text style={styles.name}>{data.name}</Text>
-            <Text style={styles.description}>{data.email}</Text>
-
-            {/* Rectangle with the button "Send Message" and chat icon */}
+            <Text style={styles.name}>{data.name}</Text>    
+            <Text style={styles.description}>{data.email}</Text>   
             <View style={styles.rectangle}>
               <FontAwesomeIcon icon={faComment} style={styles.chatIcon} />
               <Text style={styles.sendMessage}>Send Message</Text>
@@ -71,10 +71,9 @@ const TeacherDetail = () => {
           </View>
         </View>
       </View>
+    )}
     </View>
-  );
-};
-
+  )}
 // Define your styles here
 
 const styles = StyleSheet.create({

@@ -5,53 +5,117 @@ import Navbar from "../../Navbar/Navbar";
 import axios from "axios";
 import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
-
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 function Login({ navigation }) {
-  const { isDarkMode, setMode, setUser  } = useContext(MyContext);
+  const { isDarkMode, setMode, setUser } = useContext(MyContext);
   const theme = isDarkMode ? darkTheme : lightTheme;
-  const [email,setEmail]=useState('')
-  const [password , setPassword]=useState('')
-  const [data,setData]=useState([])
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [teacherEmails, setTeacherEmails] = useState([]);
+  const [userEmails, setUserEmails] = useState([]);
 
+  useEffect(() => {
+    fetchDataFromTeacherURL();
+    fetchDataFromUserURL();
+  }, []);
 
-  
-
-
-
-
-  const handleLog = (e) => {
-    e.preventDefault();
-    axios.post(`http://192.168.1.25:2023/user/login`, {
-        email,
-        password,
-      })
-      .then((res) => {
-        setData(res.data);
-        console.log(data);
-        alert("welcome");
-  
-        if (email.includes("_teacherfromHarmony")) {
-          navigation.navigate('Teacher');
-        } else {
-          navigation.navigate('Parent');
-        }
-      })
-      .catch((err) => {
-        if (email === "") {
-          console.log("enter your email");
-          alert('enter your email');
-        } else if (password === "") {
-          console.log("enter your password");
-          alert("enter your password");
-        } else {
-          console.log(err);
-          alert("check your password or your email");
-        }
-      });
+  const getUserEmail = async () => {
+    try {
+      const email = await AsyncStorage.getItem('userEmail');
+      return email;
+    } catch (error) {
+      console.error('Error retrieving user email:', error);
+    }
   }
 
 
+  
+
+
+
+  function fetchDataFromTeacherURL() {
+    axios
+      .get("http://192.168.1.136:2023/teacher/get")
+      .then((res) => {
+        const teacherData = res.data;
+        const teacherEmails = teacherData.map((teacher) => teacher.email);
+        setTeacherEmails(teacherEmails);
+      })
+      .catch((err) => {
+        console.error("Error fetching data from Teacher URL:", err);
+      });
+  }
+
+  function fetchDataFromUserURL() {
+    axios
+      .get("http://192.168.1.136:2023/user/getAll")
+      .then((res) => {
+        const userData = res.data;
+        const userEmails = userData.map((user) => user.email);
+        setUserEmails(userEmails);
+        console.log("users Emails " , userEmails)
+        
+        
+      })
+      .catch((err) => {
+        console.error("Error fetching data from User URL:", err);
+      });
+  }
+
+  
+
+  const handleLog = async (e) => {
+    const adminKey = "37910Acoy"; 
+    console.log("Admin Key:", adminKey); 
+    e.preventDefault();
+  
+    if (email === "") {
+      console.log("Enter your email");
+      alert("Enter your email");
+      return;
+    }
+    if (password === "") {
+      console.log("Enter your password");
+      alert("Enter your password");
+      return;
+    }
+  
+    try {
+      const storedEmail = await getUserEmail();
+  
+      console.log("Email entered:", email);
+      console.log("Admin Key:", adminKey);
+  
+      if (email === storedEmail && adminKey) {
+        // Admin access granted
+        console.log("Admin login");
+        alert("Welcome admin");
+        // Handle admin navigation here
+      } else if (teacherEmails.includes(email)) {
+        console.log("Teacher login");
+        alert("Welcome teacher");
+        navigation.navigate("Teacher")
+      } else if (userEmails.includes(email) || email === storedEmail) {
+        console.log("User login");
+        alert("Welcome, user");
+        console.log("Stored Email:", storedEmail);
+  
+        // Navigate to the Parent component with userEmail and adminKey
+        navigation.navigate("Parent", { userEmail: email, adminKey: adminKey });
+      } else {
+        console.log("Email not found");
+        alert("Email not found. Please check your email or register.");
+      }
+    } catch (error) {
+      console.error("Error handling login:", error);
+    }
+  };
+  
+  
+  
+
+    
   
 
   return (

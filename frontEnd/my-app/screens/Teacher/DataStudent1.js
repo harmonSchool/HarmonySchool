@@ -1,91 +1,90 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { useState,useEffect } from 'react';
-import ADRESS_API from '../serverUrl';
-import axios from 'axios';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'native-base';
+import { Card, Title } from 'react-native-paper';
 
-const DataStudent1 = () => {
-    const [students, setStudents] = useState([]); 
+const StudentClass = () => {
+  const navigation = useNavigation();
 
-    useEffect(() => {
-      
-      axios.get(`http://192.168.1.25:2023/student/getStudentsByClass/First class`)
-        .then(response => {
-          
-          setStudents(response.data);
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des étudiants :', error);
-        });
-    }, []); 
+  const handleNavigation = (routeName) => {
+    navigation.navigate(routeName);
+  };
+
+  const classData = [
+    { id: 1, name: 'Classe 1', color: 'green' },
+    { id: 2, name: 'Classe 2', color: '#e74c3c' },
+    { id: 3, name: 'Classe 3', color: '#27ae60' },
+    { id: 4, name: 'Classe 4', color: '#f39c12' },
+    { id: 5, name: 'Classe 5', color: '#9b59b6' },
+    { id: 6, name: 'Classe 6', color: '#34495e' },
+  ];
 
   return (
-   
-      <View style={styles.detailContainer}>
-        <Text style={styles.className}>Students of First Class</Text>
-        <ScrollView style={{ width: 270,marginTop:20 }}>
-        <View style={styles.studentGrid}>
-          {students.map((student, index) => (
-            <TouchableOpacity key={student.id} style={styles.studentItem}>
-              <View style={styles.studentImageContainer}>
-                <Image source={{ uri: student.image }} style={styles.studentImage} />
-              </View>
-              <Text style={styles.studentName}>{student.First_name} {student.lastName}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-        </ScrollView>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.className}>Available Classes</Text>
+        <Image
+          style={styles.image}
+          source={{
+            uri:
+              'https://cdn-icons-png.flaticon.com/512/6621/6621964.png',
+          }}
+        />
+        {classData.map((classInfo) => (
+          <CardItem
+            key={classInfo.id}
+            backgroundColor={classInfo.color}
+            onPress={() => handleNavigation(`DataStudent${classInfo.id}`)}
+            name={classInfo.name}
+          />
+        ))}
       </View>
-    
+    </ScrollView>
   );
 };
 
+const CardItem = ({ backgroundColor, onPress, name }) => (
+  <Card
+    style={[styles.button, { backgroundColor }]}
+    onPress={onPress}
+  >
+    <Card.Content>
+      <Title style={styles.buttonText}>{name}</Title>
+    </Card.Content>
+  </Card>
+);
+
 const styles = StyleSheet.create({
-  detailContainer: {
-    backgroundColor: '#DBC8E4',
-    borderColor: 'pink',
-    borderRadius: 10,
-    width: '90%',
-    padding: 50,
-    marginTop: 50,
+  container: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft:20,
-    height:"90%",
-    
+    backgroundColor: '#ecf0f1',
   },
   className: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#2c3e50',
   },
-  studentGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between', 
-   // Espacement horizontal entre les élèves
-  },
-  studentItem: {
-    width: '40%', // 45% de la largeur pour afficher deux élèves par ligne
+  image: {
+    width: 150,
+    height: 150,
     marginBottom: 20,
-    alignItems: 'center',
   },
-  studentImageContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    overflow: 'hidden',
-    marginBottom: 10,
+  button: {
+    width: 140,
+    height: 120,
+    borderRadius: 15,
+    marginVertical: 10,
   },
-  studentImage: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 50,
-  },
-  studentName: {
+  buttonText: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 20,
     textAlign: 'center',
-    fontSize: 18,
   },
 });
 
-export default DataStudent1;
+export default StudentClass;

@@ -4,59 +4,21 @@ const { add,put,remove,getAll,getStudentsInClass,getOneStudent,
   getStudentsByClass5 ,
   getStudentsByClass6  } = require("../database/model/student")
 
-const nodemailer = require('nodemailer');
 
-const addStudent = (req, res) => {
-  const {First_name,LastName ,Birthday ,email,section,image,users_idusers,classes_idclasses,type} = req.body;
-  const StudentData = { First_name, LastName, Birthday ,email,section,image,users_idusers,classes_idclasses,type}
-
-  const gmailEmail = 'oubaidbensaid18910@gmail.com';
-  const gmailPassword = 'abs10697';
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: "oubaidbensaid18910@gmail.com",
-      pass: "jyuk kkny txpk epba"
-    }
-  });
-
-  const mailOptions = {
-    from: "oubaidbensaid18910@gmail.com",
-    to: email, 
-    subject: 'school',
-    html: `
-        <html>
-            <body>
-                <p> we get the student information </p>
-                <p><strong>Message from ${StudentData.First_name}</strong></p>
-                <p><strong>Phone number ${StudentData.LastName}</strong></p>
-                <p><strong>Birthday ${StudentData.Birthday}</strong></p>
-                <p><strong>Section ${StudentData.section}</strong></p>
-                <p><strong>Image ${StudentData.image}</strong></p>
-            </body>
-        </html>
-    `
+  const addStudent = (req, res) => {
+    const { First_name, LastName, Birthday, Class , image, users_idusers, classes_idclasses, type } = req.body;
+    const StudentData = { First_name, LastName, Birthday, Class , image, users_idusers, classes_idclasses, type };
+  
+    add(StudentData, (dbError, dbResults) => {
+      if (dbError) {
+        console.log(dbError);
+        res.status(500).json(dbError);
+      } else {
+        res.status(201).json(dbResults);
+      }
+    });
   };
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Error sending email:', error);
-      res.status(500).json({ message: 'Failed to send a message' });
-    } else {
-      console.log('Email sent:', info.response);
-      // Assuming you want to add the student data to your database after sending the email
-      add(StudentData, (dbError, dbResults) => {
-        if (dbError) {
-          console.log(dbError);
-          res.status(500).json(dbError);
-        } else {
-          res.status(201).json(dbResults);
-        }
-      });
-    }
-  });
-};
+  
 
 
 
