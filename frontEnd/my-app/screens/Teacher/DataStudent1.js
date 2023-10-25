@@ -1,90 +1,105 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'native-base';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, ScrollView, StyleSheet, TextInput, Animated } from 'react-native';
 import { Card, Title } from 'react-native-paper';
+import axios from 'axios';
 
-const StudentClass = () => {
-  const navigation = useNavigation();
+const DataStudent1 = () => {
+  const [students, setStudents] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const handleNavigation = (routeName) => {
-    navigation.navigate(routeName);
-  };
+  const scrollY = useRef(new Animated.Value(0)).current;
 
-  const classData = [
-    { id: 1, name: 'Classe 1', color: 'green' },
-    { id: 2, name: 'Classe 2', color: '#e74c3c' },
-    { id: 3, name: 'Classe 3', color: '#27ae60' },
-    { id: 4, name: 'Classe 4', color: '#f39c12' },
-    { id: 5, name: 'Classe 5', color: '#9b59b6' },
-    { id: 6, name: 'Classe 6', color: '#34495e' },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://192.168.1.5:2023/student/getStudentsByClass/First class');
+        setStudents(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching students:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const filteredStudents = students.filter(student => {
+    return student.First_name.toLowerCase().includes(searchText.toLowerCase()) ||
+      student.LastName.toLowerCase().includes(searchText.toLowerCase());
+  });
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: false }
+  );
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.className}>Available Classes</Text>
-        <Image
-          style={styles.image}
-          source={{
-            uri:
-              'https://cdn-icons-png.flaticon.com/512/6621/6621964.png',
-          }}
-        />
-        {classData.map((classInfo) => (
-          <CardItem
-            key={classInfo.id}
-            backgroundColor={classInfo.color}
-            onPress={() => handleNavigation(`DataStudent${classInfo.id}`)}
-            name={classInfo.name}
-          />
-        ))}
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <Text style={styles.header}></Text>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search for a student..."
+        value={searchText}
+        onChangeText={text => setSearchText(text)}
+      />
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <ScrollView
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+        >
+          {filteredStudents.map((student, index) => {
+            // Animated card styles go here
+            return (
+              <Card key={student.id} style={styles.card}>
+                <Card.Cover source={{ uri: student.image }} />
+                <Card.Content>
+                  <Title style={styles.title}>Full Name: {student.First_name}</Title>
+                  <Title style={styles.title}>Last Name: {student.LastName}</Title>
+                  <Title style={styles.title}>Birthday: {student.Birthday}</Title>
+                  <Title style={styles.title}>Class: {student.class}</Title>
+                </Card.Content>
+              </Card>
+            );
+          })}
+        </ScrollView>
+      )}
+    </View>
   );
 };
-
-const CardItem = ({ backgroundColor, onPress, name }) => (
-  <Card
-    style={[styles.button, { backgroundColor }]}
-    onPress={onPress}
-  >
-    <Card.Content>
-      <Title style={styles.buttonText}>{name}</Title>
-    </Card.Content>
-  </Card>
-);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
+    padding: 16,
+    top:25
   },
-  className: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  header: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 16,
+    color : "#906BAD",
+    left:140
+  },
+  searchInput: {
+    height: 40,
+    borderWidth: 0.8,
     marginBottom: 20,
-    color: '#2c3e50',
+    paddingLeft: 8,
+    borderRadius: 25,
   },
-  image: {
-    width: 150,
-    height: 150,
-    marginBottom: 20,
+  card: {
+    marginBottom: 16,
+    elevation: 4, // Add a shadow effect
   },
-  button: {
-    width: 140,
-    height: 120,
-    borderRadius: 15,
-    marginVertical: 10,
-  },
-  buttonText: {
+  title: {
+    fontSize: 15,
+    top:5,
     fontWeight: 'bold',
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
   },
 });
 
-export default StudentClass;
+export default DataStudent1;

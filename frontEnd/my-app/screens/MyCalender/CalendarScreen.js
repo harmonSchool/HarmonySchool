@@ -86,7 +86,7 @@ export default function CalendarScreen({ visible, onClose, onAddEvent, route }) 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.1.189:2023/student/getStudentsByClass/First class');
+        const response = await axios.get('http://192.168.1.5:2023/student/getStudentsByClass/First class');
         setStudents(response.data);
         setLoading(false);
       } catch (error) {

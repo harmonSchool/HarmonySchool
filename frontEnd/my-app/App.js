@@ -51,7 +51,7 @@ export default function App() {
     <MyProvider>
     <NativeBaseProvider >
     <NavigationContainer>
-    <Stack.Navigator initialRouteName="Payment">
+    <Stack.Navigator initialRouteName="StudentClass">
     <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
 
      <Stack.Screen name="Payment" component={Payment} options={{headerShown:false}}  />
