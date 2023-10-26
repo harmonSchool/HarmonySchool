@@ -73,9 +73,107 @@ function updateNewProfile(username, email, password, idusers, callback) {
   });
 }
 
+function deleteUser(idusers, callback) {
+  const query = "DELETE FROM users WHERE idusers = ?";
+  conn.query(query, [idusers], (err, results) => {
+    if (err) {
+      console.error("Error deleting user: " + err);
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+}
+function getUserById(idusers, callback) {
+  const query = "SELECT * FROM users WHERE idusers = ?";
+  conn.query(query, [idusers], (err, results) => {
+    if (err) {
+      console.error("Error retrieving user by ID: " + err);
+      callback(err, null);
+    } else if (results.length === 0) {
+      callback("User not found", null);
+    } else {
+      callback(null, results[0]);
+    }
+  });
+}
 
-  module.exports = { findByEmail,
-    createUser,
-    updateNewProfile
- };
+
+const updateUserPassword = (idusers, newPassword, callback) => {
+  const saltRounds = 10;
+
+  // Hash and update the new password
+  bcrypt.hash(newPassword, saltRounds, (err, hash) => {
+    if (err) {
+      console.error('Error hashing new password: ' + err.message);
+      callback(err);
+    } else {
+      const updateSql = 'UPDATE users SET password = ? WHERE idusers = ?';
+      conn.query(updateSql, [hash, idusers], (err, result) => {
+        if (err) {
+          console.error('Error updating password: ' + err.message);
+          callback(err);
+        } else {
+          console.log('Password updated successfully.');
+          callback(null);
+        }
+      });
+    }
+  });
+};
+function getUserIdByUsername(username, callback) {
+  const query = "SELECT idusers FROM users WHERE username = ?";
+  conn.query(query, [username], (err, results) => {
+    if (err) {
+      console.error("Error retrieving user ID by username: " + err);
+      callback(err, null);
+    } else if (results.length === 0) {
+      callback("User not found", null);
+    } else {
+      callback(null, results[0].idusers);
+    }
+  });
+}
+
+
+function getUserIdByEmail(email, callback) {
+  const query = "SELECT idusers FROM users WHERE email = ?";
+  conn.query(query, [email], (err, results) => {
+    if (err) {
+      console.error("Error retrieving user ID by email: " + err);
+      callback(err, null);
+    } else if (results.length === 0) {
+      callback("email not found", null);
+    } else {
+      callback(null, results[0].idusers);
+    }
+  });
+}
+
+
+const getOneUser = (idUsers, callback) => {
+  const sql = `SELECT * FROM users WHERE idUsers = ?`;
+  conn.query(sql, [idUsers], function (error, results) {
+    callback(error, results);
+  });
+};
+
+
   
+  
+module.exports = { 
+  findByEmail,
+  createUser,
+  getAll,
+  updateNewProfile,
+  deleteUser,
+  getUserById,
+  getUserIdByUsername,
+  getUserIdByEmail,
+  findByEmail,
+    createUser,
+    updateNewProfile,
+    getAll,
+    updateUserPassword   ,getOneUser 
+};
+

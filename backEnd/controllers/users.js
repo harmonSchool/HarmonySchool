@@ -13,14 +13,71 @@ const pool = mysql.createPool({
   database: "harmony",
 });
 
-function get(req,res){
+
+
+
+function getUsers(req,res){
   User.getAll((err,result)=>{
+    if(err) res.status(500).send(err)
+    else res.status(200).json(result)
+  })
+}
+
+function getUserByID(req, res) {
+  const { idusers } = req.params;
+
+  User.getUserById(idusers, (err, user) => {
+    if (err) {
+      console.error("Error retrieving user by ID: " + err);
+      res.sendStatus(500);
+    } else if (!user) {
+      res.status(404).send("User not found");
+    } else {
+      res.status(200).json(user);
+    }
+  });
+}
+
+
+function getByUserName(req,res){
+  const {username} = req.body;
+  User.getUserIdByUsername(username,(err,idusers)=>{
     if(err){
-      res.status(404).send(err)
-    }else if(result){
-      res.status(200).send(result)
+      console.error("Error is "+err);
+    }
+    else{
+      res.status(200).json(idusers)
     }
   })
+}
+
+
+function getBymail(req,res){
+  const {email} = req.body;
+  User.getUserIdByEmail(email,(err,idusers)=>{
+    if(err){
+      console.error("Error is "+err);
+    }
+    else{
+      res.status(200).json(idusers)
+    }
+  })
+}
+
+
+
+
+function deleted(req, res) {
+  const { idusers } = req.params;
+
+  User.deleteUser(idusers, (err, result) => {
+    if (err) {
+      console.error("Error deleting user: " + err);
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  });
 }
 
 
@@ -30,30 +87,37 @@ function login(req, res) {
   User.findByEmail(email, (err, results) => {
     if (err) {
       console.error("Error retrieving user from database: " + err);
-      return res.sendStatus(500);
+      return res.status(500).send({ message: "Internal server error" });
     }
     if (results.length === 0) {
+      console.log(`User with email ${email} not found.`);
       return res.status(401).send({ message: "Invalid email or password" });
     }
 
     const user = results[0];
+    console.log(`Found user: ${user.username}`);
+
     bcrypt.compare(password, user.password, (err, isMatch) => {
       if (err) {
         console.error("Error comparing passwords: " + err);
-        return res.sendStatus(500);
+        return res.status(500).send({ message: "Internal server error" });
       }
 
       if (!isMatch) {
+        console.log(`Password for user ${user.username} does not match.`);
         return res.status(401).send({ message: "Invalid email or password" });
       }
 
       const token = jwt.sign({ userId: user.User_Id }, secretKey, {
         expiresIn: "1h",
       });
+      console.log(`User ${user.username} successfully logged in.`);
       res.send({ token, id: user.idusers });
     });
   });
 }
+
+
 function register(req, res) {
   const { username, password, email, Birthday, Number } = req.body;
 
@@ -99,12 +163,13 @@ function register(req, res) {
   });
 }
 
-function getAll(callback) {
-  const sql = "SELECT * FROM users";
-  conn.query(sql, (err, results) => {
-    callback(err, results);
+function getAll (callback) {
+  const sql = 'SELECT * FROM users'
+  conn.query(sql,  (err, results) =>{
+    callback(err, results)
   });
 }
+
 
 const sendEmail = (req, res) => {
   const { email } = req.body;
@@ -160,14 +225,53 @@ async function update(req, res) {
 }
 
 
-//contact us 
 
+const updatePassword = (req, res) => {
+  const { idusers } = req.params;
+  const { newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).json({ error: 'New password and confirm password do not match.' });
+  }
+
+  User.updateUserPassword(idusers, newPassword, (err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Password update failed.' });
+    }
+    res.status(200).json({ message: 'Password updated successfully.' });
+  });
+};
+
+
+
+
+
+const getUserById = (req, res) => {
+  const idUsers = req.params.idUsers;
+
+  User.getOneUser(idUsers, (error, students) => {
+    if (error) {
+      console.log(error);
+      res.status(500).json(error);
+    } else {
+      res.status(200).json(students);
+    }
+  });
+};
 
 
 
 
 module.exports = { login , 
   register,
-  getAll,sendEmail,update
+  getUsers,sendEmail,update,
+  updatePassword,
+  getUserById
+  ,
+  deleted,
+  sendEmail,update,
+  getUserByID,
+  getByUserName,
+  getBymail
 
  };

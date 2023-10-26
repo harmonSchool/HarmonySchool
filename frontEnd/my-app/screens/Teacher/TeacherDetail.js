@@ -9,14 +9,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ADRESS_API from '../serverUrl';
 
 const TeacherDetail = () => {
-
-
-  const [Class , setClass ]= useState();
-  [data,setData]=useState([])
-  const route=useRoute();
+  const [Class, setClass] = useState(null);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const route = useRoute();
   const subject = route.params?.params.subject;
-    console.log("class",AsyncStorage.getItem("Class"))
-    _retrieveData = async () => {
+
+  useEffect(() => {
+    async function fetchData() {
+      if (Class && subject) {
+        try {
+          const apiUrl = `http://192.168.1.5:2023/teacher/getOneTeacher/${subject}/${Class}`;
+          console.log("apiurl****", apiUrl);
+          const response = await axios.get(apiUrl);
+          setData(response.data);
+          setLoading(false);
+          console.log("---------", response.data);
+        } catch (error) {
+          console.error("Error fetching teacher data:", error);
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchData();
+  }, [Class, subject]);
+
+  useEffect(() => {
+    async function retrieveClass() {
       try {
         const value = await AsyncStorage.getItem();
        setClass(value)
@@ -24,49 +44,28 @@ const TeacherDetail = () => {
       } catch (error) {
         
       }
-    };
-    
- 
-    useEffect(() => {
-  
-      axios
-        .get(`http://${ADRESS_API}:3001/teacher/getOneTeacher/${subject}/${Class}`)
-        .then((response) => {
-        console.log(response,"teacher");
-        console.log(Class,"class");
-        setData(response.data);
-        console.log(data,"data");
-        })
-        .catch((error) => {
-         
-          console.error('Error fetching teacher data:', error);
-        });
-    },[]);
-    
+    }
+
+    retrieveClass();
+  }, []);
+
   return (
     <View style={styles.container}>
+    {loading ? (
+      <Text>Loading...</Text>
+    ) : (
       <View style={styles.detailContainer}>
         <Text style={styles.centeredText}>Mr/Mss</Text>
         <View style={styles.centeredView}>
-          {/* Contenu de la deuxième vue */}
           <View style={styles.contentContainer}>
-          
-            {/* Ellipse avec image */}
-           
-            <View >
             <Image
-          
-          style={styles.image}
-        />
-            </View>
-
-            {/* Nom et prénom en gras */}
-            <Text style={styles.name} ></Text>
-
-            {/* Description de la personne */}
-            <Text style={styles.description}></Text>
-
-            {/* Rectangle avec le bouton "Send Message" et l'icône de chat */}
+              style={styles.image}
+              source={{
+                uri: "https://www.teflcourse.net/uploads/teacher-portrait1.jpg",
+              }}
+            />
+            <Text style={styles.name}>{data.name}</Text>    
+            <Text style={styles.description}>{data.email}</Text>   
             <View style={styles.rectangle}>
               <FontAwesomeIcon icon={faComment} style={styles.chatIcon} />
               <Text  style={styles.sendMessage}>Send Message</Text>
@@ -74,10 +73,10 @@ const TeacherDetail = () => {
           </View>
         </View>
       </View>
+    )}
     </View>
-  );
-};
-
+  )}
+// Define your styles here
 
 const styles = StyleSheet.create({
   container: {

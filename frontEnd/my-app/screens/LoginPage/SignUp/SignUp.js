@@ -8,7 +8,10 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Dimensions
 } from "react-native";
+import AntDesign from "react-native-vector-icons/AntDesign"
+import Adress from '../../IP'
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons/index";
 import CustomTextInputEmail from "./CustomTextInputEmail";
@@ -102,86 +105,74 @@ const CreateAnAccount = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.homeDiv}>
-          <Text style={styles.homeText}>Home</Text>
-        </View>
-
         <View style={styles.imageContainer}>
-          <Image
-            source={require("../../../assets/icon8.png")}
-            style={{ flex: 1, width: undefined, height: undefined }}
-          />
         </View>
 
         <View style={styles.text}>
-          <Text style={{ color: "#66328E" }}>Create Account</Text>
+          <Text style={{ fontWeight:"400",fontSize:18,left:-130 }}>Create an account</Text>
+
+          <Text style={{ fontWeight:"300",fontSize:13,left:-130,top:10 }}>and join us</Text>
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={styles.label}>name</Text>
           <TextInput
             style={styles.inputName}
-            placeholderTextColor="#000000"
+            placeholder="   enter your name"
             onChangeText={handleName}
           />
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={styles.label}>Date_of_birthday</Text>
+          <Text style={styles.label}>date_of_birthday</Text>
           <TextInput
             style={styles.inputName}
-            placeholderTextColor="#000000"
+            placeholder="   YYYY/MM/DD"
             onChangeText={handleDate}
           />
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={styles.label}>Phone Number</Text>
+          <Text style={styles.label}>phone Number</Text>
           <TextInput
             style={styles.inputName}
-            placeholderTextColor="#000000"
+            placeholder="   enter your phone number"
             onChangeText={handlePhone}
           />
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={[styles.label, { paddingBottom: 20.44 }]}>Email</Text>
+          <Text style={[styles.label]}>e-mmail</Text>
 
-          <CustomTextInputEmail
-            iconName={faEnvelope}
+          <TextInput
+            style={styles.inputName}
+            placeholder="   enter your e-mail"
             onChangeText={handleEmail}
           />
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={[styles.label, { paddingBottom: 20.44 }]}>Password</Text>
+          <Text style={[styles.label]}>password</Text>
 
-          <CustomTextInputPassword
-            iconName={faLock}
+          < TextInput
+            style={styles.inputName}
+            placeholder="   enter your password"
             onChangeText={handlePassword}
-            onBlur={verify}
-            isError={isError}
-            secureTextEntry={true}
+            secureTextEntry={hide}
+            
           />
+                   <AntDesign name="eye" style={{color:"black",fontSize:28,top:-28,left:"90%"}} onPress={()=>setHide(!hide)}/>
+
         </View>
 
-        <TouchableOpacity style={styles.loginButton} onPress={handleSignUp}>
+        <TouchableOpacity style={styles.loginButton} onPress={()=>handleSignUp()}>
           <View style={styles.loginButtonTextWrapper}>
             <Text style={styles.loginButtonText}>SIGN UP</Text>
           </View>
         </TouchableOpacity>
 
-        <View style={styles.haveAccountContainer}>
-          <Text style={styles.label}>Have an account already?</Text>
-          <Text
-            style={styles.haveAnAccountText}
-            onPress={() => {
-              navigation.navigate("Login");
-            }}
-          >
-            &nbsp;&nbsp;Log in
-          </Text>
-        </View>
+        <View style={{width:"100%",height:70}}></View>
+
       </View>
     </ScrollView>
   );
@@ -193,15 +184,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     width: '100%',
-    marginTop: -29,
-    margin:29
+    marginLeft:-15
   },
   text: {
     alignItems: "center",
     marginTop: 10,
     marginLeft: 141,
     marginRight: 141,
-    width: 100,
+    width: 190,
 
     color: "#65328e",
   },
@@ -234,34 +224,28 @@ const styles = StyleSheet.create({
   },
   nameContainer: {
     position: "relative",
-    width: 269,
+    width: "90%",
     height: 84,
     marginLeft: 40,
     marginTop: 20,
+    
   },
   label: {
-    color: "#66328E",
-    fontSize: 12.3,
-    fontWeight: "500",
+    color:"rgba(0, 0, 0, 1)"  ,  fontSize:12,fontWeight: "300"
   },
   inputName: {
-    position: "absolute",
-    width: 269,
-    height: 46,
-    top: 38,
-    left: 0,
-    backgroundColor: "#F8F0F0",
-    borderRadius: 7.69,
-    borderWidth: 0.77,
-    borderColor: "#66328E",
-    paddingLeft: 10,
-    fontSize: 14,
+
+    top: "10%",
+    height: "60%",
+    width: "100%",
+    backgroundColor: "#CFCDCD",
+    borderRadius: 5.681159973144531 
   },
   loginButton: {
     position: "relative",
-    width: 268,
+    width: '90%',
     height: 46,
-    backgroundColor: "#65328e",
+    backgroundColor: "#1FA609",
     borderRadius: 7.69,
     justifyContent: "center",
     alignItems: "center",
@@ -269,10 +253,9 @@ const styles = StyleSheet.create({
     marginLeft: 40, // Adjust the margin as needed
   },
   loginButtonTextWrapper: {
-    position: "absolute",
-    width: 54,
-    height: 28,
-    top: 9,
+    
+    justifyContent:"center",
+    alignItems:"center"
   },
   loginButtonText: {
     color: "#F8F0F0",

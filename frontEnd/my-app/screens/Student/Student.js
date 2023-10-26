@@ -11,7 +11,7 @@ export default function Student() {
 
   useEffect(() => {
     axios
-      .get(`http://${ADRESS_API}:3001/student/getByUser/${user?.id}`)
+      .get("http://${ADRESS_API}:3001/student/getByUser/${user?.id}")
       .then((response) => {
         setStudentData(response.data);
       })

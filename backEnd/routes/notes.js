@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { createNote,deleteNote, getAllNotes, getNotesBySubject ,updateNote} = require('../database/model/notes');
+const { createNote,deleteNote, getAllNotes, getNotesBySubject ,updateNote} = require('../database/model/Notes');
 
 router.get('/getAll', getAllNotes);
 router.get('/getBySubject/:id',getNotesBySubject)

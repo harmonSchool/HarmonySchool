@@ -13,7 +13,7 @@ const Navbar = () => {
       <ScrollView horizontal={true}>
 <View style={styles.nav}>
   <View>
-    <TouchableWithoutFeedback onPress={()=>navigation.navigate('Login')}>
+    <TouchableWithoutFeedback onPress={()=>navigation.navigate('CalendarScreen')}>
       <Image
     style={{width:35,
     height:35,
@@ -34,7 +34,7 @@ const Navbar = () => {
   </TouchableWithoutFeedback>
   </View>
   <View>
-  <TouchableWithoutFeedback onPress={()=>navigation.navigate('Chat1')}>
+  <TouchableWithoutFeedback onPress={()=>navigation.navigate('Inscription')}>
     <Image
     style={{width:40,
     height:40,
@@ -44,7 +44,7 @@ const Navbar = () => {
   </TouchableWithoutFeedback>
   </View>
   <View>
-    <TouchableWithoutFeedback onPress={()=>navigation.navigate('Home')}>
+    <TouchableWithoutFeedback onPress={()=>navigation.navigate('ProfileView')}>
   <Image
     style={{width:40,
     height:40,
@@ -54,7 +54,7 @@ const Navbar = () => {
  </TouchableWithoutFeedback>
   </View>
   <View>
-  <TouchableWithoutFeedback >
+  <TouchableWithoutFeedback onPress={()=>navigation.navigate('Parent')} >
 
   <Image
     style={{width:40,

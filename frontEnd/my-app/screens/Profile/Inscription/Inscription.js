@@ -1,29 +1,19 @@
 import axios from "axios";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  Image,
-  ScrollView,
-  Modal,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import {StyleSheet,Text,View,TextInput,Button,Image,ScrollView,Modal,FlatList,TouchableOpacity} from "react-native";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ADRESS_API from "../../serverUrl";
-
+import Adress from '../../IP'
+import { SafeAreaView } from "react-native-safe-area-context";
 const Inscription = ({ navigation }) => {
-  const { user } = useContext(MyContext);
+  const {iduser} = useContext(MyContext);
   const [First_name, setFirstName] = useState("");
   const [LastName, setLastName] = useState("");
   const [Birthday, setBirthday] = useState("");
   const [image, setImage] = useState("");
-  const [Class, setClass] = useState("");
+  const [clas, setClass] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const classes = [
     "First Class",
@@ -147,7 +137,7 @@ const Inscription = ({ navigation }) => {
             onPress={() => {setModalVisible(true)
               }}
           >
-            <Text>{Class || "Select Class"}</Text>
+            <Text>{clas || "Select Class"}</Text>
           </TouchableOpacity>
           <Modal
             animationType="slide"

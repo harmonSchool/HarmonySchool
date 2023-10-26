@@ -8,6 +8,23 @@ const add = (StudenttData, callback) => {
 };
 
 
+function getStudentIdByUsername(First_name, callback) {
+  const query = "SELECT idStudent FROM Student WHERE First_name = ?";
+  connection.query(query, [First_name], (err, results) => {
+    if (err) {
+      console.error("Error retrieving student ID by username: " + err);
+      callback(err, null);
+    } else if (results.length === 0) {
+      callback("Student not found", null);
+    } else {
+      callback(null, results[0].idStudent); // Corrected to idStudent
+    }
+  });
+}
+
+
+
+
   const put = (idStudent, updatedData, callback) => {
     const sql = `UPDATE Student SET ? WHERE idStudent = ?`;
     connection.query(sql, [updatedData, idStudent], function(error, results) {

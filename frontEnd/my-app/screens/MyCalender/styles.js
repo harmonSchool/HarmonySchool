@@ -166,12 +166,11 @@ last: {
 },
 
 label: {
-  fontSize: 14,
   fontWeight: 'bold',
   marginBottom: 10,
   color: 'black',
-  top:13,
-  left:"35%",
+  top:-19,
+  left:"39%",
   fontSize: 18,
   fontWeight:"900",
   color: "rgba(186, 104, 200, 1)",
@@ -217,11 +216,41 @@ shadowOffset: {
 	width: 4,
 	height: 4
 },
+card: {
+  marginBottom: 16,
+  elevation: 4, // Add a shadow effect
+},
+title: {
+  fontSize: 15,
+  top:5,
+  fontWeight: 'bold',
+},
 
 
 
   
 },
+
+card: {
+  // Style for the Card component
+  backgroundColor: 'white',
+  margin: 10,
+  padding: 10,
+  borderRadius: 10,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 2, // Android shadow
+},
+title: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 5,
+  top:14
+},
+
+
 });
 ;
 ;
