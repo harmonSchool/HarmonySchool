@@ -38,17 +38,11 @@ import DataStudent6 from './screens/Teacher/DataStudent6';
 import CheckoutScreen from './screens/Stripe/CheckoutScreen';
 
 
-import StudentClass from './screens/Teacher/StudentClass';
-import DataStudent1 from './screens/Teacher/DataStudent1';
-import DataStudent2 from './screens/Teacher/DataStudent2';
-import DataStudent3 from './screens/Teacher/DataStudent3';
-import DataStudent4 from './screens/Teacher/DataStudent4';
-import DataStudent5 from './screens/Teacher/DataStudent5';
-import DataStudent6 from './screens/Teacher/DataStudent6';
+
 import Payment from './screens/Payement/Payment';
 import ConversationView from "./screens/Chat/Conv";
 import Notess from "./screens/Notes/Notess"
-import Notes from "./screens/Note/Notes"
+import Note from "./screens/Note/Note"
 
 import Hom from './screens/Home/hom';
 import ProfileView from './screens/Profile/ProfileView/ProfileView';
@@ -65,18 +59,14 @@ export default function App() {
     
     <Stack.Navigator initialRouteName="Parent">
      <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
-
+     <Stack.Screen name="Payment" component={Payment} options={{headerShown:false}}  />
+     <Stack.Screen name="ReviewOrder" component={ReviewOrder} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent1" component={DataStudent1 } options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent2" component={DataStudent2 } options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent3" component={DataStudent3} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent4" component={DataStudent4} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent5" component={DataStudent5} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent6" component={DataStudent6} options={{headerShown:false}}  />
-
-
-
-
-
 
 
      <Stack.Screen name="Login" component={Login} options={{headerShown:false}}  /> 
@@ -91,7 +81,7 @@ export default function App() {
     <Stack.Screen name="TeacherDetail" component={TeacherDetail} options={{headerShown:false}} /> 
     {/*<Stack.Screen name="Options" component={Options} options={{headerShown:false}} />*/} 
     <Stack.Screen name="Student" component={Student} options={{headerShown:false}} /> 
-    <Stack.Screen name="Notes" component={Notes} options={{headerShown:false}} />
+    <Stack.Screen name="Notes" component={Note} options={{headerShown:false}} />
     <Stack.Screen name="Notess" component={Notess} options={{headerShown:false}} />
     <Stack.Screen name="Contact" component={Contact} options={{headerShown:false}} /> 
     <Stack.Screen name="FindEmail" component={FindEmail}  options={{headerShown:false}} ></Stack.Screen>

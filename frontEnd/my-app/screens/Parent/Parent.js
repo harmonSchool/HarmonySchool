@@ -63,9 +63,6 @@ const Parent = () => {
     navigation.navigate("Student");
   };
 
-  const handleImageClick5 = () => {
-    navigation.navigate("Options");
-  };
 
   
 
@@ -159,13 +156,13 @@ const Parent = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.homeDiv}>
-          <Text style={styles.homeText}></Text>
+        <View >
         </View>
         <Image
         style={{width:40,
         height:40,
-        left:-150,top:25
+        left:"-30%",top:"2%",
+        marginTop:"5%"
       }}
       source={{uri:'https://cdn-icons-png.flaticon.com/512/6915/6915987.png'}} />
     
@@ -179,7 +176,7 @@ const Parent = () => {
             <TouchableOpacity onPress={handleImageClick}>
               <Image
               source={{uri:'https://cdn3d.iconscout.com/3d/premium/thumb/profile-5590850-4652486.png'}} 
-              style={{height:110 , width:150 , top :8 , left : -8}}
+              style={{height:110 , width:150 , top :8 , left : "-8%"}}
               />
             </TouchableOpacity>
             <Text style={{ color: 'black', marginRight: 25, fontWeight: "800", left: 5 , top:8 }}>
@@ -191,10 +188,10 @@ const Parent = () => {
             <Image
             style={{width:100,
             height:100,
-          left:-15,top:12
+          left:"-15%",top:12
           }}
           source={{uri:'https://cdn-icons-png.flaticon.com/512/2247/2247728.png'}} />
-              <Text style={{ color: 'black', marginRight: 10, left: -12, fontWeight: "800", top:16}}>
+              <Text style={{ color: 'black', marginRight: 10, left: "-15%", fontWeight: "800", top:16}}>
                 Inscription
               </Text>
             </View>
@@ -210,11 +207,11 @@ const Parent = () => {
             <Image
             style={{width:100,
             height:100,
-          left:60,top:10
+          left:"50%",top:10
           }}
           source={{uri:'https://i.pinimg.com/originals/12/92/10/129210c6c1fd1970733f46d2f4951dc3.png'}} />
             </TouchableOpacity>
-            <Text style={{ color: 'black', left: 60, fontWeight: "800"  , top:13}}>Teacher</Text>
+            <Text style={{ color: 'black', left: "50%", fontWeight: "800"  , top:13}}>Teacher</Text>
           </View>
         </View>
 
@@ -223,40 +220,32 @@ const Parent = () => {
             <TouchableOpacity onPress={handleImageClick4}>
               <Image
               source={{uri:'https://cdn-icons-png.flaticon.com/512/354/354637.png'}} 
-              style={{width:100 , height:100 , top:12 , left:6}}
+              style={{width:100 , height:100 , top:12 , left:"-15%"}}
               />
             </TouchableOpacity>
-            <Text style={{ color: 'black', left: 0, fontWeight: "800"  , top:14 , left :5 }}>Student</Text>
+            <Text style={{ color: 'black', left: 0, fontWeight: "800"  , top:14 , left :"-15%" }}>Student</Text>
           </View>
           <View style={{ ...styles.imageTextWrapper, marginLeft: 30 }}>
-            <TouchableOpacity onPress={handleImageClick5}>
+            <TouchableOpacity onPress={handleImageClick6}>
               <Image
-              source={{uri:'https://cdn-icons-png.flaticon.com/512/164/164436.png'}} 
-                style={{height:95 , width:95 , top:17 , left :15}}
+              source={{uri:'https://static-00.iconduck.com/assets.00/payment-gateway-icon-2048x1883-b7i39kz6.png'}} 
+                style={{height:95 , width:95 , top:17 , left :"-5%"}}
               />
             </TouchableOpacity>
-            <Text style={{ color: 'black', left: 0, fontWeight: "800" , left :15 , top:18 }}> payment Options</Text>
+            <Text style={{ color: 'black', left: 0, fontWeight: "800" , left :"-2%" , top:18 }}> payment </Text>
           </View>
         </View>
 
         <View style={{ ...styles.imageContainer }}>
-          <View style={styles.imageTextWrapper}>
-            <TouchableOpacity onPress={handleImageClick6}>
-              <Image
-              source={{uri:'https://static-00.iconduck.com/assets.00/payment-gateway-icon-2048x1883-b7i39kz6.png'}}
-              style={styles.imaged}
-              />
-            </TouchableOpacity>
-            <Text style={{ color: 'black', left: 0, fontWeight: "800" }}>Payment</Text>
-          </View>
+          
           <View style={{ ...styles.imageTextWrapper, marginLeft: 30 }}>
             <TouchableOpacity onPress={handleImageClick7}>
               <Image
               source={{uri:'https://cdn-icons-png.flaticon.com/512/3982/3982361.png'}}
-              style={{width:100 , height:100 , top : 8 , left:10}}
+              style={{width:100 , height:100 , top : 8 , left:"-80%"}}
               />
             </TouchableOpacity>
-            <Text style={{ color: 'black', left: 5, fontWeight: "800" , top:19 }}>Notes</Text>
+            <Text style={{ color: 'black', left: "-89%", fontWeight: "800" , top:19 }}>Notes</Text>
           </View>
         </View>
 
@@ -264,11 +253,11 @@ const Parent = () => {
           <TouchableOpacity onPress={handleImageClick8}>
             <Image
             source={{uri:'https://cdn-icons-png.flaticon.com/512/4833/4833912.png'}}
-            style={{top:"-410%" , height:100 , width:100 , left : -65}}
+            style={{top:"-375%" , height:100 , width:100 , left : "-25%"}}
             />
             
           </TouchableOpacity>
-          <Text style={{ color: 'black', fontWeight: "800" , top:"-340%" , left:-57 }}>Contact us</Text>
+          <Text style={{ color: 'black', fontWeight: "800" , top:"-320%" , left:"-23%" }}>Contact us</Text>
 
         </View>
       </View>
@@ -281,11 +270,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '150%',
-    marginTop: -90,
-    left:-110, 
-    top:25
+    justifyContent: 'center',
+
   },
   homeDiv: {
     width: 312,

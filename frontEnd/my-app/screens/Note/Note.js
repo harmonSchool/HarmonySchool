@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Center } from 'native-base';
 import axios from 'axios';
 
-const Notes=()=>{
+const Note=()=>{
   const {height,width}=Dimensions.get('window')
 const [data,setData]=useState([])
 useEffect(()=>{
@@ -88,7 +88,7 @@ const Styles=StyleSheet.create({
       }
 })
 
-export default Notes
+export default Note
 {/* <View>
           
 <View style={Styles.notes}>

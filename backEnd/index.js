@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -26,11 +25,9 @@ const teacherRoute=require("./routes/teacher")
 const classeRoute=require("./routes/classe")
 const SubjectRoute=require("./routes/subject")
 const StudentRoute=require("./routes/student")
-const StudRoute= require('./routes/notes')
-const Payment= require('./controllers/Payement')
-const adminRoute= require('./controllers/Admin')
-const Auth = require('./routes/Auth');
-const { getAll } = require('./controllers/users');
+const StudRoute= require('./routes/Notes')
+const adminRoute=require('./routes/Admin')
+
 const { update } = require('./controllers/EditProfile')
 const { updateUserPassword } = require('../backEnd/controllers/users');
 const mg = require('nodemailer-mailgun-transport'); // or any other transport method
@@ -61,10 +58,6 @@ const getSocketByuserId = (userId)=>{
   return socket
 }
 
-app.use('/',Auth);
-app.use('/',Payment);
-
-const activeUsers = new Set();
 
 io.on('connection', (socket) => {
   console.log("Conected")
@@ -373,9 +366,35 @@ app.post('/send-email', (req, res) => {
 });
 
 
-const port = process.env.PORT || 4242; 
-app.listen(port,'0.0.0.0', () => {
-    console.log(`Server connected on port ${port}`);
+
+app.post('/notify-admin', (req, res) => {
+  const { message } = req.body;
+
+  const adminEmail = 'oubaidbensaid18910@gmail.com'; 
+
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user:"oubaidbensaid18910@gmail.com",
+      pass:"jyuk kkny txpk epba "
+    }
+  });
+  const mailOptions = {
+    from: 'oubaidbensaid18@gmail.com',
+    to: adminEmail,
+    subject: 'Notification from Your App',
+    text: message,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).json({ error: 'Failed to notify the admin.' });
+    } else {
+      console.log(`Email sent to admin (${adminEmail}): ${message}`);
+      res.status(200).json({ message: 'Admin has been notified successfully.' });
+    }
+  });
 });
 
 
@@ -384,27 +403,7 @@ app.listen(port,'0.0.0.0', () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const port = process.env.PORT || 2023; 
+app.listen(port, () => {
+    console.log(`Server connected on port ${port}`);
+});
