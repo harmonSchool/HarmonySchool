@@ -22,6 +22,7 @@ import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
 import ADRESS_API from "../../serverUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const CreateAnAccount = ({navigation}) => {
   const {height,width}=Dimensions.get('window')
@@ -79,15 +80,17 @@ const[hide,setHide]=useState(true)
   };
 
   return (
+        
     <ScrollView>
+      <SafeAreaView></SafeAreaView>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
         </View>
 
         <View style={styles.text}>
-          <Text style={{ fontWeight:"400",fontSize:18,left:-130 }}>Create an account</Text>
+          <Text style={{ top:"-51%",fontWeight:"400",fontSize:18,left:"-32%" }}>Create an account</Text>
 
-          <Text style={{ fontWeight:"300",fontSize:13,left:-130,top:10 }}>and join us</Text>
+          <Text style={{ marginTop:"-8%",fontWeight:"300",fontSize:13,left:"-28%",top:"20%" }}>and join us</Text>
         </View>
 
         <View style={styles.nameContainer}>
@@ -118,7 +121,7 @@ const[hide,setHide]=useState(true)
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={[styles.label]}>e-mmail</Text>
+          <Text style={[styles.label]}>e-mail</Text>
 
           <TextInput
             style={styles.inputName}
@@ -137,7 +140,7 @@ const[hide,setHide]=useState(true)
             secureTextEntry={hide}
             
           />
-                   <AntDesign name="eye" style={{color:"black",fontSize:28,top:-28,left:"90%"}} onPress={()=>setHide(!hide)}/>
+                   <AntDesign name="eye" style={{color:"black",fontSize:28,top:-28,left:"88%"}} onPress={()=>setHide(!hide)}/>
 
         </View>
 
@@ -151,25 +154,23 @@ const[hide,setHide]=useState(true)
 
       </View>
     </ScrollView>
+    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
     marginLeft:-15
   },
   text: {
     alignItems: "center",
-    marginTop: 10,
-    marginLeft: 141,
-    marginRight: 141,
+    marginTop: 18,
     width: 190,
-
-    color: "#65328e",
+color: "#65328e",
   },
 
   imageContainer: {
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 84,
     marginLeft: 40,
-    marginTop: 20,
+    marginTop: "5%",
     
   },
   label: {
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
 
     top: "10%",
     height: "60%",
-    width: "100%",
+    width: "99%",
     backgroundColor: "#CFCDCD",
     borderRadius: 5.681159973144531 
   },

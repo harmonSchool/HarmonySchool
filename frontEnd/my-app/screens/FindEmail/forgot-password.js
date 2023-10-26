@@ -67,9 +67,9 @@ export default function Findyouremail({ navigation }) {
 //     		</View>
 <View style={styles.container}>
         <View></View>
-          
-        <Text style={{marginTop:"1.5%", color: "rgba(0, 0, 0, 1)",top:-108  ,  fontSize:20,fontWeight: "200",left:-28}}>to update your password</Text>
-        <Text style={{left:'-23%', top:"-1%", color: "rgba(0, 0, 0, 1)",fontSize:12,fontWeight: "300"}}>enter your email adress</Text>
+          <Text style={{marginTop:"-5%",top:'-22%', color: "rgba(0, 0, 0, 1)"  ,  fontSize:16,fontWeight:"600",left:"-14%"}}>Find your email</Text>
+        <Text style={{marginTop:"1.5%", color: "rgba(0, 0, 0, 1)",top:"-23%"  ,  fontSize:20,fontWeight: "200",left:"-10%"}}>to update your password</Text>
+        <Text style={{left:'-23%',top:"-1%", color: "rgba(0, 0, 0, 1)",fontSize:12,fontWeight: "300"}}>enter your email adress</Text>
         <TextInput
           onChangeText={(text) => setEmail(text)}
             type="submit" placeholder='   enter your email'  style={styles.rectangle3}/>

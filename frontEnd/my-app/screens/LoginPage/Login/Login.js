@@ -32,7 +32,7 @@ const PassShow=()=>{
         .then((res) => {
           setData(res.data);
           alert("Welcome");
-          navigation.navigate('ProfileView');
+          navigation.navigate('Parent');
         })
         .catch((err) => {
           console.log(err);
