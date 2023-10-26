@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation from React Navigation
 
-const Payment = () => {
+const Paymentbus = () => {
   const navigation = useNavigation(); 
 
   const [trimesters, setTrimesters] = useState([false, false, false]);
@@ -15,7 +15,7 @@ const Payment = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Cantine Payment</Text>
+      <Text style={styles.header}> Bus Payment </Text>
       <Text style={styles.subHeader}>Trimester Payments</Text>
       {trimesters.map((isPaid, index) => (
         <View key={index} style={styles.periodContainer}>
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Payment;
+export default Paymentbus;

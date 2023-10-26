@@ -70,27 +70,8 @@ const Parent = () => {
   
 
   const handleImageClick6 = () => {
-    if (adminKey === "37910Acoy" && userEmailFromLogin ) {
-      // AdminKey exists, grant payment access and show the input
-      navigation.navigate("Home")
-    } else {
-      // AdminKey doesn't exist, show an alert
-      Alert.alert(
-        'Payment access is not granted by the admin.',
-        'Do you want to notify the admin?',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {
-            text: 'Notify Admin',
-            onPress: notifyAdmin, // Call the notifyAdmin function
-          },
-        ]
-      );
-    }
+    navigation.navigate("ReviewOrder");
+
   };
 
 

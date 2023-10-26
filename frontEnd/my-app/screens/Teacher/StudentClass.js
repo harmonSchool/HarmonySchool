@@ -38,7 +38,7 @@ const StudentClass = () => {
     height:60,
     width:130 ,
     height:130, 
-    marginLeft:30,top:-70
+    marginLeft:16,top:-70
   }}
   source={{uri:'https://cdn-icons-png.flaticon.com/512/6621/6621964.png'}} />
   </View>
@@ -47,9 +47,9 @@ const StudentClass = () => {
     style={{width:40,
     height:60,
     width:60 , 
-    marginLeft:43,marginTop:41
+    marginLeft:0,marginTop:30
   }}
-  source={{uri:'https://static.vecteezy.com/system/resources/previews/024/781/754/original/cartoon-graduate-students-icon-free-png.png'}} />
+  source={{uri:'https://cdn-icons-png.flaticon.com/512/5123/5123413.png'}} />
         <Text style={styles.buttonText}>Classe 1</Text>
       </TouchableOpacity>
 
@@ -58,9 +58,9 @@ const StudentClass = () => {
       style={{width:40,
       height:60,
       width:60 , 
-      marginLeft:43,marginTop:41
+      marginLeft:0,marginTop:30
     }}
-    source={{uri:'https://static.vecteezy.com/system/resources/previews/024/781/754/original/cartoon-graduate-students-icon-free-png.png'}} />
+    source={{uri:'https://cdn-icons-png.flaticon.com/512/5123/5123413.png'}} />
 
         <Text style={styles.buttonText}>Classe 2</Text>
       </TouchableOpacity>
@@ -70,9 +70,9 @@ const StudentClass = () => {
       style={{width:40,
       height:60,
       width:60 , 
-      marginLeft:43,marginTop:41
+      marginLeft:0,marginTop:30
     }}
-    source={{uri:'https://static.vecteezy.com/system/resources/previews/024/781/754/original/cartoon-graduate-students-icon-free-png.png'}} />
+    source={{uri:'https://cdn-icons-png.flaticon.com/512/5123/5123413.png'}} />
         <Text style={styles.buttonText}>Classe 3</Text>
       </TouchableOpacity>
 
@@ -81,9 +81,9 @@ const StudentClass = () => {
       style={{width:40,
       height:60,
       width:60 , 
-      marginLeft:43,marginTop:41
+      marginLeft:0,marginTop:30
     }}
-    source={{uri:'https://static.vecteezy.com/system/resources/previews/024/781/754/original/cartoon-graduate-students-icon-free-png.png'}} />
+    source={{uri:'https://cdn-icons-png.flaticon.com/512/5123/5123413.png'}} />
         <Text style={styles.buttonText}>Classe 4</Text>
       </TouchableOpacity>
 
@@ -92,9 +92,9 @@ const StudentClass = () => {
       style={{width:40,
       height:60,
       width:60 , 
-      marginLeft:43,marginTop:41
+      marginLeft:0,marginTop:30
     }}
-    source={{uri:'https://static.vecteezy.com/system/resources/previews/024/781/754/original/cartoon-graduate-students-icon-free-png.png'}} />
+    source={{uri:'https://cdn-icons-png.flaticon.com/512/5123/5123413.png'}} />
         <Text style={styles.buttonText}>Classe 5</Text>
       </TouchableOpacity>
 
@@ -103,9 +103,9 @@ const StudentClass = () => {
       style={{width:40,
       height:60,
       width:60 , 
-      marginLeft:43,marginTop:41
+      marginLeft:0,marginTop:30
     }}
-    source={{uri:'https://static.vecteezy.com/system/resources/previews/024/781/754/original/cartoon-graduate-students-icon-free-png.png'}} />
+    source={{uri:'https://cdn-icons-png.flaticon.com/512/5123/5123413.png'}} />
         <Text style={styles.buttonText}>Classe 6</Text>
       </TouchableOpacity>
     </View>
@@ -127,12 +127,11 @@ const styles = StyleSheet.create({
     
   },
   className: {
-    fontSize: 23,
+    fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 20,
-    top:"-3%",
-   left:105,
-   color: "#BA68C8"
+    top:"-2%",
+   left:105
   },
   button1: {
     width: 140,
@@ -258,9 +257,9 @@ shadowOpacity: 1 ,
     left:"25%",
 
     color: 'white',
-    fontSize: 21,
-    top:"-75%",
-    left:"23%"
+    fontSize: 18,
+    top:"-34%",
+    left:"44%"
 
   },
 });

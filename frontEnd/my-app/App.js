@@ -27,6 +27,17 @@ import CheckOut from './screens/Payement/CheckOut';
 import ReviewOrder from  './screens/Payement/ReviewOrder';
 import PaymentMethod from './screens/Payement/ReviewOrder';
 import CalendarScreen from './screens/MyCalender/CalendarScreen';
+import Payementbus from  './screens/Payement/Payementbus';
+import StudentClass from './screens/Teacher/StudentClass';
+import DataStudent1 from './screens/Teacher/DataStudent1';
+import DataStudent2 from './screens/Teacher/DataStudent2';
+import DataStudent3 from './screens/Teacher/DataStudent3';
+import DataStudent4 from './screens/Teacher/DataStudent4';
+import DataStudent5 from './screens/Teacher/DataStudent5';
+import DataStudent6 from './screens/Teacher/DataStudent6';
+import CheckoutScreen from './screens/Stripe/CheckoutScreen';
+
+
 import StudentClass from './screens/Teacher/StudentClass';
 import DataStudent1 from './screens/Teacher/DataStudent1';
 import DataStudent2 from './screens/Teacher/DataStudent2';
@@ -51,23 +62,28 @@ export default function App() {
     <MyProvider>
     <NativeBaseProvider >
     <NavigationContainer>
-    <Stack.Navigator initialRouteName="CheckOut">
-    <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
+    
+    <Stack.Navigator initialRouteName="Parent">
+     <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
 
-     <Stack.Screen name="Payment" component={Payment} options={{headerShown:false}}  />
-     <Stack.Screen name="StudentClass" component={StudentClass} options={{headerShown:false}}  />
-     <Stack.Screen name="DataStudent1" component={DataStudent1} options={{headerShown:false}}  />
-     <Stack.Screen name="DataStudent2" component={DataStudent2} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent1" component={DataStudent1 } options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent2" component={DataStudent2 } options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent3" component={DataStudent3} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent4" component={DataStudent4} options={{headerShown:false}}  />
-     <Stack.Screen name="DataStudent5n" component={DataStudent5} options={{headerShown:false}}  />
+     <Stack.Screen name="DataStudent5" component={DataStudent5} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent6" component={DataStudent6} options={{headerShown:false}}  />
-    <Stack.Screen name="Intro" component={Intro} options={{headerShown:false}}  />
-     <Stack.Screen name="IT1" component={parentInterFace} options={{headerShown:false}}  />
-     <Stack.Screen name="ProfileView" component={ProfileView} options={{headerShown:false}}  />
+
+
+
+
+
+
+
      <Stack.Screen name="Login" component={Login} options={{headerShown:false}}  /> 
      <Stack.Screen name="SignUp" component={SignUp} options={{headerShown:false}}/> 
      <Stack.Screen name="Inscription" component={Inscription} options={{headerShown:false}} />
+     <Stack.Screen name="StudentClass" component={StudentClass} options={{headerShown:false}} />
+     <Stack.Screen name="Payementbus" component={Payementbus} options={{headerShown:false}} />
     <Stack.Screen name="Home" component={Home} options={{headerShown:false}} /> 
     <Stack.Screen name="Parent" component={Parent} options={{headerShown:false}} /> 
     <Stack.Screen name="Teacher" component={Teacher} options={{headerShown:false}} /> 
@@ -88,7 +104,13 @@ export default function App() {
      <Stack.Screen name="Hom" component={Hom} options={{headerShown:false}}  />
      <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />
      <Stack.Screen name="Conv" component={ConversationView} options={{headerShown:false}}  />
-     <Stack.Screen name="Chat2" component={Chat2}  options={{headerShown:false}} ></Stack.Screen>
+
+     <Stack.Screen name="Stripe" component={CheckoutScreen} options={{ headerShown: false }} initialParams={{ amount: 100 }} />
+     
+
+
+
+
     </Stack.Navigator>
     {/* <Navbar />  */}
     </NavigationContainer>

@@ -1,50 +1,133 @@
 const connection = require("../index")
 
-const add = (SubjectData, callback) => {
-  const sql = `INSERT INTO subject SET ?`;
-  connection.query(sql, SubjectData, function (error, results) {
+const add = (StudenttData, callback) => {
+  const sql = `INSERT INTO Student SET ?`;
+  connection.query(sql, StudenttData, function (error, results) {
       callback(error, results);
   });
 };
 
 
-
-  const put = (idsubject, updatedData, callback) => {
-    const sql = `UPDATE subject SET ? WHERE idsubject = ?`;
-    connection.query(sql, [updatedData, idsubject], function(error, results) {
+  const put = (idStudent, updatedData, callback) => {
+    const sql = `UPDATE Student SET ? WHERE idStudent = ?`;
+    connection.query(sql, [updatedData, idStudent], function(error, results) {
         callback(error, results);
     });
   };
 
-  const remove = (idsubject, callback) => {
-    const sql = `DELETE FROM subject WHERE idsubject = ?`;
-    connection.query(sql, [idsubject], function(error, results) {
+  const remove = (idStudent, callback) => {
+    const sql = `DELETE FROM Student WHERE idStudent = ?`;
+    connection.query(sql, [idStudent], function(error, results) {
         callback(error, results);
     });
   };
 
+  
   const getAll = (callback) => {
-    const sql = `SELECT * FROM subject`;
+    const sql = `SELECT * FROM Student`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
   };
+
+  const getStudentsInClass = (idclasses, callback) => {
+    const sql = `SELECT * FROM Student WHERE classes_idclasses = ?`;
+    connection.query(sql, [idclasses], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getOneStudent = (idStudent, callback) => {
+    const sql = 'SELECT * FROM Student WHERE idStudent = ?';
+    ;
+    connection.query(sql, [idStudent], function (error, results) {
+      callback(error, results);
+    });
+  };
+
   
 
-  const getOne = (idsubject, callback) => {
-    const sql = `SELECT * FROM subject WHERE idsubject = ?`;
-    connection.query(sql, [idsubject], function (error, results) {
+  const getStudentsByUser = (idStudent, callback) => {
+    const sql = `SELECT * FROM Student WHERE users_idusers = ?`;
+    connection.query(sql, [idStudent], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getStudentsByClass = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getStudentsByClass2 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
       callback(error, results);
     });
   };
   
 
- 
+  const getStudentsByClass3 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getStudentsByClass4 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getStudentsByClass5 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getStudentsByClass6 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+
+
+
+
+
+  
+
+
+
+
   
   module.exports = {
     add,
     put,
     remove,
     getAll,
-    getOne
+    getStudentsInClass,getOneStudent,
+    getStudentsByUser ,
+    getStudentsByClass,
+    getStudentsByClass2,
+    getStudentsByClass3,
+    getStudentsByClass4 ,
+    getStudentsByClass5 ,
+    getStudentsByClass6 
+    
+    
+    
   };
+  
+  
+  
+  
+  
+  

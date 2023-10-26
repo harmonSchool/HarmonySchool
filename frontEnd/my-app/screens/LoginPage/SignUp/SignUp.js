@@ -17,23 +17,21 @@ import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons/index";
 import CustomTextInputEmail from "./CustomTextInputEmail";
 import CustomTextInputPassword from "./CustomTextInputPassword";
 import { Alert } from "react-native";
-import serverUrl from "../../serverUrl";
+
 import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
 import ADRESS_API from "../../serverUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const CreateAnAccount = ({navigation}) => {
-  const {height,width}=Dimensions.get('window')
-  const { iduser,setUsersID,setName,username} = useContext(MyContext);
-const[hide,setHide]=useState(true)
-  const [password,setPassword]=useState('');
- const [email,setEmail]=useState("")
-  const [Birthday, setDateOfBirth] = useState('');
-  const [Number, setPhoneNumber] = useState('');
-  const [isError,setIsError]=useState(false);
-  
+const CreateAnAccount = ({ navigation }) => {
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setName] = useState("");
+  const [Birthday, setDateOfBirth] = useState("");
+  const [Number, setPhoneNumber] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [iduser, setUserId] = useState(0);
 
   const handlePassword = (text) => {
     setPassword(text);
@@ -64,13 +62,39 @@ const[hide,setHide]=useState(true)
       Number,
     };
     console.log(userData);
-    Axios.post(`http://${Adress}/user/register`, userData).then((res)=>{
-      console.log("data is "+res.data);
-      navigation.navigate('Login')
-    }).catch((err)=>{
-      console.log(err);
-    })
-      };
+    Axios.post(ADRESS_API + 'user/register', userData)
+
+      .then((response) => {
+        console.log(response.data);
+
+        data = {email : userData.email , password : userData.password , role : 1};
+
+        Axios.post(ADRESS_API + 'create/user',data).then((res) => {
+          
+        }).catch((err) => {
+          alert(err);
+        });
+
+        setName("");
+        setDateOfBirth("");
+        setPhoneNumber("");
+        setEmail("");
+        setPassword("");
+
+        setUserId(response.data.idusers);
+        console.log("User ID:", response.data.idusers);
+        Alert.alert("Success", "Registration successful! You can now log in.");
+
+        navigation.navigate("Login");
+      })
+      .catch((error) => {
+        console.error("Registration Error", error);
+        Alert.alert(
+          "Error",
+          "Registration failed. Please try again bjeh rab a3mel adress jdida"
+        );
+      });
+  };
 
   const verify = () => {
     if (password.length < 6) {

@@ -1,105 +1,91 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, Animated } from 'react-native';
-import { Card, Title } from 'react-native-paper';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { useState,useEffect } from 'react';
+import ADRESS_API from '../serverUrl';
 import axios from 'axios';
 
-const DataStudent1 = () => {
-  const [students, setStudents] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [loading, setLoading] = useState(true);
+const DataStudent5 = () => {
+    const [students, setStudents] = useState([]); 
 
-  const scrollY = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://192.168.1.25:2023/student/getStudentsByClass5/Fifth class');
-        setStudents(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching students:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const filteredStudents = students.filter(student => {
-    return student.First_name.toLowerCase().includes(searchText.toLowerCase()) ||
-      student.LastName.toLowerCase().includes(searchText.toLowerCase());
-  });
-
-  const handleScroll = Animated.event(
-    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-    { useNativeDriver: false }
-  );
+    useEffect(() => {
+      
+      axios.get(`http://192.168.1.16:3000/student/getStudentsByClass5/Fifth class`)
+        .then(response => {
+          
+          setStudents(response.data);
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération des étudiants :', error);
+        });
+    }, []); 
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Student Data</Text>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search for a student..."
-        value={searchText}
-        onChangeText={text => setSearchText(text)}
-      />
-      {loading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <ScrollView
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-        >
-          {filteredStudents.map((student, index) => {
-            // Animated card styles go here
-            return (
-              <Card key={student.id} style={styles.card}>
-                <Card.Cover source={{ uri: student.image }} />
-                <Card.Content>
-                  <Title style={styles.title}>Full Name: {student.First_name}</Title>
-                  <Title style={styles.title}>Last Name: {student.LastName}</Title>
-                  <Title style={styles.title}>Birthday: {student.Birthday}</Title>
-                  <Title style={styles.title}>Class: {student.class}</Title>
-                </Card.Content>
-              </Card>
-            );
-          })}
+   
+      <View style={styles.detailContainer}>
+        <Text style={styles.className}>Students of First Class</Text>
+        <ScrollView style={{ width: 270,marginTop:20 }}>
+        <View style={styles.studentGrid}>
+          {students.map((student, index) => (
+            <TouchableOpacity key={student.id} style={styles.studentItem}>
+              <View style={styles.studentImageContainer}>
+                <Image source={{ uri: student.image }} style={styles.studentImage} />
+              </View>
+              <Text style={styles.studentName}>{student.First_name} {student.lastName}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
         </ScrollView>
-      )}
-    </View>
+      </View>
+    
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    top:25
+  detailContainer: {
+    backgroundColor: '#DBC8E4',
+    borderColor: 'pink',
+    borderRadius: 10,
+    width: '90%',
+    padding: 50,
+    marginTop: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft:20,
+    height:"90%",
+    
   },
-  header: {
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 16,
-    color : "#906BAD",
-    left:140
-  },
-  searchInput: {
-    height: 40,
-    borderWidth: 0.8,
-    marginBottom: 20,
-    paddingLeft: 8,
-    borderRadius: 25,
-  },
-  card: {
-    marginBottom: 16,
-    elevation: 4, // Add a shadow effect
-  },
-  title: {
-    fontSize: 15,
-    top:5,
+  className: {
+    fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  studentGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between', 
+   // Espacement horizontal entre les élèves
+  },
+  studentItem: {
+    width: '40%', // 45% de la largeur pour afficher deux élèves par ligne
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  studentImageContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    overflow: 'hidden',
+    marginBottom: 10,
+  },
+  studentImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 50,
+  },
+  studentName: {
+    textAlign: 'center',
+    fontSize: 18,
   },
 });
 
-export default DataStudent1;
+export default DataStudent5;
