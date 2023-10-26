@@ -105,6 +105,28 @@ function getUserById(idusers, callback) {
 }
 
 
+const updateUserPassword = (idusers, newPassword, callback) => {
+  const saltRounds = 10;
+
+  // Hash and update the new password
+  bcrypt.hash(newPassword, saltRounds, (err, hash) => {
+    if (err) {
+      console.error('Error hashing new password: ' + err.message);
+      callback(err);
+    } else {
+      const updateSql = 'UPDATE users SET password = ? WHERE idusers = ?';
+      conn.query(updateSql, [hash, idusers], (err, result) => {
+        if (err) {
+          console.error('Error updating password: ' + err.message);
+          callback(err);
+        } else {
+          console.log('Password updated successfully.');
+          callback(null);
+        }
+      });
+    }
+  });
+};
 function getUserIdByUsername(username, callback) {
   const query = "SELECT idusers FROM users WHERE username = ?";
   conn.query(query, [username], (err, results) => {
@@ -135,6 +157,16 @@ function getUserIdByEmail(email, callback) {
 }
 
 
+const getOneUser = (idUsers, callback) => {
+  const sql = `SELECT * FROM users WHERE idUsers = ?`;
+  conn.query(sql, [idUsers], function (error, results) {
+    callback(error, results);
+  });
+};
+
+
+  
+  
 module.exports = { 
   findByEmail,
   createUser,
@@ -143,6 +175,11 @@ module.exports = {
   deleteUser,
   getUserById,
   getUserIdByUsername,
-  getUserIdByEmail
+  getUserIdByEmail,
+  findByEmail,
+    createUser,
+    updateNewProfile,
+    getAll,
+    updateUserPassword   ,getOneUser 
 };
 

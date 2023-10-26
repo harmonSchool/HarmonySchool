@@ -6,18 +6,20 @@ import axios from "axios";
 import Adress from '../../IP'
 import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
-import { SafeAreaView } from "react-native-safe-area-context";
-import AntDesign from "react-native-vector-icons/AntDesign"
-function Login({ navigation }) {
-  const { isDarkMode, setEmail ,email} = useContext(MyContext);
-  const theme = isDarkMode ? darkTheme : lightTheme;
-  const [hide,setHide]=useState(true)
-  const [password , setPassword]=useState('')
-  const [data,setData]=useState([])
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-const PassShow=()=>{
-  setHide(!hide) 
-}
+function Login({ navigation }) {
+  const { isDarkMode, setMode, setUser } = useContext(MyContext);
+  const theme = isDarkMode ? darkTheme : lightTheme;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [teacherEmails, setTeacherEmails] = useState([]);
+  const [userEmails, setUserEmails] = useState([]);
+
+  useEffect(() => {
+    fetchDataFromTeacherURL();
+    fetchDataFromUserURL();
+  }, []);
 
   const handleLog = () => {
     if (email === "") {
@@ -37,12 +39,107 @@ const PassShow=()=>{
         .catch((err) => {
           console.log(err);
           Alert.alert("Check your password or your email");
-        });
+        });}
        
+  const getUserEmail = async () => {
+    try {
+      const email = await AsyncStorage.getItem('userEmail');
+      return email;
+    } catch (error) {
+      console.error('Error retrieving user email:', error);
     }
+  }
+
+
   
     
+  
+
+
+
+  function fetchDataFromTeacherURL() {
+    axios
+      .get("http://192.168.1.136:2023/teacher/get")
+      .then((res) => {
+        const teacherData = res.data;
+        const teacherEmails = teacherData.map((teacher) => teacher.email);
+        setTeacherEmails(teacherEmails);
+      })
+      .catch((err) => {
+        console.error("Error fetching data from Teacher URL:", err);
+      });
+  }
+
+  function fetchDataFromUserURL() {
+    axios
+      .get("http://192.168.1.136:2023/user/getAll")
+      .then((res) => {
+        const userData = res.data;
+        const userEmails = userData.map((user) => user.email);
+        setUserEmails(userEmails);
+        console.log("users Emails " , userEmails)
+        
+        
+      })
+      .catch((err) => {
+        console.error("Error fetching data from User URL:", err);
+      });
+  }
+
+  
+
+  const handleLog = async (e) => {
+    const adminKey = "37910Acoy"; 
+    console.log("Admin Key:", adminKey); 
+    e.preventDefault();
+  
+    if (email === "") {
+      console.log("Enter your email");
+      alert("Enter your email");
+      return;
+    }
+    if (password === "") {
+      console.log("Enter your password");
+      alert("Enter your password");
+      return;
+    }
+  
+    try {
+      const storedEmail = await getUserEmail();
+  
+      console.log("Email entered:", email);
+      console.log("Admin Key:", adminKey);
+  
+      if (email === storedEmail && adminKey) {
+        // Admin access granted
+        console.log("Admin login");
+        alert("Welcome admin");
+        // Handle admin navigation here
+      } else if (teacherEmails.includes(email)) {
+        console.log("Teacher login");
+        alert("Welcome teacher");
+        navigation.navigate("Teacher")
+      } else if (userEmails.includes(email) || email === storedEmail) {
+        console.log("User login");
+        alert("Welcome, user");
+        console.log("Stored Email:", storedEmail);
+  
+        // Navigate to the Parent component with userEmail and adminKey
+        navigation.navigate("Parent", { userEmail: email, adminKey: adminKey });
+      } else {
+        console.log("Email not found");
+        alert("Email not found. Please check your email or register.");
+      }
+    } catch (error) {
+      console.error("Error handling login:", error);
+    }
   };
+  
+  
+  
+
+    
+  
 
   return (
     <View style={[styles.container,{ backgroundColor: theme.backgroundColor }]}>
@@ -90,12 +187,9 @@ const PassShow=()=>{
         Sign up Now
       </Text>
     </View>
-  );
-}
+  )}
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
-});
-const styled = StyleSheet.create({
   text: {
       marginLeft:"-30%",
       left:'5%',

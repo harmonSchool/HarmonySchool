@@ -85,12 +85,13 @@ const styles = StyleSheet.create({
     height: 1300,
     width: 500,
     backgroundColor: "white",
-    marginTop:"0%"
+    marginTop:"0%" , 
+    left:6
   },
   getintouch: {
     flexShrink: 0,
     top: "8%",
-    left: "26%",
+    left: "27%",
     width: 349,
     height: 31,
     color: "rgba(186, 104, 200, 1)",
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
   wearehereforyouHowcanwehelp: {
     flexShrink: 0,
     top: "9%",
-    left: "16%",
+    left: "18%",
     width: 349,
     height: 31,
     textAlign: "left",

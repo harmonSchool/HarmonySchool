@@ -19,7 +19,7 @@ const Inscription = ({ navigation }) => {
   const [LastName, setLastName] = useState("");
   const [Birthday, setBirthday] = useState("");
   const [image, setImage] = useState("");
-  const [Class, setClass] = useState("");
+  const [clas, setClass] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [message, setMessage] = useState("Select an image");

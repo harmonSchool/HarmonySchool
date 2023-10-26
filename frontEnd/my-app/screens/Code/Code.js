@@ -15,7 +15,7 @@ export default function Code() {
       body: JSON.stringify({ verificationCode: verificationCode }),
     };
 
-    fetch(`http://192.168.104.14:3000/check-verification-code`, requestOptions)
+    fetch(`http://192.168.1.5:2023/check-verification-code`, requestOptions)
       .then((response) => {
         if (response.ok) {
           alert('Verification code is valid');
@@ -188,17 +188,18 @@ const styles = StyleSheet.create({
   	_enteryourcode: {
     position: "absolute",
     flexShrink: 0,
-    top: 16,
-    left: 86,
+    top: 0,
+    left: 90,
     width: 97,
     height: 28,
     textAlign: "left",
     color: "rgba(102, 50, 142, 1)",
     fontFamily: "Poppins",
     fontSize: 12.28985595703125,
-    fontWeight: "500",
+    fontWeight: "700",
     letterSpacing: 0,
-    lineHeight: 27.652175903320312
+    lineHeight: 27.652175903320312,
+    fontSize:19
 },
   	rectangle3: {
     position: "absolute",
