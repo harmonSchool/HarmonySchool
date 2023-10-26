@@ -16,74 +16,38 @@ function Login({ navigation }) {
   const [teacherEmails, setTeacherEmails] = useState([]);
   const [userEmails, setUserEmails] = useState([]);
 
-  function fetchDataFromTeacherURL() {
-    axios
-      .get(`http://${Adress}/teacher/get`)
-      .then((res) => {
-        const teacherData = res.data;
-        const teacherEmails = teacherData.map((teacher) => teacher.email);
-        setTeacherEmails(teacherEmails);
-      })
-      .catch((err) => {
-        console.error("Error fetching data from Teacher URL:", err);
-      });
-  }
-
   function fetchDataFromUserURL() {
+    const storedPassword =  getPasswordForEmail(email);
+
     axios
-      .get(`http://${Adress}/user/getAll`)
+      .get("http://${Adress}/user/getAll")
       .then((res) => {
         const userData = res.data;
         const userEmails = userData.map((user) => user.email);
         setUserEmails(userEmails);
-        console.log("users Emails " , userEmails)
-        
-        
+        console.log("users Emails ", userEmails);
       })
       .catch((err) => {
         console.error("Error fetching data from User URL:", err);
       });
   }
 
-
-  useEffect(() => {
-    fetchDataFromTeacherURL();
-    fetchDataFromUserURL();
-  }, []);
-
-  const handleLog = () => {
-    if (email === "") {
-      alert("Enter your email");
-    } else if (password === "") {
-      alert("Enter your password");
-    } else {
-      axios.post(`http://${Adress}/user/login`, {
-        email,
-        password,
-      })
-        .then((res) => {
-          setData(res.data);
-          alert("Welcome");
-          navigation.navigate('Parent');
-        })
-        .catch((err) => {
-          console.log(err);
-          Alert.alert("Check your password or your email");
-        });}
-       
-  const getUserEmail = async () => {
-    try {
-      const email = await AsyncStorage.getItem('userEmail');
-      return email;
-    } catch (error) {
-      console.error('Error retrieving user email:', error);
-    }
-  }
   
 
   const handleLog = async (e) => {
-    const adminKey = "37910Acoy"; 
-    console.log("Admin Key:", adminKey); 
+    const adminKey = "37910Acoy";
+    const idUser = 1;
+  
+    // Extract the adminKey prefix (digits before "Acoy")
+    const adminKeyPrefix = adminKey.substring(0, adminKey.indexOf("Acoy"));
+  
+    // Increment the first digit of the adminKey prefix by 1
+    const updatedAdminKeyPrefix = (parseInt(adminKeyPrefix[0]) + 1).toString() + adminKeyPrefix.substring(1);
+  
+    // Combine the updated adminKey prefix with "Acoy" to get the new adminKey
+    const newAdminKey = updatedAdminKeyPrefix + "Acoy";
+    console.log("Admin Key:", newAdminKey);
+  
     e.preventDefault();
   
     if (email === "") {
@@ -99,11 +63,12 @@ function Login({ navigation }) {
   
     try {
       const storedEmail = await getUserEmail();
+      const storedPassword = await getPasswordForEmail(email); // Fetch the password for the entered email
   
       console.log("Email entered:", email);
-      console.log("Admin Key:", adminKey);
+      console.log("Admin Key:", newAdminKey); // Use the updated adminKey
   
-      if (email === storedEmail && adminKey) {
+      if (email === storedEmail && password === storedPassword && newAdminKey) {
         // Admin access granted
         console.log("Admin login");
         alert("Welcome admin");
@@ -111,27 +76,22 @@ function Login({ navigation }) {
       } else if (teacherEmails.includes(email)) {
         console.log("Teacher login");
         alert("Welcome teacher");
-        navigation.navigate("Teacher")
+        navigation.navigate("Teacher");
       } else if (userEmails.includes(email) || email === storedEmail) {
         console.log("User login");
         alert("Welcome, user");
         console.log("Stored Email:", storedEmail);
   
-        // Navigate to the Parent component with userEmail and adminKey
-        navigation.navigate("Parent", { userEmail: email, adminKey: adminKey });
+        // Navigate to the Parent component with userEmail and updated adminKey
+        navigation.navigate("Parent", { userEmail: email, adminKey: newAdminKey });
       } else {
-        console.log("Email not found");
-        alert("Email not found. Please check your email or register.");
+        console.log("Email and password combination is incorrect");
+        alert("Email and password combination is incorrect. Please check your credentials.");
       }
     } catch (error) {
       console.error("Error handling login:", error);
     }
-  };
-  
-  
-  
-
-    
+  }; 
   
 
   return (
@@ -163,8 +123,8 @@ function Login({ navigation }) {
     color={"red"}
 /> */}
 
-      <View style={styled.btn}>
-        <Text style={styled.Log} onPress={(e) => handleLog(e)}>
+      <View style={styles.btn}>
+        <Text style={styles.Log} onPress={(e) => handleLog(e)}>
           Log back in
         </Text>
       </View>
@@ -181,7 +141,7 @@ function Login({ navigation }) {
       </Text>
     </View>
   )}
-}
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
   text: {

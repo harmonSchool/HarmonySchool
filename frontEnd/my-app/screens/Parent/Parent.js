@@ -113,7 +113,7 @@ const Parent = () => {
     };
 
     axios
-      .post('http://192.168.1.5:2023/send-email', mailOptions)
+      .post('http://${Adress}/send-email', mailOptions)
       .then((response) => {
         if (response.status === 200) {
           Alert.alert('Notification email sent successfully.');
@@ -137,7 +137,7 @@ const Parent = () => {
   const notifyAdmin = async () => {
     // Retrieve the user's email from AsyncStorage
     axios
-      .post('http://192.168.1.5:2023/notify-admin', {
+      .post('http://${Adress}/notify-admin', {
         message: `This user wants to pay pay something you need to check the inofrmation of student to give him the access to get pay ${userEmailFromLogin}`,
       })
       .then((response) => {
@@ -161,14 +161,16 @@ const Parent = () => {
         <Image
         style={{width:40,
         height:40,
-        left:"-30%",top:"2%",
+        left:"-40%",top:"2%",
         marginTop:"5%"
       }}
       source={{uri:'https://cdn-icons-png.flaticon.com/512/6915/6915987.png'}} />
     
         <View style={styles.text}>
-          <Text style={{ color: '#66328E', fontSize: 18, fontWeight: "900" }}>
+          <Text style={{  fontSize: 16, fontWeight: "500",left:"-10%",top:"-80%" }}>
+            Home
           </Text>
+          <Text style={{  fontSize: 16, fontWeight: "200",left:"-10%",top:"-80%" }}>Have fun with our app</Text>
         </View>
 
         <View style={{ ...styles.imageContainer }}>
@@ -179,7 +181,7 @@ const Parent = () => {
               style={{height:110 , width:150 , top :8 , left : "-8%"}}
               />
             </TouchableOpacity>
-            <Text style={{ color: 'black', marginRight: 25, fontWeight: "800", left: 5 , top:8 }}>
+            <Text style={{ color: 'black', marginRight: 25, fontWeight: "500", left: 5 , top:8 }}>
               Profile
             </Text>
           </View>
@@ -191,7 +193,7 @@ const Parent = () => {
           left:"-15%",top:12
           }}
           source={{uri:'https://cdn-icons-png.flaticon.com/512/2247/2247728.png'}} />
-              <Text style={{ color: 'black', marginRight: 10, left: "-15%", fontWeight: "800", top:16}}>
+              <Text style={{ color: 'black', marginRight: 10, left: "-15%", fontWeight: "500", top:16}}>
                 Inscription
               </Text>
             </View>
@@ -211,7 +213,7 @@ const Parent = () => {
           }}
           source={{uri:'https://i.pinimg.com/originals/12/92/10/129210c6c1fd1970733f46d2f4951dc3.png'}} />
             </TouchableOpacity>
-            <Text style={{ color: 'black', left: "50%", fontWeight: "800"  , top:13}}>Teacher</Text>
+            <Text style={{ color: 'black', left: "50%", fontWeight: "500"  , top:13}}>Teacher</Text>
           </View>
         </View>
 
@@ -223,7 +225,7 @@ const Parent = () => {
               style={{width:100 , height:100 , top:12 , left:"-15%"}}
               />
             </TouchableOpacity>
-            <Text style={{ color: 'black', left: 0, fontWeight: "800"  , top:14 , left :"-15%" }}>Student</Text>
+            <Text style={{ color: 'black', left: 0, fontWeight: "500"  , top:14 , left :"-15%" }}>Student</Text>
           </View>
           <View style={{ ...styles.imageTextWrapper, marginLeft: 30 }}>
             <TouchableOpacity onPress={handleImageClick6}>
@@ -232,7 +234,7 @@ const Parent = () => {
                 style={{height:95 , width:95 , top:17 , left :"-5%"}}
               />
             </TouchableOpacity>
-            <Text style={{ color: 'black', left: 0, fontWeight: "800" , left :"-2%" , top:18 }}> payment </Text>
+            <Text style={{ color: 'black', left: 0, fontWeight: "500" , left :"-2%" , top:18 }}> payment </Text>
           </View>
         </View>
 
@@ -242,22 +244,22 @@ const Parent = () => {
             <TouchableOpacity onPress={handleImageClick7}>
               <Image
               source={{uri:'https://cdn-icons-png.flaticon.com/512/3982/3982361.png'}}
-              style={{width:100 , height:100 , top : 8 , left:"-80%"}}
+              style={{width:100 , height:100 , top : "18%" , left:"-100%"}}
               />
             </TouchableOpacity>
-            <Text style={{ color: 'black', left: "-89%", fontWeight: "800" , top:19 }}>Notes</Text>
+            <Text style={{ color: 'black', left: "-99%", fontWeight: "500" , top:"24%" }}>Notes</Text>
           </View>
         </View>
 
         <View style={styles.imageTextWrapper}>
-          <TouchableOpacity onPress={handleImageClick8}>
+          <TouchableOpacity  onPress={()=>navigation.navigate("Contact")}>
             <Image
             source={{uri:'https://cdn-icons-png.flaticon.com/512/4833/4833912.png'}}
-            style={{top:"-375%" , height:100 , width:100 , left : "-25%"}}
+            style={{top:"-395%" , height:95 , width:95 , left : "-25%"}}
             />
             
           </TouchableOpacity>
-          <Text style={{ color: 'black', fontWeight: "800" , top:"-320%" , left:"-23%" }}>Contact us</Text>
+          <Text style={{ color: 'black', fontWeight: "500" , top:"-335%" , left:"-23%" }}>Contact us</Text>
 
         </View>
       </View>

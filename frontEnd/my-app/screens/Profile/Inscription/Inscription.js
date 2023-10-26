@@ -19,7 +19,7 @@ const Inscription = ({ navigation }) => {
   const [LastName, setLastName] = useState("");
   const [Birthday, setBirthday] = useState("");
   const [image, setImage] = useState("");
-  const [clas, setClass] = useState("");
+  const [Class, setClass] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [message, setMessage] = useState("Select an image");
@@ -97,7 +97,7 @@ const Inscription = ({ navigation }) => {
       Birthday,
       image: image,
       class: Class,
-      users_idusers: iduser,
+      users_idusers: 1,
       classes_idclasses: 3
     })
     .then((res) => {
@@ -211,7 +211,7 @@ onRequestClose={() => {
 </View>
 </Modal>    
 
-            <TouchableOpacity style={styles.loginButton} >
+            <TouchableOpacity style={styles.loginButton} onPress={()=>handle()}>
               <View style={styles.loginButtonTextWrapper}>
                 <Text style={styles.loginButtonText}>SIGN UP</Text>
               </View>

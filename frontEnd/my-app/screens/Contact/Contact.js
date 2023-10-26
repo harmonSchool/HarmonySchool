@@ -1,9 +1,9 @@
 import axios from "axios";
 import { ScrollView } from "native-base";
 import React, { useEffect, useState } from "react";
-import { View, Text, ImageBackground, StyleSheet , TouchableOpacity } from "react-native";
-import { TextInput } from "react-native-paper";
+import { View, Text, ImageBackground, StyleSheet , TouchableOpacity,TextInput } from "react-native";
 import { Svg, Path } from "react-native-svg";
+import Adress from '../IP'
 
 
  
@@ -17,10 +17,10 @@ export default function ContactUs({navigation}) {
   })
 
   const handleSubmit = () =>{
-    axios.post("http://192.168.104.4:3001/contactUs", formData)
+    axios.post(`http://${Adress}/contactUs`, formData)
     .then((response)=>{
       console.log("Message send successfully" , response.data.message)
-      navigation.navigate('Home');
+      navigation.navigate('Parent');
 
     }).catch((error)=>{
       console.error("Failed to send the message" , error)
@@ -28,53 +28,97 @@ export default function ContactUs({navigation}) {
   }
 
   return (
-    <ScrollView horizontal={false}>
-      <View style={styles.container}>
-        <Text style={styles.getintouch}>{`Get in touch`}</Text>
-        <Text style={styles.wearehereforyouHowcanwehelp}>
-          {`We are here for you! How can we help?`}
-        </Text>
-        <View style={styles.emailAddressHolder}>
-          <TextInput
+    // <ScrollView horizontal={false}>
+    //   <View style={styles.container}>
+    //     <Text style={styles.getintouch}>{`Get in touch`}</Text>
+    //     <Text style={styles.wearehereforyouHowcanwehelp}>
+    //       {`We are here for you! How can we help?`}
+    //     </Text>
+    //     <View style={styles.emailAddressHolder}>
+    //       <TextInput
+    //       value={formData.first_name}
+    //       onChangeText={(text) => setFormData({ ...formData, first_name: text })}
+
+    //       style={styles.rectangle1} />
+    //       <Text style={styles.yourName}>{`Your Name`}</Text>
+    //     </View>
+    //     <View style={styles._emailAddressHolder}>
+    //       <TextInput 
+    //       value={formData.phone_number}
+    //       onChangeText={(text) => setFormData({ ...formData, phone_number: text })}
+
+    //       style={styles.rectangle2} />
+    //       <Text style={styles.phoneNumber}>{`Phone Number`}</Text>
+    //     </View>
+    //     <View style={styles.__emailAddressHolder}>
+    //       <TextInput 
+    //       value={formData.email}
+    //       onChangeText={(text) => setFormData({ ...formData, email: text })}
+
+    //       style={styles.rectangle3} />
+    //       <Text style={styles.theemailyouwanttocommunicatethrough}>
+    //         {`The email you want to communicate through`}
+    //       </Text>
+    //     </View>
+
+    //     <View style={styles.____emailAddressHolder}>
+    //       <TextInput 
+    //       value={formData.message}
+    // onChangeText={(text)=>setFormData({...formData , message:text})}
+
+    //       style={styles.rectangle5} />
+    //       <Text style={styles.message}>{`Message`}</Text>
+    //     </View>
+        
+    //     <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
+    //     <Text style={styles._submit}>Submit</Text>
+    //     </TouchableOpacity>
+
+
+    //   </View>
+    // </ScrollView>
+    <ScrollView>
+               <View style={{width:"20%",height:"30%"}}></View>
+
+      <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+        <Text style={{  fontSize: 16, fontWeight: "500",left:"-20%",top:"19%",marginTop:"5%" }}>Contact us</Text>
+        <Text style={{  fontSize: 14, fontWeight: "200",left:"-20%",top:"20%" }}>Send a message</Text>
+        <Text style={{top:"32%",fontWeight:"200",left:"-28%"}}>{`Your Name`}</Text>
+         <TextInput
           value={formData.first_name}
-          onChangeText={(text) => setFormData({ ...formData, first_name: text })}
+        onChangeText={(text) => setFormData({ ...formData, first_name: text })}
 
-          style={styles.rectangle1} />
-          <Text style={styles.yourName}>{`Your Name`}</Text>
-        </View>
-        <View style={styles._emailAddressHolder}>
-          <TextInput 
-          value={formData.phone_number}
-          onChangeText={(text) => setFormData({ ...formData, phone_number: text })}
+           style={{height:"15%",width:"80%",top:"33%",backgroundColor:"#CFCDCD",borderRadius:8}} />
+        <Text style={{top:"32%",fontWeight:"200",left:"-21%",marginTop:"5%"}}>{`Your phone number`}</Text>
 
-          style={styles.rectangle2} />
-          <Text style={styles.phoneNumber}>{`Phone Number`}</Text>
-        </View>
-        <View style={styles.__emailAddressHolder}>
-          <TextInput 
-          value={formData.email}
-          onChangeText={(text) => setFormData({ ...formData, email: text })}
+<TextInput 
+       value={formData.phone_number}
+       onChangeText={(text) => setFormData({ ...formData, phone_number: text })}
+       style={{height:"15%",width:"80%",top:"33%",backgroundColor:"#CFCDCD",borderRadius:8}}/>
+       <Text style={{top:"32%",fontWeight:"200",left:"-26%",marginTop:"5%"}}>
+             {`Your e-mail`}
+           </Text>
+           <TextInput 
+    value={formData.email}
+    onChangeText={(text)=>setFormData({...formData , email:text})}
 
-          style={styles.rectangle3} />
-          <Text style={styles.theemailyouwanttocommunicatethrough}>
-            {`The email you want to communicate through`}
-          </Text>
-        </View>
+    style={{height:"15%",width:"80%",top:"33%",backgroundColor:"#CFCDCD",borderRadius:8}} />
 
-        <View style={styles.____emailAddressHolder}>
-          <TextInput 
-          value={formData.message}
+<Text style={{top:"32%",fontWeight:"200",left:"-26%",marginTop:"5%"}}>
+             {`Your message`}
+           </Text>
+           <TextInput 
+    value={formData.message}
     onChangeText={(text)=>setFormData({...formData , message:text})}
 
-          style={styles.rectangle5} />
-          <Text style={styles.message}>{`Message`}</Text>
-        </View>
-        
-        <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
-        <Text style={styles._submit}>Submit</Text>
-        </TouchableOpacity>
+    style={{height:"30%",width:"80%",top:"33%",backgroundColor:"#CFCDCD",borderRadius:8}} />
 
 
+        <TouchableOpacity style={{width:"80%",height:"20%",borderRadius:"8",justifyContent:"center",alignItems:"center",backgroundColor:"#1FA609",top:"50%"}} onPress={handleSubmit}>
+              
+
+         <Text style={{color:"white"}}>Submit</Text>
+         </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -82,11 +126,9 @@ export default function ContactUs({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 1300,
-    width: 500,
-    backgroundColor: "white",
-    marginTop:"0%" , 
-    left:6
+justifyContent:"center",
+alignItems:"center",
+    backgroundColor: "white"
   },
   getintouch: {
     flexShrink: 0,
@@ -112,35 +154,12 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
   },
   emailAddressHolder: {
-    flexShrink: 0,
-    top: 131,
+    top: "30%",
     height: 84,
-    left: "13%",
     width: 269,
-    transform: [
-      {
-        rotateZ: "0.00deg",
-      },
-    ],
-  },
-  rectangle1: {
-    flexShrink: 0,
-    top: 38,
-    width: 269,
-    height: 46,
-    transform: [
-      {
-        rotateZ: "0.00deg",
-      },
-    ],
-    backgroundColor: "rgba(248, 240, 240, 1)",
-    borderWidth: 0.7681159973144531,
-    borderColor: "rgba(102, 50, 142, 1)",
-    borderRadius: 7.681159973144531
   },
 
   rectangle2: {
-    flexShrink: 0,
     top: 38,
     width: 269,
     height: 46,
@@ -315,14 +334,13 @@ const styles = StyleSheet.create({
     lineHeight: 27.68098258972168,
   },
   submit: {
-    flexShrink: 0,
-    top: "17%",
+    top: "67%",
     height: 45,
-    left: 70,
     width: 257,
-    backgroundColor: "rgba(102, 50, 142, 1)",
+    backgroundColor: "#1FA609",
     alignItems: "center",
-    borderRadius: 10,
+    justifyContent:"center",
+    borderRadius: 10
   },
  
   _submit : {
