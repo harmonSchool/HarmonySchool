@@ -28,6 +28,7 @@ const SubjectRoute=require("./routes/subject")
 const StudentRoute=require("./routes/student")
 const StudRoute= require('./routes/notes')
 const Payment= require('./controllers/Payement')
+const adminRoute= require('./controllers/Admin')
 const Auth = require('./routes/Auth');
 const { getAll } = require('./controllers/users');
 const { update } = require('./controllers/EditProfile')
