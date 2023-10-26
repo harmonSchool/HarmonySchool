@@ -188,6 +188,7 @@ function Login({ navigation }) {
       </Text>
     </View>
   )}
+}
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
   text: {
