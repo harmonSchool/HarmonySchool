@@ -71,6 +71,54 @@ function getStudentIdByUsername(First_name, callback) {
     });
   };
 
+  const getStudentsByClass = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getStudentsByClass2 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+  
+
+  const getStudentsByClass3 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getStudentsByClass4 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getStudentsByClass5 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+  const getStudentsByClass6 = (className, callback) => {
+    const sql = 'SELECT * FROM Student WHERE class = ?';
+    connection.query(sql, [className], function (error, results) {
+      callback(error, results);
+    });
+  };
+
+
+
+
+
+
   
 
 
@@ -83,7 +131,14 @@ function getStudentIdByUsername(First_name, callback) {
     remove,
     getAll,
     getStudentsInClass,getOneStudent,
-    getStudentIdByUsername
+    getStudentsByUser ,
+    getStudentsByClass,
+    getStudentsByClass2,
+    getStudentsByClass3,
+    getStudentsByClass4 ,
+    getStudentsByClass5 ,
+    getStudentsByClass6 
+    
     
     
   };

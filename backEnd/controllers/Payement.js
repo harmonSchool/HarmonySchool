@@ -1,24 +1,51 @@
+
+require('dotenv').config()
+
+const Stripe = require('stripe')
+const stripe = Stripe(process.env.STRIPE_KEY);
 const express = require('express');
 const router = express.Router();
-const stripe = require('stripe');
-const Stripe =
-    stripe('sk_test_51NXWAMHkrMvZ7ciM4zweSJUIr9zUwYsYjeKsjCIqDPnPUnh3offCxKZzrjfidg47dh1ECfHDcy3pnqQ56TaaQtlp00RQMwsk0q');
 
-router.post('/', async (req, res) => {
-    console.log(req.body)
-    let status, error;
-    const { token, amount } = req.body;
-    try {
-        await Stripe.charges.create({
-            source: token.id,
-            amount,
-            currency: 'usd',
-        });
-        status = 'success';
-    } catch (error) {
-        console.log(error);
-        status = 'Failure';
+
+
+
+router.post('/pay', async (req, res) => {
+    
+    const {name,classId,studentId,amount} = req.body;
+
+    if(!name || ! classId || !studentId || !amount){
+        return res.status(400).json( { message : 'you must enter name class and student and amount!'});
     }
-    res.json({ error, status });
-});
+
+    const customer = await stripe.customers.create();
+    const ephemeralKey = await stripe.ephemeralKeys.create(
+      {customer: customer.id},
+      {apiVersion: '2023-10-16'}
+    );
+
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount * 100),
+        currency: 'eur',
+        customer: customer.id,
+        // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+        //   automatic_payment_methods: {
+        //     enabled: true,
+        //   },
+        payment_method_types : ['card'],
+        metadata : {name,classId,studentId},
+        });
+
+        res.json({
+        paymentIntent: paymentIntent.client_secret,
+        ephemeralKey: ephemeralKey.secret,
+        customer: customer.id,
+        publishableKey: process.env.STRIPE_PUBLISH_KEY
+        });
+
+    
+  });
+
+
+
 module.exports = router;
+

@@ -1,24 +1,34 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
-import { useContext } from "react";
-import { MyContext } from "../../useContext/useContext";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 const Teacher = () => {
+  const navigation = useNavigation();
+
+  const handleNavigateToStudents = () => {
+    navigation.navigate('StudentClass');
+  };
+
+  //StudentClass
+
   return (
     <ScrollView>
-    <View style={styles.container}>
-      <View style={styles.homeDiv}>
-        <Text style={styles.homeText}></Text>
-      </View>
+      <View style={styles.container}>
+        <View style={styles.homeDiv}>
+          <Text style={styles.homeText}></Text>
+        </View>
 
-      <View style={styles.imageContainer}>
-      <Image
-      style={{
-      height:90,
-      width:90,
-      marginLeft:0,top:30
-    }}
-    source={{uri:'https://www.learningprofessionals.af.mil/portals/87/Images/S2C%20Images/Article%20Image_1.png?ver=VSSxf_st2FKR3mLATXb3dQ%3D%3D'}} />
-      </View>
+        <View style={styles.imageContainer}>
+          <Image
+            style={{
+              height: 90,
+              width: 90,
+              marginLeft: -15,
+              top: 10,
+            }}
+            source={{ uri: 'https://www.learningprofessionals.af.mil/portals/87/Images/S2C%20Images/Article%20Image_1.png?ver=VSSxf_st2FKR3mLATXb3dQ%3D%3D' }}
+          />
+        </View>
 
         <View style={styles.text}>
           <Text style={{ color: '#66328E', left: -8, fontWeight: '900', fontSize: 16, top: -140, textAlign: 'center', marginTop: -20 }}>
@@ -132,6 +142,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '120%',
+    height:"120%",
     paddingTop: 50,
     marginLeft: -40,
     height:900,
@@ -139,9 +150,9 @@ const styles = StyleSheet.create({
   homeDiv: {
     backgroundColor: 'white',
     width: 312,
-    height: 65,
+    height: 100,
     marginLeft: 21,
-    marginTop:60,
+    marginTop: 10, // Ajustez cette valeur pour aligner plus haut
   },
   homeText: {
     fontSize: 15,
@@ -150,21 +161,21 @@ const styles = StyleSheet.create({
     color: '#65328e',
   },
   imageContainer: {
-    marginTop: 20,
+    marginTop: 10, // Ajustez cette valeur pour aligner plus haut
     width: 100,
     height: 50,
-    marginLeft: 21, 
+    marginLeft: 21,
   },
  
   text: {
-    marginLeft: 25, 
-    marginTop: 10, 
+    marginLeft: 25,
+    marginTop: 10,
   },
   imaged: {
-    width: 100, 
+    width: 100,
     height: 100,
-    borderRadius: 10, 
-    margin: 10, 
+    borderRadius: 10,
+    margin: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -175,9 +186,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   imageContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10, // Ajustez cette valeur pour aligner plus haut
     marginLeft: 21,
   },
   imageTextWrapper: {
@@ -194,8 +205,6 @@ const styles = StyleSheet.create({
       height: 2,
     },
   }
-  
-
 });
 
 export default Teacher;

@@ -6,11 +6,56 @@ import axios from "axios";
 import Adress from '../../IP'
 import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
+<<<<<<< HEAD
+
+import ADRESS_API from "../../serverUrl";
+=======
 import AsyncStorage from "@react-native-async-storage/async-storage"
+>>>>>>> main
 
 function Login({ navigation }) {
   const { isDarkMode, setMode, setUser } = useContext(MyContext);
   const theme = isDarkMode ? darkTheme : lightTheme;
+<<<<<<< HEAD
+  const [email,setEmail]=useState('')
+  const [password , setPassword]=useState('')
+  const [role , setRole]=useState('')
+  const [data,setData]=useState([])
+
+
+
+const handleLog=(e)=>{
+
+e.preventDefault()
+  const url = ADRESS_API + 'auth';
+  console.log(url);
+
+    axios.post(url  ,{
+      email,
+      password,
+    }).then((res)=>{
+      setData(res.data)
+      console.log(data);
+    
+      if(res.data[0].role == 1){
+        navigation.navigate('Parent');
+        alert("welcome Parent");
+      }else{
+        navigation.navigate('Teacher');
+        alert("welcome Teacher");
+      }
+      
+    }).catch((err)=>{
+      if(email===""){
+        console.log("enter your email");
+        alert('enter your email')
+      }else if(password===""){
+        console.log("enter your password");
+        alert("enter your password")
+      }else{
+      console.log(err)
+      alert("check your pass or your email")
+=======
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [teacherEmails, setTeacherEmails] = useState([]);
@@ -27,6 +72,7 @@ function Login({ navigation }) {
       return email;
     } catch (error) {
       console.error('Error retrieving user email:', error);
+>>>>>>> main
     }
   }
 
