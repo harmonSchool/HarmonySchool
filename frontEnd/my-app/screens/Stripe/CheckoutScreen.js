@@ -16,7 +16,7 @@ export default function CheckoutScreen({ route, navigation }) {
 
   
     const fetchPaymentSheetParams = async () => {
-      const response = await fetch(`${ADRESS_API}pay`, {
+      const response = await fetch(`http://${Adress}/pay`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

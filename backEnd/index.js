@@ -43,7 +43,7 @@ app.use('/subject',SubjectRoute)
 app.use('/student',StudentRoute)
 app.use('/note',StudRoute)
 app.use('/Admin',adminRoute)
-
+  
 var clientSocketIds = [];
 var connectedUsers= [];
 
@@ -137,8 +137,8 @@ app.put('/api/users/editProfile',(req,res)=>{
 
 const SECRET_KEY = "sdsdsd12014651520ds52qqs"; 
 
-let generatedVerificationCode;
-let resetTokens = new Set();
+var generatedVerificationCode = null
+var resetTokens = new Set();
 
 function generateVerificationCode() {
   const code = crypto.randomInt(100000, 1000000);
@@ -175,7 +175,7 @@ app.post('/send-verification-code', (req, res) => {
     from: 'oubaidbensaid18@gmail.com',
     to: email,
     subject: 'school',
-    text: `Your verification code is: ${verificationCode}  `,
+    text: `Your verification code is: ${verificationCode} `,
 
     
   };
@@ -383,7 +383,7 @@ app.post('/notify-admin', (req, res) => {
     from: 'oubaidbensaid18@gmail.com',
     to: adminEmail,
     subject: 'Notification from Your App',
-    text: message,
+    text: message
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

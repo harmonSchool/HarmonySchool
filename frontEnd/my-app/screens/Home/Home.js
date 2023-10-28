@@ -26,34 +26,33 @@ const Home = ({navigation}) => {
   
   return (
     <SafeAreaView style={{backgroundColor:"black"}}>
-    <View style={{backgroundColor: theme.backgroundColor}}>
+    <View  key={"hello"} style={{backgroundColor: theme.backgroundColor}}>
     <ScrollView>
         <View style={[styles.container,{backgroundColor: theme.backgroundColor}]}>
             <View style={[styles.nav, {borderColor:theme.borderColor}]}>
             <Image
     style={{width:40,
     height:40,
-    left:"3%",top:"-11%",borderRadius:"100%"
+    left:8,top:-15,borderRadius:100
   }}
   source={{uri:'https://img.freepik.com/premium-vector/green-paper-cutout-plant-with-two-leaves-it_870273-24.jpg?w=2000'}} />
             <TouchableNativeFeedback onPress={()=>navigation.navigate('Login')}>
-            <View style={{alignItems: 'center',justifyContent: 'center',height:"50%",width:"35%",borderRadius:8,top:"-60%",left:"61%"  ,backgroundColor:"#1FA609"}}>
+            <View style={{alignItems: 'center',justifyContent: 'center',height:"50%",width:"35%",borderRadius:8,top:"-67%",left:"61%"  ,backgroundColor:"#1FA609"}}>
             <Text style={{color:"white"}}>Connection</Text>
             </View>
             </TouchableNativeFeedback>
             </View>
             <View style={styles.fImg}>
                 <Image
-                style={{width:"100%",height:"90%",marginTop:15}}
+                style={{width:"100%",height:"100%",marginTop:-2}}
                 source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Hibbing_High_School_2014.jpg/1200px-Hibbing_High_School_2014.jpg'}}/>
             </View>
         <View style={styles.seeAll}>
-            <Text style={{fontWeight:400,top:"10%",left:"5%",color:"#1FA609"}} >Here is The matieres</Text>
             <Text style={[styles.text1,{color:theme.textColor}]}>See All</Text>
         </View>
         <View style={styles.matieres}>
         <ScrollView horizontal={true} >
-            <View style={[styles.matiere , {borderColor:theme.borderColor}]}>
+            <View style={[styles.matiere , {borderColor:"#1FA609"}]}>
                 <Image 
                 style={styles.matiertof}
                 source={{uri:"https://cdn.the-scientist.com/assets/articleNo/69216/aImg/43641/science-article-o.png"}}
@@ -62,7 +61,7 @@ const Home = ({navigation}) => {
                 <Text style={{color:theme.textColor}}>Science</Text>
                 </View>
             </View>
-            <View style={[styles.matieree, {borderColor:theme.borderColor}]}>
+            <View style={[styles.matieree, {borderColor:"#1FA609"}]}>
             <Image 
                 style={styles.matiertof}
                 source={{uri:"https://www.myoxfordenglish.es/wp-content/uploads/2020/12/English-for-your-profession-1-1200x717.jpg"}}
@@ -71,7 +70,7 @@ const Home = ({navigation}) => {
                 <Text style={{color:theme.textColor}}>English</Text>
             </View>
             </View>
-            <View style={[styles.matieree, {borderColor:theme.borderColor}]}>
+            <View style={[styles.matieree, {borderColor:"#1FA609"}]}>
             <Image 
                 style={styles.matiertof}
                 source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKsyPFSLnN2dzT4c2WptDUQJ3HIigfbKXGwA&usqp=CAU"}}
@@ -80,7 +79,7 @@ const Home = ({navigation}) => {
                 <Text style={{color:theme.textColor}}>Computer Science</Text>
                 </View>
             </View>
-            <View style={[styles.matieree, {borderColor:theme.borderColor}]}>
+            <View style={[styles.matieree, {borderColor:"#1FA609"}]}>
             <Image 
                 style={styles.matiertof}
                 source={{uri:"https://images.verbling.com/convert/w_1000/https%3A%2F%2Fverbling-user-uploads.s3.amazonaws.com%2F75736031415276259819%2F134fe6d9-35f7-49f7-9088-00d21599e535%2Fweb2_0.jpg"}}
@@ -94,11 +93,11 @@ const Home = ({navigation}) => {
         <Text style={[styles.text1,{color:theme.textColor}]} >See All</Text>
         <View style={styles.seeAll1}>
             <ScrollView horizontal={true}>
-                {data.map((e)=>{
+                {data.map((e,i)=>{
                   return(
-<View style={[styles.Teachers, {borderColor:theme.borderColor}]}>
-                <Image style={{borderWidth:0.6,width:90,height:90,borderRadius:100,backgroundColor:"#fff",marginTop:8,marginLeft:28,borderColor:theme.borderColor}}
-                source={{uri:'https://avatars.githubusercontent.com/u/97634240?v=4'}}
+<View key={i} style={[styles.Teachers, {borderColor:"#1FA609"}]}>
+                <Image style={{borderWidth:1.4,width:90,height:90,borderRadius:100,backgroundColor:"#fff",marginTop:8,marginLeft:28,borderColor:"#1FA609"}}
+                source={{uri:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxQHBhIRBxIOExAQEREVFxYVDRcVExIVGBIWFhUSFRUYHSggGh0lGxcVLTEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NFQ4PEjEZFRkrKysrLTctLSsrKzctNysrLSsrNy0tKysrKy0rLSsrKysrKysrKystLSsrKysrKysrK//AABEIAOEA4QMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAAAwQFBgIBB//EADUQAQABAgMDCQcEAwEAAAAAAAABAgMEBRESITETQVFhcYGhscEUIjI0kdHwQlKS4SRy8SP/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/AP0wBpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHqiiblWlETMg8vsRrOkcV2jLKqvjmmPGWjh8NTh6fcjf088mjMtZdXX8WlPbx+kJ4yr91U/xaQmqzpyqOaqf4o68rqj4KontjRqhowbuErtfHTOnTG+EDpVTE4Gm9GtO6rp6e2DUxij3dtTZr0uRv/N8PCgAAAAAAAAAAAAAAAAAA3MDh+Qsxr8U75+zHw9O3iKY6aodClABFAAAAAAQYzDxiLWnPHCWFMaTpPGHSMjNbWxfiqP1ecfkLBRAVAAAAAAAAAAAAAAAAFnL41xlPf5S3GHlvzlPf5S3EpABFAAAAAAFLNaNrC6/tmPt6rqtmM/4dWvV5wDDAaQAAAAAAAAAAAAAAABZy75ynv8pbjCwE6Yynt9JbqVQBAAAAAAAYmZVTOLmJmdI07t0Ntg46dcZV2+iwQAKgAAAAAAAAAAAAAAACfBRPtNMxE7qo5m8hwdGxhqYp6In6pkqgCAAAAAAAwMXExiatqJjWqebrb6pmdG1hJmeMaTH1WDFAVAAAAAAAAAAAAAAAAG5l9e3hKerd9Flm5Pc3VUz2+k+jSZqgAAAAAAAClm1ezhtP3THhv+y6yc2ubV6KY/THjKwUAFQAAAAAAAAAAAAAAABJh702LsVU/wDYbeFv+0WdqI047tWA08nubqqZ7fSfQo0gGVAAAAAAQYvEez2tdNd+nFh3bk3LkzVxmWhnFe+mmOufSPVmtRAAAAAAAAAAAAAAAAAABNhL3IYiJnhwnsQgOlidY3CllVya7GlX6Z0hdZUAAAABWzGuaMJOzz6R9QZWMu8tiZmOHCOyEANIAAAAAAAAAAAAAAAAAAAA2MpjTDT11T5RC6rZfTsYOnr1n6zqssqAAAAK2YxtYOru84WUeIp27FURz0zHgDngGkAAAAAAAAAAAAAAAAAAHqinbriKeMzoUUzXVpREzLVwGC5Gdq78XkC7TGzTERzQ+gyoAAAAADn8Vb5LEVR1+E8ETbx2E9op1p3VRw6+qWPctzaq0uRMS1EeAAAAAAAAAAAAAAB9iNqdKd8r2Hy2a997dHRz/wBAo007c6URMz1L+Hyyat9+dI6I4tGzZps06W4iPOe9ImmI7VmmzTpbiISAigAAAAAAADzctxcp0riJh6AZmIyznsT3T6Sz7lubdWlyJiXRvFy3F2nS5ETC6mOdGjiMs034ee6fSVCuiaKtK4mJ61HkAAAAAAH2N87gfFvC4Gq9vq92nxnshbwWA2I2r++ejmj+19NENjD02I/847+ee9MCKAAAAAAAAAAAAAAAAI71mm9TpciJ/OlIAyMVl8299r3o8Y+6i6VTxmBi/GtG6rwntXUYw9VUzRVMVRpMPKgAA0sqw2vv1933Z1MbVURHGZ0dFbo5O3EU8IjQo9AMqAAAAAAAAAAAAAAAAAAAAAAo5nh9u3t08aePXDIdLMaxvc9ft8leqp6J8OZYiMBRLhfmaP8AanzdACUgAigAAAAAAAAAAAAAAAAAAAAADEzL5yru8oBYKoCsv//Z'}}
                 />
                 <View style={{alignItems: 'center',
         justifyContent: 'center',marginTop:21}}>
@@ -114,17 +113,16 @@ const Home = ({navigation}) => {
         <View style={{ 
             width:width - 30,
             height:width -160,
-            borderRadius:width/12,
-            marginTop:20,
-        backgroundColor:"black"}}>
+            borderRadius:width/16,
+            marginTop:20}}>
          
-
+<Image style={{width:"100%",height:"100%",borderRadius:15}} source={{uri:"https://www.unicefusa.org/sites/default/files/2023-02/UNI122739.jpg"}}/>
         </View>
-        <View style={{width:250 ,marginTop:20,marginLeft:80}}>
-            <Text style={{marginLeft:17,fontSize:10,color:theme.textColor}}>We opened our school in 2022</Text>
-            <Text style={{fontSize:25,fontSize:10,color:theme.textColor}}>and we appreciate the efforts made</Text>
-            <Text style={{marginLeft:15,fontSize:10,color:theme.textColor}}>by the teachers and the staff</Text>
-            <Text style={{fontSize:10,color:theme.textColor}}>to make it one of the highest ranks</Text>
+        <View style={{width:260 ,marginTop:20,marginLeft:20}}>
+            <Text style={{top:-4,marginLeft:-15,fontSize:12,marginTop:20,color:theme.textColor}}>We opened our school in 2022 and appreciate</Text>
+            <Text style={{marginLeft:3,fontSize:25,fontSize:12,color:theme.textColor}}>   the efforts made by the teachers and</Text>
+            <Text style={{top:2,marginLeft:33,fontSize:12,color:theme.textColor}}>    the staff to make it one of</Text>
+            <Text style={{top:4,marginLeft:64,fontSize:12,color:theme.textColor}}>   the highest ranks</Text>
         </View>
         <Text style={{fontSize:25,marginLeft:width - 500,marginTop:50,color:theme.textColor}}>Sponsors</Text>
         <View style={styles.sponsors}>
@@ -216,8 +214,8 @@ const styles=StyleSheet.create({
         borderRadius:12,
         backgroundColor:'red'
       },tit:{
-        width:"99%",marginLeft:1,
-        height:41.6,
+        width:"95%",marginLeft:5,
+        height:40,
     alignItems: 'center',
         justifyContent: 'center'
 
@@ -230,9 +228,8 @@ const styles=StyleSheet.create({
 
     },fImg:{
         width:"100%",
-        height:180,
-        top:"-1%"
-        ,flex: 1,
+        height:200,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },seeAll:{
@@ -242,14 +239,14 @@ const styles=StyleSheet.create({
         marginTop:17
     },text1:{
         left:"80%",
-        top:"-35%"
+        top:"20%"
     },matiere:{
         width:180,
         height:130,
         backgroundColor:"white",
         
         borderRadius:12,
-        borderWidth:0.6,
+        borderWidth:1,
     },matieres:{
         width:"100%",
         height:150,
@@ -260,12 +257,12 @@ const styles=StyleSheet.create({
         height:130,
         
         borderRadius:12,
-        borderWidth:0.6,
+        borderWidth:1,
         marginLeft:15
         
     },Teachers:{
         height:190,
-        borderWidth:0.6,
+        borderWidth:0.8,
          width:150,
          borderRadius:15,
          marginLeft:20

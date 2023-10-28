@@ -7,6 +7,7 @@ router.post('/add',addClasse);
 router.get('/get',getClasses)
 router.delete('/:id',RemoveClass)
 router.get('/getOne/:id',getOneClass)
+router.get('getByclass/:iduser')
 
 
 module.exports = router;

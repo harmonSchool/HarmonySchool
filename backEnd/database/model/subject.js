@@ -1,44 +1,46 @@
 const connection = require("../index")
 
-const add = (StudenttData, callback) => {
-  const sql = `INSERT INTO Student SET ?`;
-  connection.query(sql, StudenttData, function (error, results) {
-      callback(error, results);
+const add = (data, callback) => {
+  const { name, classes_idclasses, teachers_idteacher } = data;
+  const sql = 'INSERT INTO subject (name, classes_idclasses, teachers_idteacher) VALUES (?, ?, ?)';
+  connection.query(sql, [name, classes_idclasses, teachers_idteacher], function (error, results) {
+    callback(error, results);
   });
 };
 
 
-  const put = (idStudent, updatedData, callback) => {
-    const sql = `UPDATE Student SET ? WHERE idStudent = ?`;
-    connection.query(sql, [updatedData, idStudent], function(error, results) {
+
+  const put = (idsubject, updatedData, callback) => {
+    const sql = `UPDATE subject SET ? WHERE idsubject = ?`;
+    connection.query(sql, [updatedData, idsubject], function(error, results) {
         callback(error, results);
     });
   };
 
-  const remove = (idStudent, callback) => {
-    const sql = `DELETE FROM Student WHERE idStudent = ?`;
-    connection.query(sql, [idStudent], function(error, results) {
+  const remove = (idsubject, callback) => {
+    const sql = `DELETE FROM subject WHERE idsubject = ?`;
+    connection.query(sql, [idsubject], function(error, results) {
         callback(error, results);
     });
   };
 
   
   const getAll = (callback) => {
-    const sql = `SELECT * FROM Student`;
+    const sql = `SELECT * FROM subject`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
   };
 
-  const getStudentsInClass = (idclasses, callback) => {
+  const getSubjectInClass = (idclasses, callback) => {
     const sql = `SELECT * FROM Student WHERE classes_idclasses = ?`;
     connection.query(sql, [idclasses], function (error, results) {
       callback(error, results);
     });
   };
 
-  const getOneStudent = (idStudent, callback) => {
-    const sql = 'SELECT * FROM Student WHERE idStudent = ?';
+  const getSubject = (idStudent, callback) => {
+    const sql = 'SELECT * FROM subject WHERE idsubject = ?';
     ;
     connection.query(sql, [idStudent], function (error, results) {
       callback(error, results);
@@ -46,57 +48,6 @@ const add = (StudenttData, callback) => {
   };
 
   
-
-  const getStudentsByUser = (idStudent, callback) => {
-    const sql = `SELECT * FROM Student WHERE users_idusers = ?`;
-    connection.query(sql, [idStudent], function (error, results) {
-      callback(error, results);
-    });
-  };
-
-  const getStudentsByClass = (className, callback) => {
-    const sql = 'SELECT * FROM Student WHERE class = ?';
-    connection.query(sql, [className], function (error, results) {
-      callback(error, results);
-    });
-  };
-
-  const getStudentsByClass2 = (className, callback) => {
-    const sql = 'SELECT * FROM Student WHERE class = ?';
-    connection.query(sql, [className], function (error, results) {
-      callback(error, results);
-    });
-  };
-  
-
-  const getStudentsByClass3 = (className, callback) => {
-    const sql = 'SELECT * FROM Student WHERE class = ?';
-    connection.query(sql, [className], function (error, results) {
-      callback(error, results);
-    });
-  };
-
-  const getStudentsByClass4 = (className, callback) => {
-    const sql = 'SELECT * FROM Student WHERE class = ?';
-    connection.query(sql, [className], function (error, results) {
-      callback(error, results);
-    });
-  };
-
-  const getStudentsByClass5 = (className, callback) => {
-    const sql = 'SELECT * FROM Student WHERE class = ?';
-    connection.query(sql, [className], function (error, results) {
-      callback(error, results);
-    });
-  };
-
-  const getStudentsByClass6 = (className, callback) => {
-    const sql = 'SELECT * FROM Student WHERE class = ?';
-    connection.query(sql, [className], function (error, results) {
-      callback(error, results);
-    });
-  };
-
 
 
 
@@ -113,17 +64,8 @@ const add = (StudenttData, callback) => {
     put,
     remove,
     getAll,
-    getStudentsInClass,getOneStudent,
-    getStudentsByUser ,
-    getStudentsByClass,
-    getStudentsByClass2,
-    getStudentsByClass3,
-    getStudentsByClass4 ,
-    getStudentsByClass5 ,
-    getStudentsByClass6 
-    
-    
-    
+    getSubjectInClass,
+    getSubject
   };
   
   

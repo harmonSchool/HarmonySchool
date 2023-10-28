@@ -1,14 +1,17 @@
 import React from 'react';
 import { TouchableOpacity ,View, Text, ImageBackground, StyleSheet, TextInput ,Alert , Button } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import axios from 'axios';
+import { MyContext } from "../../useContext/useContext";
+import Adress from '../IP'
 
 export default function ResetPasswordScreen({ navigation }) {
-  const [email, setEmail] = useState('');
+  const { email,setEmail,iduser} = useContext(MyContext);
+
   const [newPassword, setNewPassword] = useState('');
   const [isError, setIsError] = useState(false);
- const  [idUsers , setIdusers]=useState("")
+ const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const handleResetPassword = () => {
     if (!email || !newPassword) {
       Alert.alert("Please enter both email and new password.");
@@ -21,10 +24,9 @@ export default function ResetPasswordScreen({ navigation }) {
     };
 
     axios
-      .post(`http://192.168.1.5:2023/user/updatePassword/${idUsers}`, requestBody)
+      .post(`http://${Adress}/user/updatePassword/${iduser}`, requestBody)
       .then((response) => {
-        Alert.alert("Password reset successful!");
-      })
+navigation.navigate('Login')      })
       .catch((error) => {
         console.error(error);
         Alert.alert("Password reset failed. Please try again.");
@@ -53,7 +55,7 @@ export default function ResetPasswordScreen({ navigation }) {
                 <Text style={styles.send}>Send</Text>
               
               <View style={styles.rectangle2} />
-          					<Text onPress={handleSubmit} style={styles.send}>
+          					<Text onPress={handleResetPassword} style={styles.send}>
             						{`Send`}
           					</Text>
         				</View>

@@ -2,60 +2,85 @@ import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet, Image, Text } from "react-native";
 import axios from "axios";
 import ADRESS_API from "../serverUrl";
+import Adress from '../IP'
 import { useContext } from "react";
 import { MyContext } from "../../useContext/useContext";
 
 export default function Student() {
+  const[imageURL,setImageUrl] = useState(null);
   const [studentData, setStudentData] = useState([]);
-  const { user } = useContext(MyContext);
 
-  useEffect(() => {
+  const { iduser } = useContext(MyContext);
+useEffect(() => {
     axios
-      .get("http://${ADRESS_API}:3001/student/getByUser/${user?.id}")
-      .then((response) => {
-        setStudentData(response.data);
+      .get(`http://${Adress}/student/getByUser/${iduser}`)
+      .then((res) => {
+        setStudentData(res.data);
+        console.log(iduser);
       })
       .catch((error) => {
         console.error("Error fetching student data:", error);
       });
-  }, []);
+  }, [iduser])
+  
 
   // console.log(studentData);
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {studentData.map((student, index) => (
-        <View key={index} style={styles.studentCard}>
+    <ScrollView >
+      <View style={styles.container}>
+        <View  style={styles.studentCard}>
+        <View style={styles.text}>
+              <Text style={{ top:"50%",fontWeight:"400",fontSize:16,left:"-32%" }}>Teacher</Text>
+    
+              <Text style={{ marginTop:"20%",fontWeight:"300",fontSize:13,left:"-33%",top:"13%" }}>your children teachers</Text>
+            </View>
           <View style={styles.ellipseContainer}>
             <Image
               source={{
-                uri: student.imageURL,
-                height: "400px",
-                width: "400px",
+                uri: imageURL,
+                height: 120,
+                width: 120,
+                borderRadius:100
               }}
               style={styles.ellipseImage}
             />
           </View>
+          {studentData.map((el,i)=>{
+            return(
           <View style={styles.studentInfo}>
-            <Text style={styles.studentInfoLabel}>Name</Text>
-            <Text style={styles.studentInfoValue}>{student.First_name}</Text>
-            <Text style={styles.studentInfoLabel}>Lastname:</Text>
-            <Text style={styles.studentInfoValue}>{student.lastName}</Text>
-            <Text style={styles.studentInfoLabel}>Date of Birth:</Text>
-            <Text style={styles.studentInfoValue}>{student.Birthday}</Text>
-            <Text style={styles.studentInfoLabel}>Class:</Text>
-            <Text style={styles.studentInfoValue}>{student.class}</Text>
+{setImageUrl(el.image)}
+              <View key={i} >
+              <Text style={styles.studentInfoLabel}>Name: {el.First_name} </Text>
+            <Text style={styles.studentInfoValue}></Text>
+            <Text style={styles.studentInfoLabel}>Lastname:{el.LastName} </Text>
+            <Text style={styles.studentInfoValue}></Text>
+            <Text style={styles.studentInfoLabel}>Date of Birth: {el.Birthday}</Text>
+            <Text style={styles.studentInfoValue}></Text>
+            <Text style={styles.studentInfoLabel}>Class: {el.class}</Text>
+            <Text style={styles.studentInfoValue}></Text>
+            </View>
+            
+            
           </View>
+       )})}
         </View>
-      ))}
+      
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  text: {
+    alignItems: "center",
+    marginTop: 25,
+    width: 190,
+color: "#65328e",
+  },
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
   },
   purpleRectangle: {
     width: "90%",
@@ -77,31 +102,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   ellipseContainer: {
-    width: 150,
-    height: 150,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: "#BA68C8",
+    width: 120,
+    height: 120,
+    borderRadius: 100,
+    borderWidth: 0.6,
+    borderColor: "#1FA609",
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
-    marginLeft: 25,
-    marginTop: 50,
+    left:"33%"
   },
   ellipseImage: {
     width: "100%",
     height: "100%",
-    borderRadius: 50,
+    borderRadius: 150,
   },
   studentInfo: {
-    marginTop: 40,
-    alignItems: "center",
+    alignItems: "center"
   },
   studentInfoLabel: {
-    fontWeight: "bold",
-    color: "#BA68C8",
-    fontSize: 25,
-    marginBottom: 5,
+    fontWeight: "300",
+    fontSize: 18,
+    marginBottom: 15,
+    left:"-55%",
+    top:"15%"
   },
   studentInfoValue: {
     fontSize: 16,

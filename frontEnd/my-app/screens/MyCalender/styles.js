@@ -166,15 +166,7 @@ last: {
 },
 
 label: {
-  fontWeight: 'bold',
-  marginBottom: 10,
-  color: 'black',
-  top:-19,
-  left:"39%",
-  fontSize: 18,
-  fontWeight:"900",
-  color: "rgba(186, 104, 200, 1)",
-
+  marginTop:"5%",top:'-8%', color: "rgba(0, 0, 0, 1)"  ,  fontSize:16,fontWeight:"600",left:"12%"
 
 },
 customDropdown: {
@@ -234,22 +226,34 @@ title: {
 card: {
   // Style for the Card component
   backgroundColor: 'white',
-  margin: 10,
+  width:200 , 
+  margin: 5,
   padding: 10,
   borderRadius: 10,
   shadowColor: '#000',
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.2,
-  shadowRadius: 2,
+  shadowRadius: 8,
   elevation: 2, // Android shadow
 },
 title: {
-  fontSize: 18,
+  fontSize: 15,
   fontWeight: 'bold',
   marginBottom: 5,
-  top:14
+  top:14 , 
+  fontWeight : "500"
+  
 },
-
+searchInput: {
+  height: 40,
+  borderColor: 'gray',
+  borderWidth: 0.6,
+  margin: 10,
+  paddingLeft: 10,
+  borderRadius: 8, 
+  backgroundColor: '#CFCDCD', 
+  left:0
+},
 
 });
 ;

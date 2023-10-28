@@ -1,8 +1,8 @@
 const Admin = require('../database/model/Admin');
 
 const CreateAdmin = (req, res) => {
-    const { admin, password, image } = req.body
-    const adminData = { admin, password, image }
+    const { admin, password, image, userType } = req.body
+    const adminData = { admin, password, image, userType }
 
     Admin.addAdmin(adminData, (error, result) => {
         if (error) {

@@ -2,6 +2,12 @@ const conn = require("../index")
 const bcrypt = require('bcrypt')
 const mysql = require('mysql2');
 
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: '10697',
+  database: 'school',
+});
 
 function getAll (callback) {
   const sql = 'SELECT * FROM users'
@@ -99,11 +105,10 @@ function getUserById(idusers, callback) {
 }
 
 
-const updateUserPassword = (idusers, newPassword, callback) => {
+const updateUserPassword = (idusers, newPassword , callback) => {
   const saltRounds = 10;
 
-  // Hash and update the new password
-  bcrypt.hash(newPassword, saltRounds, (err, hash) => {
+  bcrypt.hash(newPassword , (err, hash) => {
     if (err) {
       console.error('Error hashing new password: ' + err.message);
       callback(err);
@@ -176,4 +181,3 @@ module.exports = {
     getAll,
     updateUserPassword   ,getOneUser 
 };
-

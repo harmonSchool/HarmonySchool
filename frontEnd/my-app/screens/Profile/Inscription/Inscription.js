@@ -14,7 +14,7 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { SafeAreaView } from "react-native-safe-area-context";
 const Inscription = ({ navigation }) => {
   const[hide,setHide]=useState(true)
-  const {iduser} = useContext(MyContext);
+  const {iduser,first_name,setFirst_name} = useContext(MyContext);
   const [First_name, setFirstName] = useState("");
   const [LastName, setLastName] = useState("");
   const [Birthday, setBirthday] = useState("");
@@ -33,10 +33,11 @@ const Inscription = ({ navigation }) => {
         type: "image/jpeg",
         name: "image.jpg",
       });
-      data.append("upload_preset", "efquzmp0");
-
+      data.append("upload_preset", "efquzmp0"); // Replace with your Cloudinary upload preset
+      data.append("cloud_name", "dkago8t99"); // Replace with your Cloudinary cloud name
+  
       const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dkago8t99/image/upload",
+        "https://api.cloudinary.com/v1_1/dkago8t99/image/upload", // Replace with your Cloudinary URL
         data,
         {
           headers: {
@@ -44,13 +45,18 @@ const Inscription = ({ navigation }) => {
           },
         }
       );
-
+  
       const imageUrl = response.data.secure_url;
       setImageUrl(imageUrl);
     } catch (error) {
       console.error("Error uploading image to Cloudinary:", error);
     }
   };
+   
+  useEffect(()=>{
+    setFirst_name(First_name)
+    console.log(first_name);
+  })
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -61,13 +67,14 @@ const Inscription = ({ navigation }) => {
       allowsMultipleSelection: true,
       selectionLimit: 1,
     });
-    if (!result.canceled) {
+    if (!result.cancelled) {
       const imageUri = result.assets[0].uri;
       setImage(imageUri);
       setMessage("Replace image");
       uploadImageToCloudinary(imageUri);
     }
   };
+
 
   const classes = [
     "First Class",
@@ -78,7 +85,6 @@ const Inscription = ({ navigation }) => {
     "Sixth Class",
   ];
   
-  const [userId, setUserId] = useState("");
 
   const handleClassSelect = async(selectedClass) => {
     setClass(selectedClass);
@@ -95,13 +101,13 @@ const Inscription = ({ navigation }) => {
       First_name,
       LastName,
       Birthday,
-      image: image,
-      class: Class,
-      users_idusers: 1,
+      image: imageUrl,
+      Class: Class,
+      users_idusers: iduser,
       classes_idclasses: 3
     })
     .then((res) => {
-      alert('student added successfully'); 
+      console.log('student added successfully'); 
       navigation.navigate('Parent');  
       console.log(iduser); 
       setDat(res.data)
@@ -119,14 +125,14 @@ const Inscription = ({ navigation }) => {
           <View style={styles.container}>
             <View style={styles.imageContainer}>
             </View>
-    
+            {/* https://img.freepik.com/vecteurs-libre/illustration-icone-calendrier_53876-6132.jpg?w=740&t=st=1698409510~exp=1698410110~hmac=bf910c8b32c2bf491669c1dc42f1c89958b3e4a8533cb91e2b94c69c4a19a0ae */}
             <View style={styles.text}>
               <Text style={{ top:"10<%",fontWeight:"400",fontSize:18,left:"-32%" }}>Create an account</Text>
     
               <Text style={{ marginTop:"20%",fontWeight:"300",fontSize:13,left:"-28%",top:"-29%" }}>and join us</Text>
             </View>
             <View style={{borderColor:"#1FA609",width:100,height:100,borderRadius:100,borderWidth:0.6,left:"30%",top:"-5%"}}>
-<Image style={{width:"100%",height:"100%",borderRadius:100}} source={{uri:{imageUrl}}}/>
+            {imageUrl && <Image source={{ uri: imageUrl }} style={{ width: 100, height: 100 ,borderRadius:100}} />}
             </View>
             <TouchableOpacity  onPress={() => {
               pickImage();
@@ -213,7 +219,7 @@ onRequestClose={() => {
 
             <TouchableOpacity style={styles.loginButton} onPress={()=>handle()}>
               <View style={styles.loginButtonTextWrapper}>
-                <Text style={styles.loginButtonText}>SIGN UP</Text>
+                <Text style={styles.loginButtonText}>Inscription</Text>
               </View>
             </TouchableOpacity>
     

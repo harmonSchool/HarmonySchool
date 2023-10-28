@@ -1,13 +1,13 @@
 const { add,put,remove,getAll,getStudentsInClass,getOneStudent,
   getStudentsByUser,getStudentsByClass,getStudentsByClass2, getStudentsByClass3,
   getStudentsByClass4 ,
-  getStudentsByClass5 ,
+  getStudentsByClass5 ,getStudentIdByUsername,
   getStudentsByClass6  } = require("../database/model/student")
 
 
   const addStudent = (req, res) => {
-    const { First_name, LastName, Birthday, Class , image, users_idusers, classes_idclasses, type } = req.body;
-    const StudentData = { First_name, LastName, Birthday, Class , image, users_idusers, classes_idclasses, type };
+    const { First_name, LastName, Birthday, Class , image, users_idusers, classes_idclasses } = req.body;
+    const StudentData = { First_name, LastName, Birthday, Class , image, users_idusers, classes_idclasses};
   
     add(StudentData, (dbError, dbResults) => {
       if (dbError) {
@@ -64,6 +64,19 @@ const UpdateStudent = (req, res) => {
       }
     });
   }
+  const getStudentnames = (req, res) => {
+    const First_name = req.params.First_name;
+  
+    getStudentIdByUsername(First_name, (err, idStudent) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json(err);
+      } else {
+        res.status(200).json({ idStudent });
+      }
+    });
+  };
+
 
 
 
@@ -199,7 +212,7 @@ const UpdateStudent = (req, res) => {
     getStudentsByClassController4,
     getStudentsByClassController5,
     getStudentsByClassController6,
-    
+    getStudentnames,
     getStudentsByClassController
 
   }

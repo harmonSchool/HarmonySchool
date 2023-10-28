@@ -9,8 +9,8 @@ const mysql = require("mysql2");
 const pool = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "root",
-  database: "harmony",
+  password: "10697",
+  database: "school",
 });
 
 
@@ -87,31 +87,26 @@ function login(req, res) {
   User.findByEmail(email, (err, results) => {
     if (err) {
       console.error("Error retrieving user from database: " + err);
-      return res.status(500).send({ message: "Internal server error" });
+      return res.sendStatus(500);
     }
     if (results.length === 0) {
-      console.log(`User with email ${email} not found.`);
       return res.status(401).send({ message: "Invalid email or password" });
     }
 
     const user = results[0];
-    console.log(`Found user: ${user.username}`);
-
     bcrypt.compare(password, user.password, (err, isMatch) => {
       if (err) {
         console.error("Error comparing passwords: " + err);
-        return res.status(500).send({ message: "Internal server error" });
+        return res.sendStatus(500);
       }
 
       if (!isMatch) {
-        console.log(`Password for user ${user.username} does not match.`);
         return res.status(401).send({ message: "Invalid email or password" });
       }
 
       const token = jwt.sign({ userId: user.User_Id }, secretKey, {
         expiresIn: "1h",
       });
-      console.log(`User ${user.username} successfully logged in.`);
       res.send({ token, id: user.idusers });
     });
   });

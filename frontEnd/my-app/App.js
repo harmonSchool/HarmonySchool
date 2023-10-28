@@ -48,6 +48,8 @@ import Hom from './screens/Home/hom';
 import ProfileView from './screens/Profile/ProfileView/ProfileView';
 import parentInterFace from './screens/FirstInterfaces/parentInterFace';
 import Intro from './screens/Intro/Intro';
+import SelectChild from './screens/Note/SelectChild';
+import Add from './screens/Note/Add';
 const Stack = createNativeStackNavigator()
 
 
@@ -57,9 +59,12 @@ export default function App() {
     <NativeBaseProvider >
     <NavigationContainer>
     
-    <Stack.Navigator initialRouteName="Parent">
+    <Stack.Navigator initialRouteName="Home">
      <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}}  />
+     <Stack.Screen name="ProfileView" component={ProfileView} options={{headerShown:false}}  />
+
      <Stack.Screen name="Payment" component={Payment} options={{headerShown:false}}  />
+     <Stack.Screen name="Add" component={Add} options={{headerShown:false}}  />
      <Stack.Screen name="ReviewOrder" component={ReviewOrder} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent1" component={DataStudent1 } options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent2" component={DataStudent2 } options={{headerShown:false}}  />
@@ -68,6 +73,7 @@ export default function App() {
      <Stack.Screen name="DataStudent5" component={DataStudent5} options={{headerShown:false}}  />
      <Stack.Screen name="DataStudent6" component={DataStudent6} options={{headerShown:false}}  />
 
+     <Stack.Screen name="SelectChild" component={SelectChild} options={{headerShown:false}}  /> 
 
      <Stack.Screen name="Login" component={Login} options={{headerShown:false}}  /> 
      <Stack.Screen name="SignUp" component={SignUp} options={{headerShown:false}}/> 
@@ -94,7 +100,6 @@ export default function App() {
      <Stack.Screen name="Hom" component={Hom} options={{headerShown:false}}  />
      <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />
      <Stack.Screen name="Conv" component={ConversationView} options={{headerShown:false}}  />
-
      <Stack.Screen name="Stripe" component={CheckoutScreen} options={{ headerShown: false }} initialParams={{ amount: 100 }} />
      
 

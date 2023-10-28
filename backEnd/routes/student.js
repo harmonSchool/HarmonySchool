@@ -3,7 +3,7 @@ const router = express.Router();
 const  {addStudent,getStudentsInClassController,getAllStudent,RemoveStudent,UpdateStudent,getStudentsByUserController, getStudentsByClassController,getOnStudent,getStudentsByClassController2, getStudentsByClassController3,
     getStudentsByClassController4,
     getStudentsByClassController5,
-    getStudentsByClassController6,} = require ("../controllers/student")
+    getStudentsByClassController6,getStudentnames} = require ("../controllers/student")
 
 
 router.post('/add',addStudent);
@@ -19,9 +19,10 @@ router.get('/getStudentsByClass4/:className', getStudentsByClassController4);
 router.get('/getStudentsByClass5/:className', getStudentsByClassController5);
 router.get('/getStudentsByClass6/:className', getStudentsByClassController6);
 
+router.get('/getStudent/:First_name', getStudentnames);
 
 
-router.get('/getByUser/:idusers', getStudentsByUserController);
+router.get('/getByUser/:users_idusers', getStudentsByUserController);
 
 
 

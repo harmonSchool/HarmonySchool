@@ -12,7 +12,7 @@ const addAdmin = (adminData, callback) => {
         if (err) {
             callback(err, null);
         } else {
-            const sql = 'INSERT INTO admin (admin, password, image) VALUES (?,?,"https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg");';
+            const sql = 'INSERT INTO admin (admin, password, image,userType) VALUES (?,?,"https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg",?);';
             const values = [adminData.admin, hash, adminData.image];
             connection.query(sql, values, function (error, result) {
                 if (error) {

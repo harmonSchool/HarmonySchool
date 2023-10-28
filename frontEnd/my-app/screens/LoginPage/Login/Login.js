@@ -6,26 +6,93 @@ import axios from "axios";
 import Adress from '../../IP'
 import { useContext } from "react";
 import { MyContext } from "../../../useContext/useContext";
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 function Login({ navigation }) {
-  const { isDarkMode, setMode, setUser } = useContext(MyContext);
+  const { isDarkMode, setMode, setUser,email, setEmail,idclass,setIdClass} = useContext(MyContext);
   const theme = isDarkMode ? darkTheme : lightTheme;
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [teacherEmails, setTeacherEmails] = useState([]);
   const [userEmails, setUserEmails] = useState([]);
+  const [hide, setHide] = useState(true);
+  const[users,setUs]=useState([])
+  const[teacher,setUts]=useState([])
+  const[datas,setDatas]=useState([])
+  const { idusers,setUsersId} = useContext(MyContext);
+  const [data, setData] = useState(null);
+
+
+const [userIds , setUserIds]=useState([])
+
+  const PassShow=()=>{
+    setHide(!hide) 
+  }
+
+  useEffect(() => {
+    const userEmail = getUserEmail();
+    fetchDataFromTeacherURL();
+    fetchDataFromUserURL();
+}, []);
+
+
+  const getUserEmail = async () => {
+    try {
+      const email = await AsyncStorage.getItem('userEmail');
+      return email;
+    } catch (error) {
+      console.error('Error retrieving user email:', error);
+    }
+  }
+
+
+  
+
+
+
+  function fetchDataFromTeacherURL() {
+    axios
+      .get(`http://${Adress}/teacher/get`)
+      .then((res) => {
+        const teacherData = res.data;
+        const teacherEmails = teacherData.map((teacher) => teacher.email);
+        setTeacherEmails(teacherEmails);
+        console.log("teacherEmails ", teacherEmails);
+
+      })
+      .catch((err) => {
+        console.error("Error fetching data from Teacher URL:", err);
+      });
+  }
+
+
+
+  const getPasswordForEmail = async (email) => {
+    try {
+      // Implement the logic to fetch the password associated with the email.
+      // You can use AsyncStorage or make an API call to get the password.
+      // Example using AsyncStorage:
+      const password = await AsyncStorage.getItem(`password_${email}`);
+      return password;
+    } catch (error) {
+      console.error('Error retrieving password for email:', error);
+    }
+  };
 
   function fetchDataFromUserURL() {
-    const storedPassword =  getPasswordForEmail(email);
-
+    const email = getUserEmail();
+    const storedPassword = getPasswordForEmail(email);
     axios
-      .get("http://${Adress}/user/getAll")
+      .get(`http://${Adress}/user/getAll`)
       .then((res) => {
         const userData = res.data;
         const userEmails = userData.map((user) => user.email);
+        const userIds = userData.map((user) => user.idusers);
+
         setUserEmails(userEmails);
         console.log("users Emails ", userEmails);
+        setUserIds( userIds)
+        console.log(userIds)
       })
       .catch((err) => {
         console.error("Error fetching data from User URL:", err);
@@ -33,69 +100,47 @@ function Login({ navigation }) {
   }
 
   
-
   const handleLog = async (e) => {
-    const adminKey = "37910Acoy";
-    const idUser = 1;
-  
-    // Extract the adminKey prefix (digits before "Acoy")
-    const adminKeyPrefix = adminKey.substring(0, adminKey.indexOf("Acoy"));
-  
-    // Increment the first digit of the adminKey prefix by 1
-    const updatedAdminKeyPrefix = (parseInt(adminKeyPrefix[0]) + 1).toString() + adminKeyPrefix.substring(1);
-  
-    // Combine the updated adminKey prefix with "Acoy" to get the new adminKey
-    const newAdminKey = updatedAdminKeyPrefix + "Acoy";
-    console.log("Admin Key:", newAdminKey);
-  
     e.preventDefault();
-  
-    if (email === "") {
-      console.log("Enter your email");
-      alert("Enter your email");
-      return;
+
+    if (!email || !password) {
+        console.log('Enter your email and password');
+        alert('Enter your email and password');
+        return;
     }
-    if (password === "") {
-      console.log("Enter your password");
-      alert("Enter your password");
-      return;
-    }
-  
+
     try {
-      const storedEmail = await getUserEmail();
-      const storedPassword = await getPasswordForEmail(email); // Fetch the password for the entered email
-  
-      console.log("Email entered:", email);
-      console.log("Admin Key:", newAdminKey); // Use the updated adminKey
-  
-      if (email === storedEmail && password === storedPassword && newAdminKey) {
-        // Admin access granted
-        console.log("Admin login");
-        alert("Welcome admin");
-        // Handle admin navigation here
-      } else if (teacherEmails.includes(email)) {
-        console.log("Teacher login");
-        alert("Welcome teacher");
-        navigation.navigate("Teacher");
-      } else if (userEmails.includes(email) || email === storedEmail) {
-        console.log("User login");
-        alert("Welcome, user");
-        console.log("Stored Email:", storedEmail);
-  
-        // Navigate to the Parent component with userEmail and updated adminKey
-        navigation.navigate("Parent", { userEmail: email, adminKey: newAdminKey });
-      } else {
-        console.log("Email and password combination is incorrect");
-        alert("Email and password combination is incorrect. Please check your credentials.");
-      }
-    } catch (error) {
-      console.error("Error handling login:", error);
+        const res = await axios.post(`http://${Adress}/user/login`, {
+            email,
+            password,
+        });
+
+        setData(res.data);
+
+        const isUser = userEmails.includes(email);
+        const isTeacher = teacherEmails.includes(email);
+
+        if (isUser) {
+            navigation.navigate('Teacher');
+        } else if (isTeacher) {
+            navigation.navigate('Teacher');
+        } else {
+            console.log('Entered email:', email);
+            console.log('User emails:', userEmails);
+            console.log('Teacher emails:', teacherEmails);
+            alert('User not found, please check your email');
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Check your password or your email');
     }
-  }; 
+};
+
+  
   
 
   return (
-    <View style={[styles.container,{ backgroundColor: theme.backgroundColor }]}>
+    <View key={"hello"} style={[styles.container,{ backgroundColor: theme.backgroundColor }]}>
     <Text style={{marginTop:"-7%",top:'-3%', color: "rgba(0, 0, 0, 1)"  ,  fontSize:16,fontWeight:"600",left:"-25%"}}>Log in</Text>
     <Text style={{marginTop:"1.5%", color: "rgba(0, 0, 0, 1)",top:'-3%'  ,  fontSize:20,fontWeight: "200",left:'-26%'}}>Welcome back !</Text>
 
@@ -128,7 +173,7 @@ function Login({ navigation }) {
           Log back in
         </Text>
       </View>
-      <Text style={[styled.text, { color: theme.textColor }]}>
+      <Text style={[styles.text, { color: theme.textColor }]}>
         Don't have an account?
       </Text>
       <Text

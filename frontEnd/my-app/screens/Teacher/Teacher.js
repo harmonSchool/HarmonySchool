@@ -1,15 +1,50 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import Adress from '../IP'
+import { MyContext } from '../../useContext/useContext';
 
+import { useContext } from 'react';
 const Teacher = () => {
   const navigation = useNavigation();
+  const {setData,data,setUsersID,iduser,student,setStud, isDarkMode, setMode, setUser,email, setEmail,idclass,setIdClass,first_name} = useContext(MyContext);
 
   const handleNavigateToStudents = () => {
     navigation.navigate('StudentClass');
   };
 
   //StudentClass
+
+  useEffect(() => {
+ 
+    axios.post(`http://${Adress}/user/getUserByemail`, { email })
+      .then((res) => {
+        setUsersID(res.data);
+        console.log(first_name);
+        console.log("your data is here "+ data);
+
+        console.log("succes " + iduser);
+        console.log("student id "+student);
+
+      })
+      .catch((err) => {
+        console.log('the error ' + err);
+      });})
+
+  useEffect(()=>{
+
+    axios.get(`http://${Adress}/user/getById/${iduser}`).then((res) => {
+      const datata=res.data
+      setData(datata);
+      console.log("your data is here "+ data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, [iduser]);
+
+
 
   return (
     <ScrollView>
@@ -19,21 +54,14 @@ const Teacher = () => {
         </View>
 
         <View style={styles.imageContainer}>
-          <Image
-            style={{
-              height: 90,
-              width: 90,
-              marginLeft: -15,
-              top: 10,
-            }}
-            source={{ uri: 'https://www.learningprofessionals.af.mil/portals/87/Images/S2C%20Images/Article%20Image_1.png?ver=VSSxf_st2FKR3mLATXb3dQ%3D%3D' }}
-          />
+         
         </View>
 
         <View style={styles.text}>
-          <Text style={{ color: '#66328E', left: -8, fontWeight: '900', fontSize: 16, top: -140, textAlign: 'center', marginTop: -20 }}>
-            Welcome Mr Houssem
+          <Text style={{  left: -65, fontWeight: '500', fontSize: 15, top: -140, textAlign: 'center', marginTop: 20 }}>
+            Welcome Teacher
           </Text>
+          <Text style={{  left: -65, fontWeight: '400', fontSize: 13, top: -108, textAlign: 'center', marginTop: -20 }}>check student information</Text>
         </View>
 
         <View>
@@ -46,13 +74,13 @@ const Teacher = () => {
                   height: 100,
                   width: 100,
                   marginLeft: -10,
-                  marginTop: 40,
+                  marginTop: -50,
                 }}
                 source={{
                   uri: 'https://prod2-sprcdn-assets.sprinklr.com/50400/538cb2ba-4b9a-4111-b99f-e3e27828a816-239440336/Audience_Icon.png',
                 }}
               />
-              <Text style={{ color: '#66328E', left: -5, fontWeight: '800', textAlign: 'center' }}>Profile</Text>
+              <Text style={{  left: -5, fontWeight: '400',top:'-10', textAlign: 'center' }}>Profile</Text>
               </TouchableOpacity>
 
 
@@ -62,21 +90,21 @@ const Teacher = () => {
             <View style={{ ...styles.imageTextWrapper, marginLeft: 30 }}>
 
 
-            <TouchableOpacity onPress={() => navigation.navigate('Notess')}>
+            <TouchableOpacity onPress={() => navigation.navigate('SelectChild')}>
 
               <Image
                 style={{
                   height: 100,
                   width: 100,
                   marginLeft: 19,
-                  marginTop: 29,
+                  marginTop: -50,
                 }}
                 source={{
                   uri: 'https://cdn-icons-png.flaticon.com/512/2436/2436799.png',
                 }}
               />
               
-              <Text style={{ color: '#66328E', left: 2, fontWeight: '800', textAlign: 'center' }}>Notes</Text>
+              <Text style={{  left: 2, fontWeight: '400',top:'-10', textAlign: 'center' }}>Notes</Text>
               </TouchableOpacity>
 
             </View>
@@ -96,7 +124,7 @@ const Teacher = () => {
                   uri: 'https://cdn-icons-png.flaticon.com/512/9583/9583531.png',
                 }}
               />
-              <Text style={{ color: '#66328E', left: 0, fontWeight: '800', marginTop: -5, textAlign: 'center' }}>
+              <Text style={{  left: 0, fontWeight: '400',top:'-10', marginTop: -5, textAlign: 'center' }}>
                 Students
               </Text>
             </TouchableOpacity>
@@ -106,7 +134,7 @@ const Teacher = () => {
               source={require('../../../my-app/assets/contact.png')}
               style={styles.imaged}
             />
-            <Text style={{ color: '#66328E', fontWeight: '800', textAlign: 'center' }}>Contact Us</Text>
+            <Text style={{  fontWeight: '400',top:'-10', textAlign: 'center' }}>Contact Us</Text>
           </TouchableOpacity>
 
 
@@ -123,7 +151,7 @@ const Teacher = () => {
               uri: 'https://cdn-icons-png.flaticon.com/512/1869/1869397.png',
             }}
           />
-          <Text style={{ color: '#66328E', left: -75, fontWeight: '800', textAlign: 'center' }}>Calender</Text>
+          <Text style={{  left: -75, fontWeight: '400',top:'-10', textAlign: 'center' }}>Calender</Text>
           </TouchableOpacity>
 
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TextInput, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TextInput, Button, Alert, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { useContext,useEffect } from "react";
@@ -9,32 +9,56 @@ import Adress from '../IP'
 
 const Parent = () => {
   
-  const { isDarkMode, setMode,iduser,setUsersID,email} = useContext(MyContext);
+  const {setData,data,setUsersID,iduser,student,setStud, isDarkMode, setMode, setUser,email, setEmail,idclass,setIdClass,first_name} = useContext(MyContext);
 
 
   useEffect(() => {
  
-    axios.post(`http://${Adress}:3000/user/getUserByemail`, { email })
+    axios.post(`http://${Adress}/user/getUserByemail`, { email })
       .then((res) => {
         setUsersID(res.data);
+        console.log(first_name);
+        console.log("your data is here "+ data);
+
         console.log("succes " + iduser);
+        console.log("student id "+student);
+
       })
       .catch((err) => {
         console.log('the error ' + err);
-      });
+      });})
+      useEffect(()=>{
+
+      axios.get(`http://${Adress}/student/getStudent/${first_name}`).then((res)=>{
+        setStud(res.data[0])
+console.log("student id "+student);
+      }).catch((err)=>{ 
+        console.log("err is "+err);
+      })
   
+}, [iduser]);
+
+useEffect(()=>{
+
+  axios.get(`http://${Adress}/user/getById/${iduser}`).then((res) => {
+    const datata=res.data
+    setData(datata);
+    console.log("your data is here "+ data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 }, [iduser]);
 
 
   const navigation = useNavigation();
   const [showInput, setShowInput] = useState(false);
-  const route = useRoute(); // Use useRoute to access the route's params
-  const [message, setMessage] = useState(''); // Add state for the message
+  const route = useRoute(); 
+  const [message, setMessage] = useState('');
 
   const [allUserEmails, setAllUserEmails] = useState([]);
-  const [paymentAccess, setPaymentAccess] = useState(false); // Added payment access state
+  const [paymentAccess, setPaymentAccess] = useState(false); 
 
-  const [idUsers, setIdUsers] = useState("");
 
   const userEmailFromLogin = route.params?.userEmail || '';
 
@@ -44,7 +68,7 @@ const Parent = () => {
   console.log('Email from route params:', userEmailFromLogin);
 
   const handleImageClick = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("ProfileView");
   };
 
   const handleImageClick1 = () => {
@@ -80,13 +104,17 @@ const Parent = () => {
     navigation.navigate("Contact");
   };
 
+  const handleImageClick11=()=>{
+    navigation.navigate('CalendarScreen')
+  }
+
   const hideInput = () => {
     setShowInput(false);
   };
 
   const getAllUserData = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.5:2023/oneUser/${idUsers}`);
+      const response = await axios.get(`http://192.168.1.5:2023/oneUser/${iduser}`);
       if (response.status === 200) {
         const data = response.data;
         const emails = data.map(user => user.email);
@@ -113,7 +141,7 @@ const Parent = () => {
     };
 
     axios
-      .post('http://${Adress}/send-email', mailOptions)
+      .post(`http://${Adress}/send-email`, mailOptions)
       .then((response) => {
         if (response.status === 200) {
           Alert.alert('Notification email sent successfully.');
@@ -137,8 +165,8 @@ const Parent = () => {
   const notifyAdmin = async () => {
     // Retrieve the user's email from AsyncStorage
     axios
-      .post('http://${Adress}/notify-admin', {
-        message: `This user wants to pay pay something you need to check the inofrmation of student to give him the access to get pay ${userEmailFromLogin}`,
+      .post(`http://${Adress}/notify-admin`, {
+        message: `This user wants to pay something you need to check the inofrmation of student to give him the access to get pay ${userEmailFromLogin}`,
       })
       .then((response) => {
         if (response.status === 200) {
@@ -155,6 +183,7 @@ const Parent = () => {
 
   return (
     <ScrollView>
+  <SafeAreaView style={{backgroundColor:"black"}}>
       <View style={styles.container}>
         <View >
         </View>
@@ -175,7 +204,7 @@ const Parent = () => {
 
         <View style={{ ...styles.imageContainer }}>
           <View style={styles.imageTextWrapper}>
-            <TouchableOpacity onPress={handleImageClick}>
+            <TouchableOpacity onPress={()=>handleImageClick()}>
               <Image
               source={{uri:'https://cdn3d.iconscout.com/3d/premium/thumb/profile-5590850-4652486.png'}} 
               style={{height:110 , width:150 , top :8 , left : "-8%"}}
@@ -262,7 +291,19 @@ const Parent = () => {
           <Text style={{ color: 'black', fontWeight: "500" , top:"-335%" , left:"-23%" }}>Contact us</Text>
 
         </View>
+        <View style={styles.imageTextWrapper}>
+            <TouchableOpacity onPress={handleImageClick11}>
+              <Image
+              source={{uri:'https://img.freepik.com/vecteurs-libre/illustration-icone-calendrier_53876-6132.jpg?w=740&t=st=1698409510~exp=1698410110~hmac=bf910c8b32c2bf491669c1dc42f1c89958b3e4a8533cb91e2b94c69c4a19a0ae'}} 
+              style={{height:110 , width:200 , top :"-188%" , left : "22%"}}
+              />
+            </TouchableOpacity>
+            <Text style={{ color: 'black', fontWeight: "500", left: 70 , top:-205 }}>
+              Calendrier
+            </Text>
+          </View>
       </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };

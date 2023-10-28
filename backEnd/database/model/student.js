@@ -137,7 +137,7 @@ function getStudentIdByUsername(First_name, callback) {
     getStudentsByClass3,
     getStudentsByClass4 ,
     getStudentsByClass5 ,
-    getStudentsByClass6 
+    getStudentsByClass6 ,getStudentIdByUsername
     
     
     

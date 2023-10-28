@@ -32,6 +32,7 @@ const CreateAnAccount = ({ navigation }) => {
   const [Number, setPhoneNumber] = useState("");
   const [isError, setIsError] = useState(false);
   const [iduser, setUserId] = useState(0);
+  const [hide, setHide] = useState(true);
 
   const handlePassword = (text) => {
     setPassword(text);
@@ -60,20 +61,13 @@ const CreateAnAccount = ({ navigation }) => {
       password,
       Birthday,
       Number,
+      userType:"user"
     };
     console.log(userData);
-    Axios.post(ADRESS_API + 'user/register', userData)
+    Axios.post(`http://${Adress}/user/register`, userData)
 
       .then((response) => {
         console.log(response.data);
-
-        data = {email : userData.email , password : userData.password , role : 1};
-
-        Axios.post(ADRESS_API + 'create/user',data).then((res) => {
-          
-        }).catch((err) => {
-          alert(err);
-        });
 
         setName("");
         setDateOfBirth("");
@@ -81,18 +75,13 @@ const CreateAnAccount = ({ navigation }) => {
         setEmail("");
         setPassword("");
 
-        setUserId(response.data.idusers);
-        console.log("User ID:", response.data.idusers);
-        Alert.alert("Success", "Registration successful! You can now log in.");
+
 
         navigation.navigate("Login");
       })
       .catch((error) => {
         console.error("Registration Error", error);
-        Alert.alert(
-          "Error",
-          "Registration failed. Please try again bjeh rab a3mel adress jdida"
-        );
+       
       });
   };
 
@@ -102,6 +91,7 @@ const CreateAnAccount = ({ navigation }) => {
       Alert.alert("make password than 6");
     }
   };
+
 
   return (
         
@@ -130,7 +120,7 @@ const CreateAnAccount = ({ navigation }) => {
           <Text style={styles.label}>date_of_birthday</Text>
           <TextInput
             style={styles.inputName}
-            placeholder="   YYYY/MM/DD"
+            placeholder="   DD/MM/YYYY"
             onChangeText={handleDate}
           />
         </View>

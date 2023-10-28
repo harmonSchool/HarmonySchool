@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { CheckBox  } from 'react-native-elements';
 import { RadioButton } from 'react-native-paper';
 import CheckoutScreen from '../Stripe/CheckoutScreen';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -21,27 +22,26 @@ const PaymentMethod = ({ navigation}) => {
 
   return (
     <ScrollView style={styles.container}>
+      <SafeAreaView style={{backgroundColor:"black"}}></SafeAreaView>
       <View style={styles.header}>
         
       </View>
-      <Image
-        source={require('../../assets/violet.png')}
-        style={styles.image}
-      />
+
       <Text style={styles.checkout}>CHECKOUT</Text>
 
+<Text style={{left:"3%",fontSize:18,fontWeight:"200"}}>Pay your amount</Text>
       <View style={styles.boxContainer}>
         <View style={styles.box}>
           <Image
             source={require('../../assets/tuition.png')}
-            style={styles.boxImage}
+            style={styles.boxImage1}
           />
           <View style={styles.boxContent}>
-            <Text style={styles.boxTitle}>School Tuition</Text>
+            <Text style={styles.boxTitle3}>School Tuition</Text>
             <View style={styles.checkboxContainer}>
 
               <RadioButton.Group onValueChange={value => setValue(value)} value={value} >
-                <RadioButton.Item label="Per Month - $100" value="100"  />
+                <RadioButton.Item label="Per Month - $100" value="100" style={{borderBottomWidth:0.6}} />
                 <RadioButton.Item label="Per Quarter - $250" value="250" />
               </RadioButton.Group>
             </View>
@@ -54,11 +54,11 @@ const PaymentMethod = ({ navigation}) => {
             style={styles.boxImage}
           />
           <View style={styles.boxContent}>
-            <Text style={styles.boxTitle}>Breakfast</Text>
+            <Text style={styles.boxTitle1}>Breakfast</Text>
             <View style={styles.checkboxContainer}>
 
               <RadioButton.Group onValueChange={value => setValue(value)} value={value} >
-                <RadioButton.Item label="Per Month - $100" value="100.0" />
+                <RadioButton.Item style={{borderBottomWidth:0.6}} label="Per Month - $100" value="100.0" />
                 <RadioButton.Item label="Per Quarter - $250" value="250.0" />
               </RadioButton.Group>
             </View>
@@ -75,7 +75,7 @@ const PaymentMethod = ({ navigation}) => {
             <View style={styles.checkboxContainer}>
 
               <RadioButton.Group onValueChange={value => setValue(value)} value={value}>
-                <RadioButton.Item label="Per Month - $50" value="50" />
+                <RadioButton.Item style={{borderBottomWidth:0.6}} label="Per Month - $50" value="50" />
                 <RadioButton.Item label="Per Quarter - $120" value="120" />
               </RadioButton.Group>
             </View>
@@ -83,24 +83,11 @@ const PaymentMethod = ({ navigation}) => {
         </View>
       </View>
 
-      <View style={styles.contactInfoContainer}>
-        <View style={styles.contactInfo}>
-          <FontAwesome name="map-marker" size={16} style={styles.icon} />
-          <Text style={styles.contactInfoText}>16 Ghazala, Ariana/Tunis</Text>
-        </View>
-        <View style={styles.contactInfo}>
-          <FontAwesome name="phone" size={16} style={styles.icon} />
-          <Text style={styles.contactInfoText}>+216 27011 482</Text>
-        </View>
-        <View style={styles.contactInfo}>
-          <FontAwesome name="envelope" size={16} style={styles.icon} />
-          <Text style={styles.contactInfoText}>school@gmail.com</Text>
-        </View>
-      </View>
+   
     
 
 
-      <Button      
+      <TouchableOpacity     
             onPress={()=> navigation.navigate('Stripe' , {name : value,amount : value,studentId,classId})}
             title="Checkout"
             style={styles.button}>
@@ -111,7 +98,7 @@ const PaymentMethod = ({ navigation}) => {
                   Payment
               </Text>
   
-           </Button> 
+           </TouchableOpacity> 
 
     </ScrollView>
   );
@@ -123,7 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   header: {
-    backgroundColor: '#4285F4',
+    backgroundColor: '#ffffff',
     padding: 16,
   },
   headerText: {
@@ -133,11 +120,12 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 200,
+    height: 150,
   },
   checkout: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '600',
+    left:"-27%",
     textAlign: 'center',
   },
   boxContainer: {
@@ -153,6 +141,10 @@ const styles = StyleSheet.create({
   boxImage: {
     width: 60,
     height: 60,
+  },  boxImage1: {
+    width: 60,
+    height: 60,
+    left:"3%"
   },
   boxContent: {
     flex: 1,
@@ -160,11 +152,25 @@ const styles = StyleSheet.create({
    
   },
   boxTitle: {
+    top:"10%",
+    left:"2%",
+    fontSize: 16,
+    fontWeight: 'bold',
+  },  boxTitle1: {
+    top:"10%",
+    left:"-8%",
+    fontSize: 16,
+    fontWeight: '200',
+  }, boxTitle3: {
+    top:"10%",
+    left:"-12%",
     fontSize: 16,
     fontWeight: 'bold',
   },
   checkboxContainer: {
-    marginTop: 10,
+    marginTop: 20,
+    borderWidth:0.6,
+    borderRadius:8
   },
   checkbox: {
     backgroundColor: 'white',
@@ -186,7 +192,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#DBC8E4',
+    backgroundColor: '#1FA609',
     borderRadius: 8,
     margin: 16,
     padding: 16,

@@ -3,10 +3,11 @@ import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity } 
 import { Svg, Path } from 'react-native-svg';
 import ADRESS_API from '../serverUrl';
 import { Title } from 'react-native-paper';
+import Adress from '../IP'
 export default function Code() {
   const [verificationCode, setVerificationCode] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = ({navigation}) => {
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -15,10 +16,10 @@ export default function Code() {
       body: JSON.stringify({ verificationCode: verificationCode }),
     };
 
-    fetch(`http://192.168.1.5:2023/check-verification-code`, requestOptions)
+    fetch(`http://${Adress}/check-verification-code`, requestOptions)
       .then((response) => {
         if (response.ok) {
-          alert('Verification code is valid');
+          navigation.navigate('NewPassword')
         } else {
           alert('Verification code is invalid');
         }

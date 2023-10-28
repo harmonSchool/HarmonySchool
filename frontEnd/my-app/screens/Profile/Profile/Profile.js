@@ -18,7 +18,7 @@ import axios from "axios";
 import AntDesign from "react-native-vector-icons/AntDesign"
 
 const Profile = ({ navigation }) => {
-  const {iduser} = useContext(MyContext);
+  const {iduser,data} = useContext(MyContext);
    const[hide,setHide]=useState(true)
   const [username, setName] = useState("");
   const [email, setEmailAdress] = useState("");
@@ -27,12 +27,13 @@ const Profile = ({ navigation }) => {
   
 
 const handlePut=()=>{
-  axios.put(`http://${Adress}:3000/edit/${iduser}`,{
+  axios.put(`http://${Adress}/edit/${iduser}`,{
     username,
     email,
     password,
   }).then((res)=>{
     console.log("updated succesfull");
+    navigation.navigate('Login')
   }).catch((err)=>{
     console.log("there is an error "+err);
   })

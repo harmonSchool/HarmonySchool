@@ -4,6 +4,7 @@ import { Svg, Path, Defs, Pattern, Use, Image } from 'react-native-svg';
 import axios from 'axios';
 import { useState } from 'react';
 import ADRESS_API from '../serverUrl';
+import Adress from '../IP'
 export default function Findyouremail({ navigation }) {
   const [email, setEmail] = useState('');
 
@@ -13,13 +14,12 @@ export default function Findyouremail({ navigation }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user_email: email }),
+      body: JSON.stringify({ email: email }),
     };
 
-    fetch(`http://192.168.104.14:3000/send-verification-code`, requestOptions)
+    fetch(`http://${Adress}/send-verification-code`, requestOptions)
       .then((response) => {
-        
-          alert('Verification code sent successfully to your Email');
+
           navigation.navigate('Code');
       })
       .catch((error) => {
@@ -75,7 +75,7 @@ export default function Findyouremail({ navigation }) {
             type="submit" placeholder='   enter your email'  style={styles.rectangle3}/>
        
        
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity onPress={()=>handleSubmit()} style={styles.btn}>
         <Text style={styles.Log}>Find your email</Text>
        
       </TouchableOpacity> 
